@@ -6,7 +6,7 @@ from pathlib import Path
 # ==========================================
 
 BASE_DIR = Path(__file__).resolve().parent
-OUTPUT_FILE = BASE_DIR / "endes_2022_2025.xlsx"
+OUTPUT_FILE = BASE_DIR / "endes_2022_2025.csv"
 
 ARCHIVOS_POR_ANIO = {
     2022: BASE_DIR / "2022" / "endes_filtrada_ml_2022.csv",
@@ -42,18 +42,14 @@ print(f"   CLASE 0 (Sin perdida): {clase_0:,} ({clase_0 / len(df_consolidado) * 
 print(f"   CLASE 1 (Perdida): {clase_1:,} ({clase_1 / len(df_consolidado) * 100:.2f}%)")
 
 # ==========================================
-# GUARDAR EN EXCEL (una hoja por año + una hoja consolidada)
+# GUARDAR EN CSV (consolidado, con columna 'anio' para distinguir cada registro)
 # ==========================================
 
 print("\n" + "=" * 70)
-print(f"GUARDANDO EXCEL EN: {OUTPUT_FILE}")
+print(f"GUARDANDO CSV EN: {OUTPUT_FILE}")
 print("=" * 70)
 
-with pd.ExcelWriter(OUTPUT_FILE, engine='openpyxl') as writer:
-    df_consolidado.to_excel(writer, sheet_name='Consolidado_2022_2025', index=False)
-    for anio, df in dataframes_por_anio.items():
-        df.to_excel(writer, sheet_name=str(anio), index=False)
+df_consolidado.to_csv(OUTPUT_FILE, index=False, encoding='utf-8-sig')
 
-print("Archivo Excel guardado exitosamente")
-print(f"\nHojas creadas: Consolidado_2022_2025, {', '.join(str(a) for a in dataframes_por_anio.keys())}")
+print("Archivo CSV guardado exitosamente")
 print(f"Archivo: {OUTPUT_FILE}")
