@@ -224,6 +224,18 @@ cols_habitos = [c for c in cols_habitos if c in df_csalud.columns]
 df_csalud = df_csalud[['HHID', 'QSNUMERO'] + cols_habitos]
 df_csalud = df_csalud.rename(columns={'QSNUMERO': 'V003'})
 
+# QS900 (peso) y QS901 (talla) vienen como texto y algunos anios usan coma
+# decimal en vez de punto. Se normalizan a numero (punto) aqui para que el
+# CSV final tenga siempre el mismo formato, sin importar de que anio salio
+# cada fila (si no, Excel no detecta un tipo numerico consistente al
+# importar la columna y trunca los valores a enteros).
+for col_peso_talla in ['QS900', 'QS901']:
+    if col_peso_talla in df_csalud.columns:
+        df_csalud[col_peso_talla] = (
+            df_csalud[col_peso_talla].astype(str).str.strip().str.replace(',', '.', regex=False)
+        )
+        df_csalud[col_peso_talla] = pd.to_numeric(df_csalud[col_peso_talla], errors='coerce')
+
 antes = df['CASEID'].nunique()
 df = df.merge(df_csalud, on=['HHID', 'V003'], how='inner')
 print(f"   CASEID: {antes:,} -> {df['CASEID'].nunique():,}")
