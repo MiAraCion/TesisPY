@@ -117,3 +117,34 @@ Archivo de salida: ./2025/endes_filtrada_ml_completa.csv
 PROCESO COMPLETADO
 
 C:\Users\Remoto\Desktop\TesisPY>
+
+---
+
+## Notas para aclarar en la tesis
+
+### QS109 (diagnóstico de diabetes o azúcar alta)
+
+`QS109` refleja el diagnóstico **actual** de la entrevistada (al momento de la
+entrevista de ENDES), **no** si ya tenía diabetes al momento del embarazo o la
+pérdida gestacional que se está prediciendo con `target`.
+
+ENDES sí contempla en su diccionario variables para la fecha de diagnóstico
+(`QS110U` = unidad de tiempo, `QS110C` = cantidad de años/meses desde el
+diagnóstico), pero **están completamente vacías en los 4 años de datos
+disponibles (2022-2025)** — la pregunta existe en el cuestionario/esquema
+pero no se recolectó en la práctica. Por lo tanto, no es posible determinar
+si el diagnóstico de diabetes precedió o no al evento gestacional evaluado.
+
+**Qué aclarar en la tesis:** que `QS109` se interpreta como un proxy del
+estado de salud metabólica de la entrevistada, no como un factor de riesgo
+confirmado temporalmente anterior a la pérdida gestacional. Mencionar esto
+como limitación del dataset (ENDES no registra fecha de diagnóstico de
+comorbilidades crónicas).
+
+Se revisaron también `QS26` (tiene seguro de salud) y `QS102` (diagnóstico de
+hipertensión) con la misma validación (cobertura, fuga de datos, diferencia
+entre clases del target). Ambas tuvieron cobertura excelente (~99.6%) y sin
+fuga, pero la diferencia entre la clase con pérdida y sin pérdida fue casi
+nula (`QS26`: 96.1% vs 96.0%; `QS102`: 4.1% vs 4.2%), por lo que **no se
+incluyeron** en el dataset final — a diferencia de `QS109`, que sí mostró una
+diferencia (aunque chica) en la dirección clínicamente esperada.

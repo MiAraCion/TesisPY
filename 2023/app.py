@@ -30,8 +30,15 @@ COLUMNAS_FINALES = [
     'V234', 'V222', 'V201',
     # --- Habitos de Salud: tabaco, alcohol, IMC (1640) ---
     'QS200', 'QS202', 'QS205C',
-    'QS206', 'QS208', 'QS210',
+    'QS206', 'QS208', 'QS209','QS210',
     'QS900', 'QS901',
+    # --- Comorbilidades autoreportadas (1640) ---
+    # OJO: QS109 refleja el diagnostico ACTUAL (al momento de la entrevista),
+    # no si la diabetes ya existia cuando ocurrio el embarazo/perdida que se
+    # esta prediciendo. ENDES no registra la fecha de diagnostico (QS110U/
+    # QS110C existen en el diccionario pero estan vacias en los 4 anios).
+    # Aclarar esta limitacion en la tesis (ver nota en README.md).
+    'QS109',
     # --- Habitos de Salud: numero de controles prenatales (1633) ---
     'M14',
     # --- Variable objetivo ---
@@ -219,7 +226,7 @@ ruta_csalud01 = BASE_DIR / "1640_cuestionario_del_hogar" / ARCHIVO_1640
 df_csalud = cargar_csv(ruta_csalud01)
 verificar_anio(df_csalud, ARCHIVO_1640)
 
-cols_habitos = ['QS200', 'QS202', 'QS205C', 'QS206', 'QS208', 'QS210', 'QS900', 'QS901']
+cols_habitos = ['QS200', 'QS202', 'QS205C', 'QS206', 'QS208', 'QS209', 'QS210', 'QS900', 'QS901', 'QS109']
 cols_habitos = [c for c in cols_habitos if c in df_csalud.columns]
 df_csalud = df_csalud[['HHID', 'QSNUMERO'] + cols_habitos]
 df_csalud = df_csalud.rename(columns={'QSNUMERO': 'V003'})

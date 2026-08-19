@@ -1,0 +1,9 @@
+﻿Posicion,Feature,Seleccionada,Ranking,Importancia,Importancia_acumulada_pct
+1,Glucose,True,1,0.26863590368995066,26.9
+2,BMI,True,1,0.19148352273797864,46.0
+3,Age,True,1,0.13683704508334096,59.7
+4,DiabetesPedigreeFunction,True,1,0.11129564575164885,70.8
+5,BloodPressure,False,3,0.08130028562538187,79.0
+6,Pregnancies,False,2,0.07827692644000062,86.8
+7,SkinThickness,False,4,0.06899633807697407,93.7
+8,Insulin,False,5,0.06317433259472428,100.0
