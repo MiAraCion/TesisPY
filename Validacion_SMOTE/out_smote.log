@@ -1,0 +1,62 @@
+Buscando archivo en: C:\Users\Remoto\Desktop\TesisPY\boruta\dataset_topN_importancia.csv
+
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+FASE 2: VALIDACION SMOTE-NC (CON vs. SIN)
+============================================================
+
+Train (sin tocar): 31,288 filas (28,550 clase 0 / 2,738 clase 1)
+Test (mismo para ambas condiciones): 7,822 filas (7,138 clase 0 / 684 clase 1)
+
+------------------------------------------------------------
+CONDICION A: SIN SMOTE-NC (train desbalanceado, ~91%/9%)
+------------------------------------------------------------
+
+------------------------------------------------------------
+CONDICION B: CON SMOTE-NC (train balanceado 50/50)
+------------------------------------------------------------
+Train balanceado: 57,100 filas (28,550 clase 0 / 28,550 clase 1)
+Tasa de sobremuestreo sintetico: 1:1 (se generaron 25,812 filas sinteticas de clase 1)
+
+============================================================
+COMPARACION DE METRICAS (mismo test, sin tocar en ambos casos)
+============================================================
+
+SIN SMOTE-NC
+   Accuracy: 0.9196
+   Balanced_Accuracy: 0.5402
+   Precision_clase1: 1.0000
+   Recall_clase1: 0.0804
+   F1_clase1: 0.1488
+   AUC_ROC: 0.6784
+   PR_AUC: 0.2440
+
+CON SMOTE-NC
+   Accuracy: 0.6080
+   Balanced_Accuracy: 0.6147
+   Precision_clase1: 0.1317
+   Recall_clase1: 0.6228
+   F1_clase1: 0.2175
+   AUC_ROC: 0.6570
+   PR_AUC: 0.2360
+
+------------------------------------------------------------
+EFECTO DE SMOTE-NC (CON - SIN)
+------------------------------------------------------------
+   Delta Accuracy: -0.3116
+   Delta Balanced_Accuracy: +0.0745
+   Delta Precision_clase1: -0.8683
+   Delta Recall_clase1: +0.5424
+   Delta F1_clase1: +0.0686
+   Delta AUC_ROC: -0.0214
+   Delta PR_AUC: -0.0080
+
+HE2 ('SMOTE-NC incrementa Recall y F1 frente a datos desbalanceados'): CONFIRMADA con este modelo y este dataset
+
+Tabla guardada en: C:\Users\Remoto\Desktop\TesisPY\Validacion_SMOTE\comparacion_con_sin_smote.csv
+Grafico guardado en: C:\Users\Remoto\Desktop\TesisPY\Validacion_SMOTE\grafico_con_sin_smote.png
+Curva Precision-Recall guardada en: C:\Users\Remoto\Desktop\TesisPY\Validacion_SMOTE\curva_precision_recall.png
+
+============================================================
+VALIDACION SMOTE-NC COMPLETADA
+============================================================

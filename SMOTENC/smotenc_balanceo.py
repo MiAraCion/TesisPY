@@ -57,8 +57,10 @@ RUTA_TRAIN_BALANCEADO = BASE_DIR / "SMOTENC" / "train_balanceado.csv"
 RUTA_TEST_ORIGINAL = BASE_DIR / "SMOTENC" / "test_original.csv"
 
 # Columnas categoricas del top 10 (ver justificacion arriba). El resto
-# (V040, V222, IMC, V012, M14, V201) se trata como continua/conteo.
-COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501']
+# (V040, V222, IMC, V012, V201) se trata como continua/conteo.
+# Actualizado tras el fix C3 (M14 fuera, nuevo top 10): se agrega QS206
+# (consumo de alcohol alguna vez, nominal binaria: 1=Si, 2=No).
+COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501', 'QS206']
 
 print(f"Buscando archivo en: {RUTA_ARCHIVO}")
 

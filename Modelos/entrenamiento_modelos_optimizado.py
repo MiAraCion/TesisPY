@@ -21,11 +21,11 @@
 #   - test (30%, proporcion real 91/9, SIN balancear): se usa SOLO al
 #     final, una vez, para reportar el resultado. Nunca participa en
 #     ninguna decision de ajuste.
-# El split train/test (70/30) es identico al de SMOTENC/smotenc_balanceo.py
+# El split train/test (80/20) es identico al de SMOTENC/smotenc_balanceo.py
 # (mismo random_state, mismo test_size, mismos datos de origen), asi que el
 # conjunto de test de este script coincide exactamente con
-# SMOTENC/test_original.csv. Lo que cambia es que el 70% de train se
-# subdivide ademas en train+validacion.
+# SMOTENC/test_original.csv. Lo que cambia es que el 80% de train se
+# subdivide ademas en train+validacion (65% train / 15% validacion).
 #
 # POR QUE BUSQUEDA "MANUAL" SOBRE VALIDACION EN VEZ DE GridSearchCV:
 # GridSearchCV/RandomizedSearchCV hacen validacion cruzada (K-fold) DENTRO
@@ -80,8 +80,8 @@ RUTA_ARCHIVO = BASE_DIR / "boruta" / "dataset_topN_importancia.csv"
 RUTA_GUARDAR = BASE_DIR / "Modelos" / "resultados_modelos_optimizado.csv"
 RUTA_GRAFICO = BASE_DIR / "Modelos" / "grafico_comparacion_optimizado.png"
 
-COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501']  # para SMOTENC
-COLUMNA_NOMINAL = ['V501']  # para one-hot en KNN/SVM
+COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501', 'QS206']  # para SMOTENC
+COLUMNA_NOMINAL = ['V501']  # para one-hot, ahora aplicado a los 5 modelos (fix C4)
 RANDOM_STATE = 2023
 LIMITE_SVM_BUSQUEDA = 8000  # submuestra solo para la busqueda de hiperparametros de SVM
 
@@ -98,7 +98,6 @@ X = df[feature_names].copy()
 y = df['target'].astype(int).copy()
 
 categorical_features = [feature_names.index(c) for c in COLUMNAS_CATEGORICAS if c in feature_names]
-columnas_escalar = [c for c in feature_names if c not in COLUMNA_NOMINAL]
 
 print(f"Dataset: {df.shape[0]:,} filas | Features: {feature_names}")
 
@@ -135,10 +134,45 @@ X_train_bal, y_train_bal = smotenc.fit_resample(X_train, y_train)
 print(f"\nTrain balanceado por SMOTENC: {X_train_bal.shape[0]:,} filas "
       f"({(y_train_bal == 0).sum():,} clase 0 / {(y_train_bal == 1).sum():,} clase 1)")
 
+# ==========================================
+# PASO 6: ONE-HOT ENCODING DE V501 (fix C4, aplicado a los 5 modelos)
+# ==========================================
+# V501 (estado civil) es nominal, sin orden real entre sus categorias. Antes
+# el One-Hot solo se aplicaba dentro del pipeline de KNN/SVM; los modelos de
+# arbol (Random Forest, Gradient Boosting, XGBoost) entrenaban directamente
+# sobre el codigo numerico 0-5. Aunque los arboles no comparan magnitudes
+# entre variables distintas, SI pueden generar cortes de umbral artificiales
+# dentro de una misma variable (ej. "V501 <= 2"), agrupando categorias sin
+# relacion semantica real entre si solo porque quedaron numeradas juntas. Se
+# aplica ahora de forma uniforme a los 5 modelos, antes de la busqueda de
+# hiperparametros, y no solo a los sensibles a distancia/margen.
+
+onehot_v501 = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+onehot_v501.fit(X_train_bal[COLUMNA_NOMINAL])
+nombres_dummies_v501 = onehot_v501.get_feature_names_out(COLUMNA_NOMINAL).tolist()
+
+
+def aplicar_onehot_v501(df_x):
+    dummies = pd.DataFrame(
+        onehot_v501.transform(df_x[COLUMNA_NOMINAL]),
+        columns=nombres_dummies_v501,
+        index=df_x.index,
+    )
+    return pd.concat([df_x.drop(columns=COLUMNA_NOMINAL), dummies], axis=1)
+
+
+X_train_bal = aplicar_onehot_v501(X_train_bal)
+X_val = aplicar_onehot_v501(X_val)
+X_test = aplicar_onehot_v501(X_test)
+
+columnas_escalar = [c for c in X_train_bal.columns if c not in nombres_dummies_v501]
+
+print(f"\nV501 codificado con One-Hot ({len(nombres_dummies_v501)} columnas): {nombres_dummies_v501}")
+print(f"Columnas a escalar (solo KNN/SVM; el resto de modelos usa la escala original): {columnas_escalar}")
+
 preprocesador = ColumnTransformer(transformers=[
     ('escalado', StandardScaler(), columnas_escalar),
-    ('onehot', OneHotEncoder(handle_unknown='ignore'), COLUMNA_NOMINAL),
-])
+], remainder='passthrough')
 
 # ==========================================
 # PASO 7: ESPACIOS DE BUSQUEDA DE HIPERPARAMETROS

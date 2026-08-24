@@ -41,6 +41,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import OneHotEncoder
 import shap
 
 RANDOM_STATE = 2023
@@ -61,12 +62,21 @@ RUTA_BEESWARM = BASE_DIR / "XAI_Global" / "shap_beeswarm.png"
 RUTA_BARRAS = BASE_DIR / "XAI_Global" / "shap_barras_importancia.png"
 
 # Clasificacion de cada variable del top 10 en su dimension teorica, segun
-# la matriz de consistencia y operacionalizacion del proyecto.
+# la matriz de consistencia y operacionalizacion del proyecto. Actualizado
+# tras el fix C3 (M14 fuera del top 10, entran V012 y V201; ver
+# boruta/resultados_boruta.csv). V501 se expande en columnas V501_x por el
+# One-Hot (fix C4): se clasifican todas bajo el mismo prefijo.
 DIMENSION_VARIABLE = {
     'V012': 'Sociodemografico', 'V106': 'Sociodemografico', 'V025': 'Sociodemografico',
-    'V190': 'Sociodemografico', 'V040': 'Sociodemografico', 'V501': 'Sociodemografico',
-    'IMC': 'Salud', 'M14': 'Salud', 'V201': 'Salud', 'V222': 'Salud',
+    'V190': 'Sociodemografico', 'V040': 'Sociodemografico',
+    'IMC': 'Salud', 'V201': 'Salud', 'V222': 'Salud', 'QS206': 'Salud',
 }
+
+
+def clasificar_dimension(nombre_feature):
+    if nombre_feature.startswith('V501'):
+        return 'Sociodemografico'
+    return DIMENSION_VARIABLE.get(nombre_feature, 'Sin clasificar')
 
 print(f"Buscando archivos en: {RUTA_TRAIN.parent}")
 
@@ -97,10 +107,32 @@ print(f"\nTrain (balanceado): {X_train.shape[0]:,} filas")
 print(f"Test (proporcion real, se explica sobre este): {X_test.shape[0]:,} filas")
 print(f"Features: {feature_names}")
 
+# One-Hot de V501 (fix C4), igual que en Modelos/entrenamiento_modelos_optimizado.py:
+# se explica el mismo Random Forest que realmente se entrena y evalua ahi,
+# no una version con el codigo numerico crudo de V501.
+onehot_v501 = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+onehot_v501.fit(X_train[['V501']])
+nombres_dummies_v501 = onehot_v501.get_feature_names_out(['V501']).tolist()
+
+
+def aplicar_onehot_v501(df_x):
+    dummies = pd.DataFrame(
+        onehot_v501.transform(df_x[['V501']]),
+        columns=nombres_dummies_v501,
+        index=df_x.index,
+    )
+    return pd.concat([df_x.drop(columns=['V501']), dummies], axis=1)
+
+
+X_train = aplicar_onehot_v501(X_train)
+X_test = aplicar_onehot_v501(X_test)
+feature_names = list(X_train.columns)
+print(f"V501 codificado con One-Hot ({len(nombres_dummies_v501)} columnas): {nombres_dummies_v501}")
+
 # Hiperparametros OPTIMOS encontrados en Modelos/entrenamiento_modelos_optimizado.py
-# (busqueda sobre el set de validacion), no los valores por defecto: se
-# explica el modelo realmente afinado, no una configuracion generica.
-modelo = RandomForestClassifier(n_estimators=100, max_depth=8, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1)
+# (busqueda sobre el set de validacion, tras el fix C3), no los valores por
+# defecto: se explica el modelo realmente afinado, no una configuracion generica.
+modelo = RandomForestClassifier(n_estimators=300, max_depth=5, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1)
 modelo.fit(X_train, y_train)
 print("\nModelo (Random Forest, hiperparametros optimos) entrenado sobre el train balanceado")
 
@@ -143,7 +175,7 @@ resultados_shap = pd.DataFrame({
     'Feature': feature_names,
     'Mean_Abs_SHAP': mean_abs_shap,
     'Direccion_Promedio': direccion_promedio,
-    'Dimension': [DIMENSION_VARIABLE.get(f, 'Sin clasificar') for f in feature_names],
+    'Dimension': [clasificar_dimension(f) for f in feature_names],
 })
 resultados_shap = resultados_shap.sort_values('Mean_Abs_SHAP', ascending=False).reset_index(drop=True)
 resultados_shap.insert(0, 'Posicion', range(1, len(resultados_shap) + 1))

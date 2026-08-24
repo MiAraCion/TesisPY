@@ -42,6 +42,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import OneHotEncoder
 import shap
 from lime.lime_tabular import LimeTabularExplainer
 
@@ -57,7 +58,7 @@ RUTA_TEST = BASE_DIR / "SMOTENC" / "test_original.csv"
 RUTA_SALIDA = BASE_DIR / "XAI_Local"
 RUTA_RESUMEN = RUTA_SALIDA / "resumen_casos_explicados.csv"
 
-COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501']
+COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'QS206']  # V501 se agrega tras el One-Hot (fix C4)
 
 print(f"Buscando archivos en: {RUTA_TRAIN.parent}")
 
@@ -82,9 +83,32 @@ y_train = df_train['target'].astype(int)
 X_test = df_test[feature_names].reset_index(drop=True)
 y_test = df_test['target'].astype(int).reset_index(drop=True)
 
-# Hiperparametros OPTIMOS (iguales a XAI_Global/shap_global.py), no los
-# valores por defecto.
-modelo = RandomForestClassifier(n_estimators=100, max_depth=8, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1)
+# One-Hot de V501 (fix C4), igual que en XAI_Global/shap_global.py y en
+# Modelos/entrenamiento_modelos_optimizado.py: se explica el mismo modelo
+# que realmente se entrena y evalua ahi.
+onehot_v501 = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+onehot_v501.fit(X_train[['V501']])
+nombres_dummies_v501 = onehot_v501.get_feature_names_out(['V501']).tolist()
+
+
+def aplicar_onehot_v501(df_x):
+    dummies = pd.DataFrame(
+        onehot_v501.transform(df_x[['V501']]),
+        columns=nombres_dummies_v501,
+        index=df_x.index,
+    )
+    return pd.concat([df_x.drop(columns=['V501']), dummies], axis=1)
+
+
+X_train = aplicar_onehot_v501(X_train)
+X_test = aplicar_onehot_v501(X_test)
+feature_names = list(X_train.columns)
+COLUMNAS_CATEGORICAS = COLUMNAS_CATEGORICAS + nombres_dummies_v501
+print(f"V501 codificado con One-Hot ({len(nombres_dummies_v501)} columnas): {nombres_dummies_v501}")
+
+# Hiperparametros OPTIMOS (iguales a XAI_Global/shap_global.py, tras el fix
+# C3), no los valores por defecto.
+modelo = RandomForestClassifier(n_estimators=300, max_depth=5, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1)
 modelo.fit(X_train, y_train)
 print(f"\nModelo (Random Forest, hiperparametros optimos) entrenado sobre {X_train.shape[0]:,} filas balanceadas")
 

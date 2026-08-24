@@ -1,0 +1,156 @@
+Buscando archivos en: C:\Users\Remoto\Desktop\TesisPY\SMOTENC
+
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+FASE 5: EXPLICABILIDAD LOCAL (LIME + SHAP Waterfall)
+============================================================
+V501 codificado con One-Hot (6 columnas): ['V501_0', 'V501_1', 'V501_2', 'V501_3', 'V501_4', 'V501_5']
+
+Modelo (Random Forest, hiperparametros optimos) entrenado sobre 57,100 filas balanceadas
+
+------------------------------------------------------------
+SELECCIONANDO CASOS REPRESENTATIVOS
+------------------------------------------------------------
+
+Alto riesgo (verdadero positivo) (fila #6702):
+   Target real: 1.0 | Prediccion: 1.0 | Probabilidad: 0.8284
+   Valores: {'V201': np.float64(0.0), 'V222': np.float64(37.0), 'V040': np.float64(432.0), 'V012': np.float64(24.0), 'IMC': np.float64(25.84754086496212), 'V190': np.float64(3.0), 'V025': np.float64(1.0), 'V106': np.float64(3.0), 'QS206': np.float64(1.0), 'V501_0': np.float64(0.0), 'V501_1': np.float64(0.0), 'V501_2': np.float64(1.0), 'V501_3': np.float64(0.0), 'V501_4': np.float64(0.0), 'V501_5': np.float64(0.0)}
+
+Bajo riesgo (verdadero negativo) (fila #3246):
+   Target real: 0.0 | Prediccion: 0.0 | Probabilidad: 0.0304
+   Valores: {'V201': np.float64(4.0), 'V222': np.float64(262.0), 'V040': np.float64(3791.0), 'V012': np.float64(47.0), 'IMC': np.float64(28.069698103368133), 'V190': np.float64(1.0), 'V025': np.float64(2.0), 'V106': np.float64(1.0), 'QS206': np.float64(2.0), 'V501_0': np.float64(0.0), 'V501_1': np.float64(0.0), 'V501_2': np.float64(0.0), 'V501_3': np.float64(0.0), 'V501_4': np.float64(0.0), 'V501_5': np.float64(1.0)}
+
+Caso limite (probabilidad ~0.5) (fila #1010):
+   Target real: 0.0 | Prediccion: 1.0 | Probabilidad: 0.5000
+   Valores: {'V201': np.float64(1.0), 'V222': np.float64(89.0), 'V040': np.float64(98.0), 'V012': np.float64(24.0), 'IMC': np.float64(26.680541103017685), 'V190': np.float64(2.0), 'V025': np.float64(1.0), 'V106': np.float64(2.0), 'QS206': np.float64(1.0), 'V501_0': np.float64(0.0), 'V501_1': np.float64(0.0), 'V501_2': np.float64(0.0), 'V501_3': np.float64(0.0), 'V501_4': np.float64(0.0), 'V501_5': np.float64(1.0)}
+
+============================================================
+EXPLICABILIDAD LOCAL: LIME
+============================================================
+
+--- Alto riesgo (verdadero positivo) ---
+Contribuciones LIME (variable: peso hacia el riesgo):
+   QS206=1: +0.2853
+   V025=1: +0.1641
+   V501_2=1: +0.0879
+   V501_0=0: +0.0591
+   V201 <= 1.00: +0.0570
+   V106=3: +0.0294
+   V501_1=0: +0.0199
+   V501_4=0: +0.0158
+   V501_5=0: +0.0146
+   V012 <= 27.00: +0.0056
+   34.00 < V222 <= 54.00: -0.0055
+   24.94 < IMC <= 27.75: +0.0051
+   V190=3: +0.0028
+   V501_3=0: -0.0021
+   419.00 < V040 <= 2596.00: +0.0001
+   Grafico guardado: lime_alto_riesgo.png
+
+--- Bajo riesgo (verdadero negativo) ---
+Contribuciones LIME (variable: peso hacia el riesgo):
+   QS206=2: -0.2777
+   V025=2: -0.1598
+   V106=1: -0.1331
+   V501_2=0: -0.0894
+   V501_0=0: +0.0548
+   V201 > 3.00: -0.0481
+   V222 > 54.00: -0.0395
+   V501_3=0: -0.0193
+   V012 > 37.00: -0.0180
+   V190=1: -0.0163
+   V040 > 2596.00: -0.0145
+   V501_5=1: -0.0119
+   V501_1=0: +0.0115
+   27.75 < IMC <= 30.86: +0.0078
+   V501_4=0: +0.0020
+   Grafico guardado: lime_bajo_riesgo.png
+
+--- Caso limite (probabilidad ~0.5) ---
+Contribuciones LIME (variable: peso hacia el riesgo):
+   QS206=1: +0.2891
+   V025=1: +0.1663
+   V501_2=0: -0.0924
+   V501_0=0: +0.0629
+   V201 <= 1.00: +0.0523
+   V222 > 54.00: -0.0357
+   V501_3=0: +0.0328
+   V106=2: +0.0317
+   V501_5=1: -0.0167
+   V040 <= 123.00: +0.0114
+   V501_1=0: +0.0092
+   V501_4=0: -0.0065
+   V012 <= 27.00: +0.0036
+   V190=2: +0.0024
+   24.94 < IMC <= 27.75: +0.0019
+   Grafico guardado: lime_caso_limite.png
+
+============================================================
+EXPLICABILIDAD LOCAL: SHAP WATERFALL
+============================================================
+
+--- Alto riesgo (verdadero positivo) ---
+   Valor base (promedio del modelo): 0.5000
+   Probabilidad final predicha: 0.8284
+   V201: +0.2096
+   V222: +0.0155
+   V040: +0.0029
+   V012: +0.0049
+   IMC: +0.0026
+   V190: +0.0095
+   V025: +0.0336
+   V106: +0.0184
+   QS206: +0.0101
+   V501_0: +0.0013
+   V501_1: +0.0017
+   V501_2: +0.0165
+   V501_3: +0.0000
+   V501_4: +0.0000
+   V501_5: +0.0018
+   Grafico guardado: shap_waterfall_alto_riesgo.png
+
+--- Bajo riesgo (verdadero negativo) ---
+   Valor base (promedio del modelo): 0.5000
+   Probabilidad final predicha: 0.0304
+   V201: -0.0320
+   V222: -0.0230
+   V040: -0.0170
+   V012: -0.0562
+   IMC: +0.0015
+   V190: -0.0163
+   V025: -0.0751
+   V106: -0.0777
+   QS206: -0.1350
+   V501_0: +0.0012
+   V501_1: +0.0004
+   V501_2: -0.0303
+   V501_3: -0.0000
+   V501_4: -0.0000
+   V501_5: -0.0100
+   Grafico guardado: shap_waterfall_bajo_riesgo.png
+
+--- Caso limite (probabilidad ~0.5) ---
+   Valor base (promedio del modelo): 0.5000
+   Probabilidad final predicha: 0.5000
+   V201: +0.0023
+   V222: -0.0271
+   V040: +0.0112
+   V012: +0.0066
+   IMC: +0.0032
+   V190: +0.0070
+   V025: +0.0400
+   V106: +0.0131
+   QS206: +0.0121
+   V501_0: +0.0032
+   V501_1: +0.0008
+   V501_2: -0.0615
+   V501_3: +0.0000
+   V501_4: +0.0000
+   V501_5: -0.0109
+   Grafico guardado: shap_waterfall_caso_limite.png
+
+Resumen de todas las contribuciones guardado en: C:\Users\Remoto\Desktop\TesisPY\XAI_Local\resumen_casos_explicados.csv
+
+============================================================
+EXPLICABILIDAD LOCAL (LIME + SHAP WATERFALL) COMPLETADA
+============================================================

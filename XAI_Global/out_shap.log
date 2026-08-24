@@ -1,0 +1,63 @@
+Buscando archivos en: C:\Users\Remoto\Desktop\TesisPY\SMOTENC
+
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+FASE 4: EXPLICABILIDAD GLOBAL (TreeSHAP)
+============================================================
+
+Train (balanceado): 57,100 filas
+Test (proporcion real, se explica sobre este): 7,822 filas
+Features: ['V201', 'V222', 'V040', 'V012', 'IMC', 'V190', 'V025', 'V106', 'V501', 'QS206']
+V501 codificado con One-Hot (6 columnas): ['V501_0', 'V501_1', 'V501_2', 'V501_3', 'V501_4', 'V501_5']
+
+Modelo (Random Forest, hiperparametros optimos) entrenado sobre el train balanceado
+
+------------------------------------------------------------
+CALCULANDO VALORES SHAP (TreeExplainer)
+------------------------------------------------------------
+Se detecto salida por clase (binaria); se usa la clase 1 (perdida gestacional)
+Valores SHAP calculados: 7,822 filas x 15 features
+
+Ranking de importancia global (mean|SHAP|):
+ Posicion Feature  Mean_Abs_SHAP  Direccion_Promedio        Dimension  Importancia_pct
+        1    V025       0.066236       -1.512398e-02 Sociodemografico             24.6
+        2  V501_2       0.042422       -7.779256e-03 Sociodemografico             15.7
+        3    V106       0.037285       -9.491155e-03 Sociodemografico             13.8
+        4   QS206       0.033129       -1.023846e-02            Salud             12.3
+        5    V201       0.019345       -1.095592e-02            Salud              7.2
+        6    V222       0.018379       -3.317894e-03            Salud              6.8
+        7    V190       0.013422       -2.804812e-03 Sociodemografico              5.0
+        8    V012       0.011762       -2.635196e-03 Sociodemografico              4.4
+        9    V040       0.009019       -2.122245e-03 Sociodemografico              3.3
+       10     IMC       0.005911       -8.266236e-04            Salud              2.2
+       11  V501_0       0.005392       -1.071719e-03 Sociodemografico              2.0
+       12  V501_5       0.004423       -4.737780e-04 Sociodemografico              1.6
+       13  V501_1       0.002958       -3.169218e-04 Sociodemografico              1.1
+       14  V501_4       0.000031        1.190403e-07 Sociodemografico              0.0
+       15  V501_3       0.000019       -7.461106e-06 Sociodemografico              0.0
+
+Tabla guardada en: C:\Users\Remoto\Desktop\TesisPY\XAI_Global\shap_importancia_global.csv
+
+------------------------------------------------------------
+JERARQUIA POR DIMENSION: SALUD vs. SOCIODEMOGRAFICO
+------------------------------------------------------------
+   Sociodemografico: 71.5% de la contribucion total (SHAP)
+   Salud: 28.5% de la contribucion total (SHAP)
+
+Tabla guardada en: C:\Users\Remoto\Desktop\TesisPY\XAI_Global\shap_dimension_salud_vs_sociodemografico.csv
+
+------------------------------------------------------------
+GENERANDO GRAFICOS
+------------------------------------------------------------
+Beeswarm guardado en: C:\Users\Remoto\Desktop\TesisPY\XAI_Global\shap_beeswarm.png
+Grafico de barras guardado en: C:\Users\Remoto\Desktop\TesisPY\XAI_Global\shap_barras_importancia.png
+
+============================================================
+RESUMEN FINAL
+============================================================
+
+Variable con mayor impacto global: V025 (24.6% de la contribucion total)
+Dimension dominante: Sociodemografico (71.5%)
+
+EXPLICABILIDAD GLOBAL (SHAP) COMPLETADA
+============================================================

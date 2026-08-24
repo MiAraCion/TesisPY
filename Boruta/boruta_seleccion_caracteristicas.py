@@ -160,8 +160,10 @@ VARIABLES_MODELO = [
     # ENDES no registra fecha de diagnostico. Ver nota en README.md.
     'QS109',  # Le diagnosticaron diabetes o azucar alta
 
-    # --- Salud: controles prenatales ---
-    'M14',    # Numero de controles prenatales del ultimo embarazo
+    # M14 (controles prenatales) SE RETIRO (fix C3): el modulo M de ENDES solo
+    # cubre nacidos vivos (MIDX=1 = parto vivo mas reciente), no el embarazo que
+    # termino en perdida, asi que no puede vincularse de forma confiable al
+    # evento que se esta modelando. Ademas ya no viene en endes_2022_2025.csv.
 
     # --- Variable objetivo ---
     'target',

@@ -61,7 +61,7 @@ RUTA_GUARDAR = BASE_DIR / "Validacion_SMOTE" / "comparacion_con_sin_smote.csv"
 RUTA_GRAFICO = BASE_DIR / "Validacion_SMOTE" / "grafico_con_sin_smote.png"
 RUTA_GRAFICO_PR = BASE_DIR / "Validacion_SMOTE" / "curva_precision_recall.png"
 
-COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501']
+COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501', 'QS206']
 
 print(f"Buscando archivo en: {RUTA_ARCHIVO}")
 

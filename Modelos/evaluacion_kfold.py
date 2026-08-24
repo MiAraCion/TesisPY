@@ -70,8 +70,8 @@ RUTA_GUARDAR_MATRICES = BASE_DIR / "Modelos" / "matrices_confusion.csv"
 RUTA_GRAFICO_KFOLD = BASE_DIR / "Modelos" / "grafico_kfold.png"
 RUTA_GRAFICO_MATRIZ = BASE_DIR / "Modelos" / "matriz_confusion_mejor_modelo.png"
 
-COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501']
-COLUMNA_NOMINAL = ['V501']
+COLUMNAS_CATEGORICAS = ['V190', 'V025', 'V106', 'V501', 'QS206']
+COLUMNA_NOMINAL = ['V501']  # one-hot aplicado a los 5 modelos (fix C4), dentro de cada fold
 
 print(f"Buscando archivo en: {RUTA_ARCHIVO}")
 
@@ -90,28 +90,36 @@ X = df[feature_names].copy()
 y = df['target'].astype(int).copy()
 
 categorical_features = [feature_names.index(c) for c in COLUMNAS_CATEGORICAS if c in feature_names]
-columnas_escalar = [c for c in feature_names if c not in COLUMNA_NOMINAL]
 
 print(f"Dataset: {df.shape[0]:,} filas | Features: {feature_names}")
 
-preprocesador = ColumnTransformer(transformers=[
-    ('escalado', StandardScaler(), columnas_escalar),
-    ('onehot', OneHotEncoder(handle_unknown='ignore'), COLUMNA_NOMINAL),
-])
+
+def aplicar_onehot_v501(encoder, nombres_dummies, df_x):
+    dummies = pd.DataFrame(
+        encoder.transform(df_x[COLUMNA_NOMINAL]),
+        columns=nombres_dummies,
+        index=df_x.index,
+    )
+    return pd.concat([df_x.drop(columns=COLUMNA_NOMINAL), dummies], axis=1)
 
 
 # Hiperparametros: los OPTIMOS encontrados en
 # Modelos/entrenamiento_modelos_optimizado.py (busqueda sobre el set de
-# validacion), no los valores por defecto. Este k-fold valida que tan
+# validacion, tras el fix C3: sin M14, con V233=0 incluido, join left en
+# vez de inner), no los valores por defecto. Este k-fold valida que tan
 # estable es el desempeno del modelo YA AFINADO, no de una configuracion
-# generica.
-def construir_modelos():
+# generica. One-Hot de V501 (fix C4) aplicado a los 5 modelos por igual,
+# no solo a KNN/SVM (ver PASO 4).
+def construir_modelos(columnas_escalar):
+    preprocesador = ColumnTransformer(transformers=[
+        ('escalado', StandardScaler(), columnas_escalar),
+    ], remainder='passthrough')
     return {
-        'Random Forest': RandomForestClassifier(n_estimators=100, max_depth=8, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1),
-        'Gradient Boosting': GradientBoostingClassifier(n_estimators=200, max_depth=3, learning_rate=0.05, random_state=RANDOM_STATE),
+        'Random Forest': RandomForestClassifier(n_estimators=300, max_depth=5, min_samples_leaf=1, random_state=RANDOM_STATE, n_jobs=-1),
+        'Gradient Boosting': GradientBoostingClassifier(n_estimators=150, max_depth=2, learning_rate=0.05, random_state=RANDOM_STATE),
         'XGBoost': XGBClassifier(n_estimators=300, max_depth=3, learning_rate=0.05, eval_metric='logloss', random_state=RANDOM_STATE, n_jobs=-1),
-        'KNN': Pipeline(steps=[('preprocesar', preprocesador), ('modelo', KNeighborsClassifier(n_neighbors=15, weights='uniform'))]),
-        'SVM': Pipeline(steps=[('preprocesar', preprocesador), ('modelo', SVC(kernel='rbf', C=0.5, gamma='scale', probability=True, random_state=RANDOM_STATE))]),
+        'KNN': Pipeline(steps=[('preprocesar', preprocesador), ('modelo', KNeighborsClassifier(n_neighbors=11, weights='uniform'))]),
+        'SVM': Pipeline(steps=[('preprocesar', preprocesador), ('modelo', SVC(kernel='rbf', C=1, gamma='auto', probability=True, random_state=RANDOM_STATE))]),
     }
 
 
@@ -133,7 +141,17 @@ for fold_idx, (train_idx, test_idx) in enumerate(skf.split(X, y), start=1):
     smotenc = SMOTENC(categorical_features=categorical_features, sampling_strategy='auto', random_state=RANDOM_STATE)
     X_train_bal, y_train_bal = smotenc.fit_resample(X_train_fold, y_train_fold)
 
-    modelos = construir_modelos()
+    # One-Hot de V501 (fix C4), ajustado sobre el train balanceado de ESTE
+    # fold y aplicado tanto al train como al test del mismo fold.
+    onehot_v501 = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+    onehot_v501.fit(X_train_bal[COLUMNA_NOMINAL])
+    nombres_dummies_v501 = onehot_v501.get_feature_names_out(COLUMNA_NOMINAL).tolist()
+
+    X_train_bal = aplicar_onehot_v501(onehot_v501, nombres_dummies_v501, X_train_bal)
+    X_test_fold = aplicar_onehot_v501(onehot_v501, nombres_dummies_v501, X_test_fold)
+    columnas_escalar = [c for c in X_train_bal.columns if c not in nombres_dummies_v501]
+
+    modelos = construir_modelos(columnas_escalar)
     for nombre, modelo in modelos.items():
         modelo.fit(X_train_bal, y_train_bal)
         pred = modelo.predict(X_test_fold)

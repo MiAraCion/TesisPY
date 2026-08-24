@@ -39,8 +39,11 @@ COLUMNAS_FINALES = [
     # QS110C existen en el diccionario pero estan vacias en los 4 anios).
     # Aclarar esta limitacion en la tesis (ver nota en README.md).
     'QS109',
-    # --- Habitos de Salud: numero de controles prenatales (1633) ---
-    'M14',
+    # M14 (controles prenatales, modulo 1633) SE RETIRO de esta lista: por
+    # el diseno del modulo M de ENDES (solo cubre nacidos vivos, MIDX=1 es
+    # el parto vivo mas reciente, no el embarazo que termino en perdida),
+    # M14 no puede vincularse de forma confiable al embarazo que se esta
+    # modelando (ver fix C3 / seccion 4.6 de la tesis).
     # --- Variable objetivo ---
     'target',
 ]
@@ -161,7 +164,7 @@ print(f"   Excluidos: {excluidos_f4:,} | Quedan: {len(df):,}")
 # --- FILTRO 5: CREAR TARGET (VARIABLE OBJETIVO) ---
 print("\nFILTRO 5: Crear variable objetivo 'target'")
 condiciones = [
-    (df['V228'] == 1) & (df['V233'].isin([1, 2, 3, 4, 5])),  # Perdida < 6 meses
+    (df['V228'] == 1) & (df['V233'].isin([0, 1, 2, 3, 4, 5])),  # Perdida < 6 meses (V233=0 incluido: verificado con fecha real de perdida, no es codigo de dato faltante)
     (df['V228'] == 0),  # Sin perdida
 ]
 df['target'] = np.select(condiciones, [1, 0], default=np.nan)
@@ -207,6 +210,10 @@ print(f"   CASEID: {antes:,} -> {df['CASEID'].nunique():,}")
 # REC41 tiene una fila POR EMBARAZO (indice MIDX), no por mujer.
 # Nos quedamos con el embarazo mas reciente (MIDX == 1) para tener 1 fila por CASEID.
 print("\nModulo 1633 (REC41) - Numero de controles prenatales")
+print("   FIX C3: join cambiado de 'inner' a 'left' porque el modulo M solo cubre")
+print("   nacidos vivos: con inner, cualquier mujer cuyo unico evento reproductivo")
+print("   fue una perdida (sin ningun parto vivo) se caia de TODO el dataset, no")
+print("   solo de M14. M14 ya no se usa como variable (ver COLUMNAS_FINALES).")
 ruta_rec41 = BASE_DIR / "1633" / ARCHIVO_1633
 df_rec41 = cargar_csv(ruta_rec41)
 verificar_anio(df_rec41, ARCHIVO_1633)
@@ -214,7 +221,7 @@ df_rec41 = df_rec41[df_rec41['MIDX'] == 1][['CASEID', 'M14']]
 df_rec41 = df_rec41[df_rec41['CASEID'].isin(caseids_filtrados)]
 
 antes = df['CASEID'].nunique()
-df = df.merge(df_rec41, on='CASEID', how='inner')
+df = df.merge(df_rec41, on='CASEID', how='left')
 print(f"   CASEID: {antes:,} -> {df['CASEID'].nunique():,}")
 
 # --- 1640: Habitos de salud (tabaco, alcohol, IMC) ---

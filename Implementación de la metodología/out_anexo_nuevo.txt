@@ -1,0 +1,50 @@
+=== PARRAFOS ===
+1 | VALIDACIÓN DE INSTRUMENTOS DE INVESTIGACIÓN POR JUICIO DE EXPERTOS
+2 | Lima, ____ de ______________ de 2026
+3 | Ingeniero(a):
+4 | ____________________________________________
+5 | Presente. –
+6 | Asunto: Solicitud de validación de instrumento de investigación por juicio de expertos
+7 | De mi mayor consideración:
+8 | Es grato dirigirme a usted para expresarle mi cordial saludo y, a la vez, solicitar su valiosa colaboración como experto(a) en la validación del instrumento de recolección/registro de datos que se utilizará en el desarrollo de la investigación titulada:
+9 | “Modelamiento predictivo y explicable mediante Machine Learning para la estimación del riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años a partir de factores sociodemográficos y de salud (ENDES 2022-2025)”
+10 | El instrumento se encuentra alineado con la matriz de consistencia y la matriz de operacionalización, y contempla las etapas de selección de variables con Boruta, balanceo con SMOTE-NC, comparación de modelos predictivos, explicabilidad global mediante TreeSHAP y explicabilidad local mediante LIME/SHAP.
+11 | Su evaluación permitirá determinar si los indicadores y criterios de registro son adecuados para medir las variables y dimensiones planteadas en la investigación. Marque una opción de 1 a 4 para cada criterio y registre observaciones cuando considere necesario.
+12 | Para dicho fin, se adjunta el siguiente expediente de validación:
+13 | Carta de presentación | Ficha de datos del experto | Datos e instrucciones | Ficha de Validación
+14 | Observaciones | Dictamen | Constancia | Matriz de Consistencia
+15 | Matriz de Operacionalización de Variables
+17 | En la cual solicito consignar su valoración y firma.
+18 | Agradeciendo de antemano su gentil apoyo, quedo a la espera de sus valiosos aportes y observaciones.
+19 | Atentamente,
+21 | ____________________________________________
+22 | Michael Aragón Encarnación
+23 | 71025677
+29 | 1. Ficha de datos del experto
+31 | 2. DATOS GENERALES DE LA INVESTIGACIÓN
+33 | 3. INSTRUCCIONES PARA EL EXPERTO
+34 | Para cada indicador, valore los siguientes criterios utilizando una escala de 1 a 4. La puntuación debe reflejar su juicio profesional sobre el indicador tal como está formulado.
+41 | 4. FICHA DE VALIDACIÓN DEL INSTRUMENTO
+42 | Marque con una X la puntuación correspondiente y utilice la columna de observaciones para proponer modificaciones.
+44 | OBSERVACIONES GENERALES DEL EXPERTO
+45 | Fortalezas del instrumento:
+46 | ________________________________________________________________________________
+47 | ________________________________________________________________________________
+48 | Aspectos que deberían modificarse:
+49 | ________________________________________________________________________________
+50 | ________________________________________________________________________________
+51 | Indicadores que deberían incorporarse:
+52 | ________________________________________________________________________________
+53 | ________________________________________________________________________________
+54 | Recomendaciones metodológicas adicionales:
+55 | ________________________________________________________________________________
+56 | ________________________________________________________________________________
+58 | DICTAMEN DEL EXPERTO
+60 | Firma del experto: __________________________________________
+61 | DNI / identificación: ________________________________________
+62 | Fecha: ____ / ____ / ______
+64 | CONSTANCIA DE VALIDACIÓN
+65 | Declaro que he revisado el instrumento presentado y que las valoraciones consignadas corresponden a mi criterio profesional. Asimismo, he formulado las observaciones que considero pertinentes para mejorar la claridad, relevancia y pertinencia de los indicadores evaluados.
+67 | Firma y sello: ______________________________________________
+69 | ANEXO 1 – MATRIZ DE CONSISTENCIA
+72 | ANEXO 2 – MATRIZ DE OPERACIONALIZACIÓN DE VARIABLES
