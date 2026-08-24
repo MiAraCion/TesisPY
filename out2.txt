@@ -1,0 +1,52 @@
+1 | VALIDACIÓN DE INSTRUMENTOS DE INVESTIGACIÓN POR JUICIO DE EXPERTOS
+2 | Lima, ____ de ______________ de 2026
+3 | Ingeniero(a):
+4 | ____________________________________________
+5 | Presente. –
+6 | Asunto: Solicitud de validación de instrumento de investigación por juicio de expertos
+7 | De mi mayor consideración:
+8 | Es grato dirigirme a usted para expresarle mi cordial saludo y, a la vez, solicitar su valiosa colaboración como experto(a) en la validación del instrumento de recolección/registro de datos que se utilizará en el desarrollo de la investigación titula
+9 | “Modelamiento predictivo y explicable mediante Machine Learning para la estimación del riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años a partir de factores sociodemográficos y de salud (ENDES 2022-2025)”
+10 | Dada su formación académica y experiencia profesional, considero que su opinión constituye un aporte fundamental para garantizar la validez de contenido del instrumento adjunto, el cual será empleado para la operacionalización de variables y el proce
+11 | Para dicho fin, se adjunta el siguiente expediente de validación:
+12 | Carta de presentación.
+13 | Ficha de datos del experto.
+14 | Matriz de Confusión
+15 | Matriz de operacionalización de las variables.
+16 | Certificado de validez de contenido del instrumento (evaluación ítem por ítem).
+17 | Instrumento de validación de la metodología de desarrollo (escala de valoración general).
+19 | En la cual solicito consignar su valoración y firma.
+20 | Agradeciendo de antemano su gentil apoyo, quedo a la espera de sus valiosos aportes y observaciones.
+21 | Atentamente,
+24 | ____________________________________________
+25 | Karla Jange Zarate
+26 | 72690658
+29 | ____________________________________________
+30 | Michael Aragon Encarnacion
+31 | DNI
+32 | 1. Ficha de datos del experto
+33 | 2. Instrumentos objeto de Validación
+34 | A continuación, se presentan los dos instrumentos objeto de validación: (a) la matriz de operacionalización de las variables, que define cómo se registran y codifican las variables sociodemográficas y de salud a partir de la base de datos ENDES 2022-
+36 | Fuente de datos: Encuesta Demográfica y de Salud Familiar (ENDES), Instituto Nacional de Estadística e Informática (INEI), años 2022-2025.
+37 | La técnica de selección de variables (Boruta), el balanceo de clases (SMOTE-NC), los algoritmos de clasificación (Random Forest, Gradient Boosting, XGBoost, SVM, KNN) y las técnicas de explicabilidad (TreeSHAP, LIME) NO son instrumentos de investigac
+39 | Ver Anexo [1-2]
+42 | 3. Validación de instrumento
+43 | Evaluar cada indicador (ítem) del instrumento marcando en las columnas
+44 | Criterios: Calificar de 1 a 5 (1 = Muy Deficiente, 2 = Deficiente, 3 = Regular, 4 = Bueno, 5 = Excelente) o marcar Sí/No según formato institucional
+45 | Evaluación de Instrumento
+47 | 4. Validación de la Metodología de Desarrollo
+51 | [   ] Aplicable sin modificaciones
+52 | [   ] Aplicable con modificaciones menores
+53 | [   ] No aplicable
+55 | Observaciones / Recomendaciones:
+62 | Firma del Experto: ___________________________
+63 | Fecha: _____ / _____ / 2026
+64 | 5. Constancia de validación
+65 | Quien suscribe, en calidad de experto(a) validador(a), certifica haber revisado el instrumento de investigación y la metodología de desarrollo correspondiente al estudio antes mencionado, dejando constancia de ambos instrumentos reúnen las condicione
+66 | Lima, ____ de ______________ de 2026
+69 | ____________________________________________
+70 | Firma del experto validador
+71 | DNI:
+72 | N° de Colegiatura:
+81 | ANEXO 1 – MATRIZ DE CONSISTENCIA
+84 | ANEXO 2 – MATRIZ DE OPERACIONALIZACIÓN DE VARIABLES

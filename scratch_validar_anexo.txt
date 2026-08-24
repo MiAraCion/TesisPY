@@ -1,0 +1,129 @@
+[1] VALIDACIÓN DE INSTRUMENTOS DE INVESTIGACIÓN POR JUICIO DE EXPERTOS
+[2] Lima, ____ de ______________ de 2026
+[3] Ingeniero(a):
+[4] ____________________________________________
+[5] Presente. –
+[6] Asunto: Solicitud de validación de instrumento de investigación por juicio de expertos
+[7] De mi mayor consideración:
+[8] Es grato dirigirme a usted para expresarle mi cordial saludo y, a la vez, solicitar su valiosa colaboración como experto(a) en la validación del instrumento de recolección/registro de datos que se utilizará en el desarrollo de la investigación titulada:
+[9] “Modelamiento predictivo y explicable mediante Machine Learning para la estimación del riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años a partir de factores sociodemográficos y de salud (ENDES 2022-2025)”
+[10] Dada su formación académica y experiencia profesional, considero que su opinión constituye un aporte fundamental para garantizar la validez de contenido del instrumento adjunto, el cual será empleado para la operacionalización de variables y el procesamiento de la base de datos de la Encuesta Demográfica y de Salud Familiar (ENDES 2022-2025) mediante algoritmos de Machine Learning.
+[11] Para dicho fin, se adjunta el siguiente expediente de validación:
+[12] Carta de presentación.
+[13] Ficha de datos del experto.
+[14] Matriz de Confusión
+[15] Matriz de operacionalización de las variables (instrumento de recolección).
+[16] Certificado de validez de contenido del instrumento (evaluación ítem por ítem).
+[17] Instrumento de validación de la metodología de desarrollo (escala de valoración general).
+[19] En la cual solicito consignar su valoración y firma.
+[20] Agradeciendo de antemano su gentil apoyo, quedo a la espera de sus valiosos aportes y observaciones.
+[21] Atentamente,
+[24] ____________________________________________
+[25] Karla Jange Zarate
+[26] 72690658
+[29] ____________________________________________
+[30] Michael Aragon Encarnacion
+[31] DNI
+[32] 1. Ficha de datos del experto
+[33] 2. Instrumentos de objeto de Validación
+[34] A continuación, se presentan los dos instrumentos objeto de validación: (a) la matriz de operacionalización de las variables, que define cómo se registran y codifican las variables sociodemográficas y de salud a partir de la base de datos ENDES 2022-2025, con su dimensión, indicador, código de la variable fuente y escala de medición; y (b) la matriz de confusión, como instrumento de medición de la variable dependiente del estudio (la capacidad predictiva del modelo). Se solicita evaluar la pertinencia, relevancia y claridad de cada uno.
+[36] Fuente de datos: Encuesta Demográfica y de Salud Familiar (ENDES), Instituto Nacional de Estadística e Informática (INEI), años 2022-2025.
+[37] Ver Anexo [1-2]
+[38] 3. Validación de instrumento
+[39] Evaluar cada indicador (ítem) del instrumento marcando en las columnas
+[40] Criterios: Calificar de 1 a 5 (1 = Muy Deficiente, 2 = Deficiente, 3 = Regular, 4 = Bueno, 5 = Excelente) o marcar Sí/No según formato institucional
+[41] Evaluación de Instrumento
+[43] 4. Validación de la Metodología de Desarrollo
+[47] [   ] Aplicable sin modificaciones
+[48] [   ] Aplicable con modificaciones menores
+[49] [   ] No aplicable
+[51] Observaciones / Recomendaciones:
+[58] Firma del Experto: ___________________________
+[59] Fecha: _____ / _____ / 2026
+[60] 5. Constancia de validación
+[61] Quien suscribe, en calidad de experto(a) validador(a), certifica haber revisado el instrumento de investigación y la metodología de desarrollo correspondiente al estudio antes mencionado, dejando constancia de ambos instrumentos reúnen las condiciones metodológicas suficientes para ser aplicadas.
+[62] Lima, ____ de ______________ de 2026
+[65] ____________________________________________
+[66] Firma del experto validador
+[67] DNI:
+[68] N° de Colegiatura:
+[77] ANEXO 1 – MATRIZ DE CONSISTENCIA
+[80] ANEXO 2 – MATRIZ DE OPERACIONALIZACIÓN DE VARIABLES
+
+=== TABLA 0 (6 filas x 2 columnas) ===
+Apellidos y nombres | 
+Grado académico | 
+Especialidad | 
+Cargo / institución donde labora | 
+Años de experiencia profesional | 
+Correo electrónico | 
+
+=== TABLA 1 (6 filas x 6 columnas) ===
+Ítem / Indicador Metodológico | Dimensión Evaluada | Claridad (1-5) | Pertinencia (1-5) | Relevancia (1-5) | Observaciones
+Claridad y pertinencia de los indicadores de la dimensión sociodemográfica (edad, nivel educativo, área de residencia, índice de riqueza, altitud del conglomerado, estado civil). | Matriz de operacionalización — Factores sociodemográficos |  |  |  | 
+Claridad y pertinencia de los indicadores de la dimensión de hábitos de salud y antecedentes obstétricos (IMC, diagnóstico de diabetes, consumo de tabaco y alcohol, controles prenatales, paridad, uso de anticonceptivos, intervalo intergenésico). | Matriz de operacionalización — Hábitos de salud |  |  |  | 
+Adecuación de la operacionalización de la variable dependiente (pérdida gestacional involuntaria, derivada de las variables obstétricas V228 y V233). | Matriz de operacionalización — Variable dependiente |  |  |  | 
+Claridad y pertinencia de la estructura de la matriz de confusión (verdaderos/falsos positivos y negativos) como instrumento de medición del desempeño predictivo. | Matriz de confusión — Estructura del instrumento |  |  |  | 
+Adecuación de las métricas derivadas de la matriz de confusión (Sensibilidad/Recall, Precisión, F1-Score, AUC) como indicadores de la capacidad predictiva del modelo. | Matriz de confusión — Métricas derivadas |  |  |  | 
+
+=== TABLA 2 (7 filas x 6 columnas) ===
+Criterios de Evaluación Metodológica | Deficiente (1) | Regular (2) | Bueno (3) | Muy Bueno (4) | Excelente (5)
+Rigor Teórico: La fundamentación de Machine Learning y técnicas XAI está sustentada conceptual y matemáticamente. |  |  |  |  | 
+Consistencia Metodológica: Existe correspondencia biunívoca entre problemas, objetivos, hipótesis y las 5 fases del pipeline. |  |  |  |  | 
+Idoneidad de Datos: La base secundaria ENDES (INEI) y los filtros obstétricos aplicados son adecuados para el objetivo. |  |  |  |  | 
+Tratamiento Algorítmico: La secuencia metodológica (Boruta -> SMOTE-NC -> Benchmark  -> XAI) es reproducible y válida. |  |  |  |  | 
+Interpretabilidad: Las técnicas post-hoc (TreeSHAP / LIME) aportan explicabilidad clínica suficiente a los modelos de caja negra. |  |  |  |  | 
+Aplicabilidad: La propuesta genera valor para el soporte de decisiones en salud pública y prevención gestacional. |  |  |  |  | 
+
+=== TABLA 3 (5 filas x 4 columnas) ===
+Rango de Puntaje | Porcentaje | Nivel de Validez | Decisión del Experto
+25 – 30puntos | 81% - 100% | Validez Muy Alta / Excelente | Aplicable sin modificaciones
+19 – 24puntos | 61% - 80% | Validez Aceptable | Aplicable con modificaciones menores
+13 – 18puntos | 41% - 60% | Validez Regular | Requiere reformulación
+<= 12puntos | <= 40% | No Válido / Deficiente | No aplicable
+
+=== TABLA 4 (8 filas x 7 columnas) ===
+Problema (PE) | Objetivo (OE) | Hipótesis (HE) | Variable y Rol | Dimensión | Indicadores y Métricas ENDES | Metodología
+¿De qué manera el modelamiento predictivo y explicable mediante Machine Learning a partir de factores sociodemográficos y de salud permite estimar el riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años registradas en la ENDES 2022-2025? | Desarrollar y evaluar un modelo predictivo y explicable mediante Machine Learning basado en factores sociodemográficos y de salud para la estimación del riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años a partir de la ENDES 2022-2025. | El modelamiento predictivo y explicable mediante Machine Learning basado en factores sociodemográficos y de salud presenta una capacidad de discriminación estadísticamente significativa para estimar el riesgo de pérdida gestacional en mujeres peruanas de 15 a 49 años a partir de la ENDES 2022-2025. | V.I.: Modelamiento predictivo y XAI.
+
+V.D.: Estimación del riesgo de pérdida gestacional involuntaria. | Detalle de dimesiones | Ver detalle de indicadores | Metodología:
+• Tipo: Aplicada
+• Nivel: Predictivo / XAI
+• Enfoque: Cuantitativo
+PE1:¿De qué manera la técnica de selección de características Boruta optimiza el espacio dimensional identificando los factores sociodemográficos y de salud más relevantes de la ENDES? | OE1:Implementar y evaluar el algoritmo Boruta para la selección de características relevantes a partir del conjunto de variables sociodemográficas y de salud de la ENDES. | HE1:El algoritmo Boruta selecciona un subconjunto estadísticamente significativo de factores sociodemográficos y clínicos, reduciendo la dimensionalidad y eliminando el ruido sin pérdida de capacidad predictiva. | V.I. (E1): Preprocesamiento y selección (Boruta) | Optimización del espacio de características | • Variables confirmadas, tentativas y rechazadas
+• Z-Score vs. Shadow Features
+• Variables ENDES: V012, V106, V025, V190, V040, V501, QS900/901, QS109, QS200-210, M14, V201, V302/313, V222 | • Diseño: No experimental, observacional, transversal y retrospectivo
+• Línea: IA y Ciencia de Datos aplicada a la Salud
+PE2:¿Cómo influye la aplicación de sobremuestreo sintético mediante SMOTE-NC en el conjunto de entrenamiento en la reducción del sesgo de clase y la sensibilidad del modelo? | OE2:Evaluar el impacto del balanceo sintético mediante SMOTE-NC en el conjunto de entrenamiento para la mejora de la sensibilidad (Recall) y la mitigación del sesgo de clase. | HE2:El balanceo de clases mediante SMOTE-NC en el set de entrenamiento incrementa significativamente la sensibilidad (Recall) y el F1-Score frente al entrenamiento con clases desbalanceadas. | V.I. (E2): Balanceo sintético (SMOTE-NC) | Tratamiento del desbalance de clases | • Tasa de sobremuestreo (N:1)
+• Recall en clase minoritaria (Con vs. Sin SMOTE-NC)
+• F1-Score (Macro / Ponderado)
+• Curva PR-AUC | Población y Muestra:
+• Mujeres 15-49 años (ENDES 2022-2025)
+• Fuente secundaria: Base de datos INEI
+PE3:¿Qué algoritmo de Machine Learning (Random Forest, XGBoost, Gradient Boosting, SVM, KNN) presenta el mejor rendimiento predictivo en la estimación del riesgo gestacional? | OE3:
+Comparar el rendimiento predictivo de algoritmos basados en ensambles frente a modelos tradicionales mediante AUROC, F1-Score, Sensibilidad y Precisión para seleccionar el modelo óptimo. | HE3:
+Los algoritmos basados en ensambles (XGBoost, Random Forest, Gradient Boosting) superan de manera estadísticamente significativa en AUROC y F1-Score a los modelos tradicionales (SVM, KNN). | V.I. (E3): Algoritmos de Machine Learning | Eficiencia y rendimiento predictivo | • AUROC (Área bajo la curva ROC)
+• F1-Score (Macro / Ponderado)
+• Sensibilidad / Recall y Precisión
+• Matriz de Confusión y k-fold CV | 
+PE4:¿Cuál es la importancia global y el sentido de contribución de las variables sociodemográficas y de salud en las predicciones del modelo óptimo según TreeSHAP? | OE4:Determinar la importancia global y la dirección del impacto de las variables predictoras mediante la técnica TreeSHAP (Beeswarm / Summary Plot) en el modelo óptimo. | HE4:Los valores TreeSHAP permiten jerarquizar con rigor matemático las variables sociodemográficas y de salud determinantes según su contribución promedio al riesgo gestacional. | V.I. (E4): Explicabilidad Global (TreeSHAP) | Interpretabilidad global | • Valores medios: mean(|SHAP value|)
+• Dispersión en SHAP Beeswarm plot
+• Jerarquía: Factores de salud vs. Sociodemográficos | 
+PE5:¿De qué manera las técnicas de explicabilidad local (LIME y SHAP Waterfall) permiten la atribución e interpretación del riesgo en instancias individuales específicas? | OE5:Analizar la atribución local del riesgo gestacional en perfiles individuales mediante explicaciones de caja negra con LIME y gráficos SHAP Waterfall. | HE5:Las técnicas LIME y SHAP Waterfall permiten descomponer y justificar con precisión las predicciones individuales del modelo para la interpretación de casos clínicos específicos. | V.I. (E5): Explicabilidad Local (LIME / SHAP) | Atribución individual del riesgo | • Coeficientes de atribución LIME
+• Valores aditivos SHAP Waterfall (phi_i)
+• Probabilidad estimada vs. base E[f(x)] | 
+ |  |  | V.D.: Estimación del Riesgo de Pérdida Gestacional | Desenlace / Estado Gestacional | • Target binario de pérdida temprana: (0 = No, 1 = Sí)
+• Variables ENDES de desenlace: V228 y V233 | 
+
+=== TABLA 5 (7 filas x 7 columnas) ===
+Variable y Rol | Dimensión | Definición Operacional | Indicador / Parámetro | Código ENDES / Métrica | Escala de Medición | Instrumento / Fuente
+VARIABLE INDEPENDIENTE
+
+Modelamiento Predictivo y Explicable mediante Machine Learning | Dimensión 1: Optimización del espacio de características (Boruta) | Reducción de dimensionalidad e identificación de variables sociodemográficas y clínicas mediante Boruta. | Relevancia por Boruta / Variables sociodemográficas y de salud | Z-Score vs. Shadow Features / V012, V106, V025, V190, V040, V501, QS900-901, QS109, QS200-210, M14, V201, V302-313, V222 | Continuo (Z-Score) / Razón / Ordinal / Nominal | Cuestionario Individual y de Salud ENDES (INEI) / Algoritmo Boruta (Python)
+ | Dimensión 2: Tratamiento del desbalance de clases (SMOTE-NC) | Mitigación del sesgo de clase mayoritaria mediante sobremuestreo sintético en el set de entrenamiento. | Sobremuestreo sintético SMOTE-NC / Ratio de balanceo | Tasa de sobremuestreo (N:1) / Proporción de clases (0:1) | Ratio numérico / Proporción porcentual | Pipeline Imbalanced-Learn
+ | Dimensión 3: Eficiencia y rendimiento predictivo (Modelos ML) | Evaluación del desempeño comparativo de los 5 algoritmos evaluados (RF, XGBoost, GB, SVM, KNN). | Capacidad de discriminación / Balance de clasificación / Sensibilidad / Precisión | AUROC / F1-Score (Macro y Ponderado) / Recall / Precision | Razón continua [0.0 - 1.0] | Pipeline Scikit-Learn / XGBoost
+ | Dimensión 4: Interpretabilidad global de características (TreeSHAP) | Jerarquización global y sentido de contribución de los predictores en el modelo óptimo. | Importancia global TreeSHAP / Sentido de impacto | mean|SHAP value| / Gráficos SHAP Summary y Beeswarm | Continuo real (R) / Sentido direccional (+/-) | Librería SHAP (Python)
+ | Dimensión 5: Atribución individual del riesgo (LIME / SHAP Local) | Justificación individual de predicciones en casos clínicos puntuales mediante métodos de caja negra. | Atribución local LIME / Descomposición aditiva SHAP | Coeficientes LIME / Valores locales phi_i en SHAP Waterfall | Continuo real (R) | Librerías LIME y SHAP (Python)
+VARIABLE DEPENDIENTE
+
+Estimación del Riesgo de Pérdida Gestacional | Desenlace / Estado Gestacional | Ocurrencia reportada de pérdida gestacional temprana involuntaria (meses 1 a 5). | Pérdida gestacional involuntaria temprana | Target Binario (derivado de V228 y V233) | Nominal Dicotómica (0 = Sin pérdida, 1 = Pérdida temprana) | Historial Obstétrico ENDES (INEI)

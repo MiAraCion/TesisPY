@@ -1,0 +1,380 @@
+---LINE 317 ROLE user ---
+ahora aplica el inner join con el caseID para obtener la relacion de los demas datos de las otras tablas
+
+segun esto:
+N° Encuesta	Variable	Descripción	Por qué la incluyo	Adicional
+—	CASEID	Identificación del cuestionario individual	Llave para unir todos los módulos por mujer	Llave, no es predictora
+1631	V012	Edad actual - entrevistada	Indicador Edad (Factores Sociodemográficos)	—
+1631	V106	Nivel educativo más alto aprobado	Indicador Nivel educativo (Factores Sociodemográficos)	—
+1631	V025	Tipo de lugar de residencia (urbano/rural)	Indicador Área de residencia (Factores Sociodemográficos)	—
+1631	V190	Índice de riqueza (quintil)	Indicador Índice de riqueza (Factores Sociodemográficos)	—
+1635	V501	Estado civil actual	Indicador Estado civil (Factores Sociodemográficos)	—
+1632	V302	Alguna vez usó un método anticonceptivo	Indicador Uso de anticonceptivos (Hábitos de Salud)	—
+1632	V313	Uso actual por tipo de método (ninguno/tradicional/moderno)	Indicador Uso de anticonceptivos (Hábitos de Salud)	—
+1640	QS200	Fumó cigarrillos en los últimos 12 meses	Indicador Consumo de tabaco (Hábitos de Salud)	—
+1640	QS202	Fuma diariamente	Indicador Consumo de tabaco — severidad	—
+1640	QS205C	Cantidad de cigarrillos que fuma al día	Indicador Consumo de tabaco — intensidad	—
+1640	QS206	Ha consumido alguna vez bebidas alcohólicas	Indicador Consumo de alcohol (Hábitos de Salud)	—
+1640	QS208	Consumió alcohol en los últimos 12 meses	Indicador Consumo de alcohol — recencia	—
+1640	QS210	Consumió alcohol e
+
+---LINE 539 ROLE assistant ---
+Sin errores tras quitar `V234`. Resultado final validado:
+
+**Confirmadas por Boruta (3 de 18):** `V190` (índice de riqueza), `V040` (altitud), `V222` (intervalo intergenésico)
+**Rechazadas (15):** el resto, incluyendo `IMC` que quedó cerca (rank 2) pero no confirmada
+
+Nota honesta: el `recall` de la clase 1 es bajo (~0.02-0.14) con Random Forest simple y sin balanceo de muestreo — normal dado el desbalance 91/9; eso ya es un tema para la etapa de entrenamiento del modelo final (SMOTE, ajuste de umbral, etc.), no de esta selección de variables.
+
+El script en `boruta/boruta_seleccion_caracteristicas.py` está listo para correr en Colab: sube `endes_2022_2025.csv` a tu Drive en la ruta indicada (`/content/drive/MyDrive/TesisPY/endes_2022_2025.csv`) y ejecútalo. Voy a también quitar `V234` de los `app.py` de cada año y de la tabla/documento Word para que todo quede consistente — ¿lo hago ahora?
+
+---LINE 623 ROLE assistant ---
+Corrió de punta a punta en **15 segundos** con `early_stopping` activado — mucho más rápido que un run completo de 50 iteraciones.
+
+## Resumen de lo que cambié
+
+| Qué | Antes | Ahora |
+|---|---|---|
+| Instalación | `get_ipython().system(...)` — falla fuera de Colab | Se quitó; instala una vez desde terminal (`py -m pip install boruta ...`) |
+| Origen de datos | `google.colab.drive` + ruta de Drive | `Path(__file__).resolve().parent.parent` — encuentra `endes_2022_2025.csv` en la raíz automáticamente, sin importar desde dónde ejecutes el script |
+| Salidas | Rutas de Drive | `boruta/resultados_boruta.csv` y `boruta/dataset_boruta_seleccionado.csv`, junto al script |
+| Velocidad | Siempre 50 iteraciones completas | `early_stopping=True`, corta si el veredicto de cada variable no cambia en 15 iteraciones seguidas |
+
+## Resultado de la corrida real
+
+**Confirmadas (3 de 18):** `V040` (altitud), `V222` (intervalo intergenésico), `IMC`
+**Rechazadas (15):** el resto — incluyendo `V012` (edad), `V501` (estado civil), `V302`/`V313` (uso de anticonceptivos), todas las de tabaco/alcohol, `M14` (controles prenatales)
+
+Se guardaron ambos archivos en `boruta/`. Un detalle honesto: `recall` de la clase 1 sigue bajo (0.02-0.06) — es esperable con un Random Forest simple sobre un target 91/9 sin técnicas de balanceo de muestreo (SMOTE, etc.), que es tema de la siguiente etapa (entrenamiento del modelo final), no de esta selección de variables.
+
+¿Quieres que actualicemos la tabla/documento Word
+
+---LINE 799 ROLE assistant ---
+Revisé si Boruta marcó alguna variable como "tentativa" (zona gris) — **no hay ninguna**: de las 20 no confirmadas, las 20 quedaron firmemente rechazadas (`Tentativa = False` en todas). O sea que no hay un punto de corte natural que el propio algoritmo te sugiera entre "las 3" y "las 23" — cualquier corte intermedio que elijas es una decisión tuya, no una que Boruta recomiende automáticamente.
+
+## Las 3 rutas reales, con su honestidad correspondiente
+
+| Opción | Variables | Respaldo |
+|---|---|---|
+| **A. Solo las confirmadas** | `V040`, `V222`, `IMC` (3) | Más riguroso estadísticamente, pero muy delgado para una tesis — desaprovecha tu marco teórico |
+| **B. "Top N" por ranking** | Por ejemplo, las primeras 8 por cercanía al corte: `V040`, `V222`, `IMC`, `V190`, `hemoglobina`, `V012`, `M14`, `V025` | Punto medio razonable — son las que más se acercaron a confirmarse, aunque el corte en 8 (y no en 6 o en 10) es una decisión tuya, no del algoritmo. Hay que decirlo así en la tesis: "se consideraron las variables con mejor ranking Boruta" |
+| **C. Las 23 completas** | Todas | Máximo respaldo teórico (tu matriz de consistencia), mínimo respaldo estadístico de Boruta — pero Boruta se usa como *evidencia complementaria*, no como filtro obligatorio |
+
+## Mi recomendación
+
+Para una tesis, iría con **C**: entrenas el modelo final con las 23, y usas los resultados de Boruta como una **sección de discusión/validación** ("de las 23 variables candidatas, Boruta confirmó estadísticamente 3
+
+---LINE 819 ROLE assistant ---
+Listo — el script ya ordena la tabla por puntaje real (`Importancia`, no por el `Ranking` de Boruta) de mayor a menor, agrega una columna `Posicion` (1-23) y `Importancia_acumulada_pct`, y el CSV se guarda en `boruta/resultados_boruta.csv` con ese orden.
+
+## Tabla completa (top 23, ordenada por importancia)
+
+| Pos | Variable | Importancia | Acumulado |
+|---|---|---|---|
+| 1 | `V040` (altitud) | 13.6% | 13.6% |
+| 2 | `V222` (intervalo intergenésico) | 12.7% | 26.3% |
+| 3 | `IMC` | 10.3% | 36.6% |
+| 4 | `hemoglobina` | 9.0% | 45.7% |
+| 5 | `V012` (edad) | 8.6% | 54.2% |
+| 6 | `V190` (índice de riqueza) | 7.2% | 61.5% |
+| 7 | `M14` (controles prenatales) | 6.1% | 67.5% |
+| 8 | `V025` (área de residencia) | 4.0% | 71.5% |
+| 9 | `V501` (estado civil) | 3.8% | 75.3% |
+| **10** | **`V201` (paridad)** | **3.6%** | **78.9%** |
+| 11 | V106 (nivel educativo) | 3.5% | 82.4% |
+| 12 | combustible_contaminante | 3.4% | 85.9% |
+| 13-23 | resto (uso anticonceptivos, tabaco, alcohol, calidad de atención) | 0.1%-2.5% c/u | hasta 100% |
+
+## La razón para quedarte con el top 10
+
+**Las primeras 10 variables concentran el 78.9% (~79%) de la importancia total del modelo**, muy cerca del umbral clásico de "80% de importancia acumulada" que se usa como criterio estándar de selección de variables (el mismo principio que se usa en PCA para elegir componentes). A partir de la posición 11 en adelante, cada variable adicional aporta cada vez menos: cada una de las últimas 11 variables (posiciones 13-23) co
+
+---LINE 846 ROLE assistant ---
+Listo. Se generaron los 3 archivos dentro de `boruta/`:
+
+| Archivo | Contenido |
+|---|---|
+| `resultados_boruta.csv` | Tabla completa de las 23 variables, ordenada de mayor a menor importancia, con `Importancia_acumulada_pct` |
+| `dataset_boruta_seleccionado.csv` | Solo las 3 confirmadas por Boruta (evidencia estadística pura) |
+| **`dataset_top12_importancia.csv`** | **29,450 filas × 13 columnas** — las 12 variables de mayor importancia + `target`, acumulando 85.9% de la señal total |
+
+Las 12 variables del dataset final:
+`V040` (altitud), `V222` (intervalo intergenésico), `IMC`, `hemoglobina`, `V012` (edad), `V190` (índice de riqueza), `M14` (controles prenatales), `V025` (área de residencia), `V501` (estado civil), `V201` (paridad), `V106` (nivel educativo), `combustible_contaminante`.
+
+Es una mezcla equilibrada de sociodemográficas (5), biomarcadores/salud (4) y atención obstétrica (1), consistente con el alcance ampliado de tu tesis. ¿Seguimos con la etapa de entrenamiento del modelo usando este dataset de 12 variables?
+
+---LINE 899 ROLE assistant ---
+Aquí está la tabla con las variables que estamos usando actualmente en `main` (la rama en la que estás ahora — sin los biomarcadores de RECH5, esos quedaron en `FirstTestBoruta`):
+
+| Variable | Código | Descripción |
+|---|---|---|
+| Identificador | `CASEID` | Identificación del cuestionario individual (llave para unir módulos, no es predictora) |
+| Edad | `V012` | Edad actual de la entrevistada |
+| Nivel educativo | `V106` | Nivel educativo más alto aprobado |
+| Área de residencia | `V025` | Tipo de lugar de residencia (urbano/rural) |
+| Índice de riqueza | `V190` | Índice de riqueza (quintil: más pobre a más rico) |
+| Altitud | `V040` | Altitud del conglomerado, en metros |
+| Estado civil | `V501` | Estado civil actual |
+| Uso de anticonceptivos (alguna vez) | `V302` | Alguna vez usó un método anticonceptivo |
+| Uso de anticonceptivos (actual) | `V313` | Uso actual por tipo de método (ninguno/tradicional/moderno) |
+| Antecedente de pérdida | `V234` | Ha tenido otras pérdidas o abortos, antes de la última ⚠️ |
+| Intervalo intergenésico | `V222` | Meses entre el último nacimiento y la fecha de la entrevista |
+| Paridad | `V201` | Total de hijos nacidos vivos |
+| Tabaco (últimos 12 meses) | `QS200` | Fumó cigarrillos en los últimos 12 meses |
+| Tabaco (diario) | `QS202` | Fuma diariamente |
+| Tabaco (cantidad) | `QS205C` | Cantidad de cigarrillos que fuma al día |
+| Alcohol (alguna vez) | `QS206` | Ha consumido alguna vez bebidas alcohólicas |
+| Alcohol (últimos 12 meses) | `QS
+
+---LINE 1101 ROLE assistant ---
+Listo. Resumen del resultado (con el dataset actualizado de `main`, que ya incluye `QS109` y `QS209`):
+
+**4 variables confirmadas por Boruta** (de 20 evaluadas, `V234` excluida a propósito por fuga de datos):
+- `V040` (altitud)
+- `V222` (intervalo intergenésico)
+- `IMC` (calculado de peso/talla)
+- `V190` (índice de riqueza) — **nueva** respecto a corridas anteriores
+
+**Top 10 por importancia acumulada (86.2%)**: las 4 confirmadas + `V012`, `M14`, `V025`, `V106`, `V501`, `V201` — es decir, prácticamente todo el bloque sociodemográfico entra en el top 10.
+
+Notablemente, **ninguna variable de hábitos (tabaco/alcohol/diabetes) quedó confirmada ni en el top 10** — todas cayeron por debajo del 90% acumulado.
+
+Archivos en `boruta/`:
+- `boruta_seleccion_caracteristicas.py` — el script, con comentarios paso a paso explicando qué hace Boruta y por qué
+- `resultados_boruta.csv` — tabla completa ordenada por importancia
+- `dataset_topN_importancia.csv` — top 10 + target, listo para entrenar
+- `grafico_importancia.png` — gráfico de barras
+
+¿Sigo con algo puntual sobre estos resultados, o quedamos aquí por ahora?
+
+---LINE 1144 ROLE assistant ---
+Te recomiendo usar el **dataset del top 10** que ya generamos (`boruta/dataset_topN_importancia.csv`) — es el punto medio que veníamos discutiendo: suficiente respaldo estadístico de Boruta (86.2% de la importancia acumulada) sin quedarte solo con las 4 confirmadas, que es muy poco para entrenar un modelo completo.
+
+## Las 10 variables, clasificadas por tipo (importante para SMOTE)
+
+| Variable | Tipo | ¿Por qué importa el tipo? |
+|---|---|---|
+| `V040` (altitud) | Continua | SMOTE puede interpolar libremente |
+| `V222` (intervalo intergenésico) | Continua/conteo | Interpola bien |
+| `IMC` | Continua | Interpola bien |
+| `V012` (edad) | Continua/conteo | Interpola bien |
+| `M14` (controles prenatales) | Conteo | Interpola bien |
+| `V201` (paridad) | Conteo | Interpola bien |
+| `V190` (índice de riqueza) | **Categórica ordinal** (1-5) | SMOTE puede generar valores como "3.7", que no existen en la realidad |
+| `V025` (área urbano/rural) | **Categórica binaria** | Mismo problema — un "1.5" entre urbano y rural no significa nada |
+| `V106` (nivel educativo) | **Categórica ordinal** | Mismo problema |
+| `V501` (estado civil) | **Categórica nominal** | Mismo problema, y peor: al no tener orden real, interpolar no tiene sentido conceptual |
+
+## Por qué esto importa para tu siguiente paso
+
+Como ya habíamos hablado cuando preguntaste si convenía aplicar SMOTE antes de Boruta: el SMOTE estándar **interpola entre vecinos**, y eso funciona bien para variables continuas pero genera valores
+
+---LINE 1202 ROLE assistant ---
+**Tabla 3: Variables de Determinantes de Salud**
+
+| Variable | Código | Definición conceptual |
+|---|---|---|
+| Edad | V012 | Años cumplidos por la entrevistada |
+| Nivel educativo | V106 | Nivel de instrucción más alto alcanzado por la entrevistada (sin educación, primaria, secundaria, superior) |
+| Área de residencia | V025 | Ámbito geográfico de residencia de la entrevistada, clasificado como urbano o rural |
+| Estado civil | V501 | Situación conyugal actual de la entrevistada (soltera, casada, conviviente, viuda, divorciada o separada) |
+| Índice de riqueza | V190 | Quintil de riqueza del hogar de la entrevistada, calculado por el INEI a partir de la posesión de bienes y las características de la vivienda (de 1 = más pobre a 5 = más rico) |
+
+Dejé las filas en blanco de tu tabla original sin usar — si esas son para variables adicionales (por ejemplo `V040`, altitud del conglomerado, que también forma parte de los factores sociodemográficos del modelo), dime y te completo esas filas también con la misma redacción.
+
+---LINE 1206 ROLE assistant ---
+**Top 10 de variables según Boruta** (ordenadas de mayor a menor importancia — 86.2% de la importancia acumulada total)
+
+| Variable | Código | Descripción | Factor Sociodemográfico / Factor de Salud |
+|---|---|---|---|
+| Altitud del conglomerado | V040 | Altitud en metros sobre el nivel del mar de la zona donde reside la entrevistada | Factor sociodemográfico |
+| Intervalo intergenésico | V222 | Meses transcurridos entre el último nacimiento y la fecha de la entrevista | Factor de salud (antecedente obstétrico) |
+| Índice de masa corporal | IMC | Calculado como peso (kg) / talla (m)², a partir de QS900 (peso) y QS901 (talla) | Factor de salud |
+| Edad | V012 | Años cumplidos por la entrevistada | Factor sociodemográfico |
+| Índice de riqueza | V190 | Quintil de riqueza del hogar (1 = más pobre a 5 = más rico) | Factor sociodemográfico |
+| Controles prenatales | M14 | Número de controles prenatales recibidos durante el último embarazo | Factor de salud |
+| Área de residencia | V025 | Ámbito de residencia de la entrevistada (urbano o rural) | Factor sociodemográfico |
+| Nivel educativo | V106 | Nivel de instrucción más alto alcanzado por la entrevistada | Factor sociodemográfico |
+| Estado civil | V501 | Situación conyugal actual de la entrevistada | Factor sociodemográfico |
+| Paridad | V201 | Total de hijos nacidos vivos de la entrevistada | Factor de salud (antecedente obstétrico) |
+
+De estas 10, solo 4 fueron **confirmadas estadísticamente** por el algoritmo Boruta (superar
+
+---LINE 1217 ROLE assistant ---
+**Tabla 3: Variables candidatas antes de la selección por Boruta** (las 20 predictoras evaluadas, según la matriz de consistencia)
+
+| Variable | Código | Descripción | Factor Sociodemográfico / Factor de Salud |
+|---|---|---|---|
+| Edad | V012 | Años cumplidos por la entrevistada | Factor sociodemográfico |
+| Nivel educativo | V106 | Nivel de instrucción más alto alcanzado por la entrevistada | Factor sociodemográfico |
+| Área de residencia | V025 | Ámbito de residencia de la entrevistada (urbano o rural) | Factor sociodemográfico |
+| Índice de riqueza | V190 | Quintil de riqueza del hogar (1 = más pobre a 5 = más rico) | Factor sociodemográfico |
+| Altitud del conglomerado | V040 | Altitud en metros sobre el nivel del mar de la zona donde reside la entrevistada | Factor sociodemográfico |
+| Estado civil | V501 | Situación conyugal actual de la entrevistada | Factor sociodemográfico |
+| Uso de anticonceptivos (alguna vez) | V302 | Si la entrevistada usó alguna vez algún método anticonceptivo | Factor de salud |
+| Uso actual de anticonceptivos | V313 | Tipo de método anticonceptivo que usa actualmente (ninguno/tradicional/moderno) | Factor de salud |
+| Intervalo intergenésico | V222 | Meses transcurridos entre el último nacimiento y la fecha de la entrevista | Factor de salud (antecedente obstétrico) |
+| Paridad | V201 | Total de hijos nacidos vivos de la entrevistada | Factor de salud (antecedente obstétrico) |
+| Tabaco (últimos 12 meses) | QS200 | Si fumó cigarrillos en los 
+
+---LINE 1223 ROLE assistant ---
+**Tabla 3a: Variables candidatas — Factores Sociodemográficos** (antes de Boruta)
+
+| Variable | Código | Descripción |
+|---|---|---|
+| Edad | V012 | Años cumplidos por la entrevistada |
+| Nivel educativo | V106 | Nivel de instrucción más alto alcanzado por la entrevistada |
+| Área de residencia | V025 | Ámbito de residencia de la entrevistada (urbano o rural) |
+| Índice de riqueza | V190 | Quintil de riqueza del hogar (1 = más pobre a 5 = más rico) |
+| Altitud del conglomerado | V040 | Altitud en metros sobre el nivel del mar de la zona donde reside la entrevistada |
+| Estado civil | V501 | Situación conyugal actual de la entrevistada |
+
+**Tabla 3b: Variables candidatas — Hábitos de Salud / Salud** (antes de Boruta)
+
+| Variable | Código | Descripción |
+|---|---|---|
+| Uso de anticonceptivos (alguna vez) | V302 | Si la entrevistada usó alguna vez algún método anticonceptivo |
+| Uso actual de anticonceptivos | V313 | Tipo de método anticonceptivo que usa actualmente (ninguno/tradicional/moderno) |
+| Intervalo intergenésico | V222 | Meses transcurridos entre el último nacimiento y la fecha de la entrevista |
+| Paridad | V201 | Total de hijos nacidos vivos de la entrevistada |
+| Tabaco (últimos 12 meses) | QS200 | Si fumó cigarrillos en los últimos 12 meses |
+| Tabaco (frecuencia diaria) | QS202 | Si fuma diariamente |
+| Tabaco (cantidad diaria) | QS205C | Cantidad de cigarrillos que fuma al día |
+| Alcohol (alguna vez) | QS206 | Si ha consumido alguna vez bebidas alcohólicas |
+|
+
+---LINE 1705 ROLE assistant ---
+El script de Boruta corrió con las 54 variables (20 originales + 34 nuevas). Resultado:
+
+## Cambios clave
+
+- **Solo 2 confirmadas estadísticamente por Boruta** (`V040`, `V222`) — bajó de las 4 anteriores (`V040`, `V222`, `IMC`, `V190`). Esto es un efecto esperado de Boruta, no un error: al agregar 34 candidatas más, la "barra" para confirmar sube (Boruta compara cada variable contra la *mejor* sombra aleatoria entre *todas* las candidatas, así que con más competencia es más difícil destacar).
+
+## Pero el ranking por importancia sí cambió bastante — nuevo top 10
+
+| Pos | Variable | Importancia acum. |
+|---|---|---|
+| 1 | V040 (altitud) | 7.5% |
+| 2 | V222 (intervalo intergenésico) | 14.3% |
+| 3 | V190 (riqueza) | 18.8% |
+| 4 | **HA40 (IMC medido)** | 22.9% |
+| 5 | IMC (autorreportado) | 27.0% |
+| 6 | **HA53 (hemoglobina medida)** | 31.1% |
+| 7 | V012 (edad) | 34.5% |
+| 8 | **QS903S (presión sistólica medida)** | 37.9% |
+| 9 | **V730 (edad del esposo)** | 41.1% |
+| 10 | **HA56 (hemoglobina ajustada por altitud)** | 44.3% |
+
+**4 de las 6 variables nuevas mejor rankeadas ya superan a variables que llevas usando desde el inicio** (`M14`, `V025`, `V106`, `V501`, `V201` quedaron todas por debajo del puesto 10) — el IMC medido directamente (`HA40`) incluso superó al IMC autorreportado (`QS900`/`QS901`), justo como se esperaba dado que es un dato medido por el personal de la encuesta, no recordado por la entrevistada.
+
+Las que peor rindieron: las variables de salud mental (`QS700A-I`)
+
+---LINE 1716 ROLE assistant ---
+Reviso los tipos del nuevo top 10: `V040, V222, V190, HA40, IMC, HA53, V012, QS903S, V730, HA56`. Aquí hay un dato importante — **de las 10, solo `V190` sigue siendo categórica** (ordinal, quintil de riqueza). Las otras 9 son todas continuas (altitud, meses, IMC, hemoglobina, edad, presión arterial). Actualizo ambos scripts para reflejar esto.
+
+---LINE 1791 ROLE assistant ---
+Se puede probar, pero hay una razón de fondo por la que Boruta existe en el pipeline — usar todo el dataset después de Boruta va un poco en contra del propósito de haberlo corrido.
+
+## El problema conceptual
+
+Boruta ya evaluó las 54 variables y solo confirmó 2 (`V040`, `V222`) como estadísticamente mejores que el ruido puro. El top 10 es un punto intermedio pragmático (variables con mayor importancia acumulada, aunque no todas pasen la prueba estadística). Si en vez de eso usas las 54 completas, estás ignorando por completo la evidencia que Boruta generó — sería como hacer todo el trabajo de selección de variables para después no usarlo.
+
+## Dos problemas técnicos específicos con SMOTENC/KNN/SVM
+
+1. **Maldición de la dimensionalidad:** SMOTENC (y KNN, y SVM con kernel RBF) dependen del concepto de "vecino más cercano" en el espacio de variables. Con pocas dimensiones (10) esa noción tiene sentido; con 54 dimensiones, las distancias entre puntos se vuelven cada vez más parecidas entre sí (efecto bien documentado: en alta dimensión, "cerca" y "lejos" pierden significado), así que los vecinos que SMOTENC elige para generar datos sintéticos son cada vez menos representativos.
+
+2. **Relación variables/datos:** tienes 2,636 casos reales de la clase minoritaria. Con 54 variables candidatas (muchas correlacionadas entre sí, ej. `HA53` y `HA56` son casi la misma hemoglobina con/sin ajuste de altitud), el riesgo de que el modelo memorice ruido en vez de aprender señal real sube bastant
+
+---LINE 2387 ROLE user ---
+Tabla 2: Variables Determinantes Sociodemográficos
+Variable	Código	Definición conceptual	Tipo / Escala 	Categorías/Rango
+Edad  	V012	Años cumplidos por la entrevistada		
+Nivel educativo	V106	Nivel de instrucción más alto alcanzado por la entrevistada		
+Área de residencia	V025	Ámbito de residencia de la entrevistada (urbano o rural)		
+Índice de riqueza	V190	Quintil de riqueza del hogar (1 = más pobre a 5 = más rico)		
+Altitud del conglomerado	V040	Altitud en metros sobre el nivel del mar de la zona donde reside la entrevistada		
+Estado civil	V501	Situación conyugal actual de la entrevistada		
+
+
+completa la tabla por favor, en tipo escala va si es numerica o cualitativa y en categorias rango si va de 1 a 6 o que categorias tiene, por fa
+
+---LINE 2391 ROLE assistant ---
+**Tabla 2: Variables Determinantes Sociodemográficos** (completada, alineada con tu Matriz de Operacionalización oficial)
+
+| Variable | Código | Definición conceptual | Tipo / Escala | Categorías/Rango |
+|---|---|---|---|---|
+| Edad | V012 | Años cumplidos por la entrevistada | Cuantitativa / Razón | 15 a 49 años (rango continuo) |
+| Nivel educativo | V106 | Nivel de instrucción más alto alcanzado por la entrevistada | Cualitativa / Ordinal | 0 = Sin educación, 1 = Primaria, 2 = Secundaria, 3 = Superior |
+| Área de residencia | V025 | Ámbito de residencia de la entrevistada (urbano o rural) | Cualitativa / Nominal (dicotómica) | 1 = Urbano, 2 = Rural |
+| Índice de riqueza | V190 | Quintil de riqueza del hogar (1 = más pobre a 5 = más rico) | Cualitativa / Ordinal | 1 = Más pobre, 2 = Pobre, 3 = Medio, 4 = Rico, 5 = Más rico |
+| Altitud del conglomerado | V040 | Altitud en metros sobre el nivel del mar de la zona donde reside la entrevistada | Cuantitativa / Razón | Aproximadamente 0 a 4,500 msnm (varía según costa, sierra o selva) |
+| Estado civil | V501 | Situación conyugal actual de la entrevistada | Cualitativa / Nominal | 0 = Nunca unida, 1 = Casada, 2 = Conviviente, 3 = Viuda, 4 = Divorciada, 5 = Separada |
+
+**Nota:** esta tabla es consistente con la hoja "Operacionalización Variables" de tu `Matriz_Consistencia_Operacionalizacion_ML_XAI.xlsx` — usé exactamente las mismas categorías/escalas que ya tienes aprobadas ahí, para que no haya inconsistencia entre documentos. La
+
+---LINE 2398 ROLE assistant ---
+Sí, exactamente — son las **6 variables sociodemográficas completas** de las 20 candidatas totales que se evaluaron antes de Boruta (`VARIABLES_MODELO` en `boruta_seleccion_caracteristicas.py`). No falta ninguna de esa dimensión.
+
+Las 20 candidatas se dividen así:
+
+**Sociodemográficas (6) — las de tu Tabla 2:**
+`V012` (edad), `V106` (educación), `V025` (área), `V190` (riqueza), `V040` (altitud), `V501` (estado civil)
+
+**Hábitos de salud / antecedentes (14) — las otras 14:**
+`V302`, `V313` (anticoncepción), `V222` (intervalo intergenésico), `V201` (paridad), `QS200`, `QS202`, `QS205C` (tabaco), `QS206`, `QS208`, `QS209`, `QS210` (alcohol), `QS900`, `QS901` (IMC), `QS109` (diabetes), `M14` (controles prenatales)
+
+Entonces tu Tabla 2 está completa para "sociodemográficos" — si quieres la tabla equivalente para las 14 de "hábitos de salud" (con Tipo/Escala y Categorías/Rango, mismo formato), dímelo y te la armo igual.
+
+---LINE 3206 ROLE user ---
+Claridad y pertinencia de los indicadores de la dimensión sociodemográfica (edad, nivel educativo, área de residencia, índice de riqueza, altitud del conglomerado, estado civil).
+Claridad y pertinencia de los indicadores de la dimensión de hábitos de salud y antecedentes obstétricos (IMC, diagnóstico de diabetes, consumo de tabaco y alcohol, controles prenatales, paridad, uso de anticonceptivos, intervalo intergenésico).
+Adecuación de la operacionalización de la variable dependiente (pérdida gestacional involuntaria, derivada de las variables obstétricas V228 y V233).
+Claridad y pertinencia de la estructura de la matriz de confusión (verdaderos/falsos positivos y negativos) como instrumento de medición del desempeño predictivo.
+Adecuación de las métricas derivadas de la matriz de confusión (Sensibilidad/Recall, Precisión, F1-Score, AUC) como indicadores de la capacidad predictiva del modelo.
+
+
+quiero entender esto, que es? como es que son las herramientas de investigacion?
+
+---LINE 3210 ROLE assistant ---
+Este listado que pegaste es el **"ítem por ítem"** de la ficha que le vas a entregar al experto para que la califique — no es un instrumento en sí mismo, sino la lista de cosas concretas que el experto va a puntuar (Claridad, Pertinencia, Relevancia, del 1 al 5) sobre tus **2 instrumentos reales**: la matriz de operacionalización de variables y la matriz de confusión.
+
+Te explico cada ítem y a cuál de los 2 instrumentos pertenece:
+
+## Ítems 1, 2 y 3 → evalúan la **Matriz de operacionalización de variables**
+
+| Ítem | Qué le pide al experto que juzgue |
+|---|---|
+| 1. Dimensión sociodemográfica (edad, educación, área, riqueza, altitud, estado civil) | ¿Estas 6 variables están bien definidas/codificadas como indicadores de "factores sociodemográficos"? ¿Son claras, pertinentes, relevantes para medir eso? |
+| 2. Dimensión de salud (IMC, diabetes, tabaco, alcohol, controles prenatales, paridad, anticonceptivos, intervalo intergenésico) | Lo mismo, pero para las 15 variables de "hábitos de salud y antecedentes obstétricos" |
+| 3. Variable dependiente (target, derivado de V228/V233) | ¿Está bien planteado cómo se construye la etiqueta "con pérdida / sin pérdida" a partir de esas dos preguntas de ENDES? |
+
+Estos 3 ítems, en el fondo, le preguntan al experto: *"¿el instrumento (la matriz de operacionalización) captura correctamente lo que dice medir?"* — eso es literalmente lo que significa "validez de contenido".
+
+## Ítems 4 y 5 → evalúan la **Matriz de confusión**
+
+| Ítem | Qué le 
+
+---LINE 3681 ROLE user ---
+en esta tabla:
+
+Ítem / Indicador Metodológico	Dimensión Evaluada	Claridad (1-5)	Pertinencia (1-5)	Relevancia (1-5)	Observaciones
+Claridad y pertinencia de los indicadores de la dimensión sociodemográfica (edad, nivel educativo, área de residencia, índice de riqueza, altitud del conglomerado, estado civil).	Matriz de operacionalización — Factores sociodemográficos				
+Claridad y pertinencia de los indicadores de la dimensión de hábitos de salud y antecedentes obstétricos (IMC, diagnóstico de diabetes, consumo de tabaco y alcohol, controles prenatales, paridad, uso de anticonceptivos, intervalo intergenésico).	Matriz de operacionalización — Hábitos de salud				
+Adecuación de la operacionalización de la variable dependiente (pérdida gestacional involuntaria, derivada de las variables obstétricas V228 y V233).	Matriz de operacionalización — Variable dependiente				
+Claridad y pertinencia de la estructura de la matriz de confusión (verdaderos/falsos positivos y negativos) como instrumento de medición del desempeño predictivo.	Matriz de confusión — Estructura del instrumento				
+
+dimension evaluada es dimensiones de la matriz de consistencia o trataste de hacer referencia al instrumento ?
+
+---LINE 3726 ROLE user ---
+consulta, tu me pasaste esto:
+3.2.1 Factores sociodemográficos
+Diversos estudios poblacionales confirman que la pérdida del embarazo puede estar condicionada por el contexto sociodemográfico de la madre [7, 10].  Como por las siguientes variables: 
+•	Edad materna: Mujeres mayores de 30 y 35 años reflejan un riesgo significativamente mayor en comparación con mujeres jóvenes [4, 10]. 
+•	Índice de riqueza (donde los valores menores indican mayor pobreza): El nivel socioeconómico bajo y la pobreza material lucen incrementar significativamente el riesgo de un aborto espontáneo o terminación de la gestación [8, 10]. 
+•	Estado civil: Estar casada o en una unión convivencial ha demostrado tener una fuerte asociación estadística con mayores tasas de terminación del embarazo y uso de métodos de planificación [7, 10, 12]. 
+•	Nivel educativo: Las mujeres con mayores niveles de educación a menudo presentan diferencias significativas en las tasas de interrupción del embarazo y mayor uso de anticonceptivos frente a aquellas sin educación [7, 10, 14]. 
+•	Lugar de residencia (urbano/rural): Las mujeres en áreas rurales o urbanas experimentan diferentes niveles de riesgo debido a disparidades en el acceso a servicios de salud y planificación familiar [10, 12].
+•	Altitud de Conglomerado: 
+
+Sabiendo sobre la influencia de estas variables, podemos tomarlas de referencia para el diseño de este trabajo. Ya que la pérdida gestacional puede analizarse no solo desde la biología, sino también bajo el a
+
