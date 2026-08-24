@@ -276,7 +276,7 @@ print(f"Target (y): {y.shape}")
 print(f"Nombres de features ({len(feature_names)}): {feature_names}")
 
 # ==========================================
-# PASO 9: DIVIDIR EN TRAIN Y TEST
+# PASO 9: DIVIDIR EN TRAIN Y TEST (80/20)
 # ==========================================
 # Boruta se ejecuta SOLO sobre el train set. Si se ejecutara sobre todo el
 # dataset, la validacion posterior (PASO 12) quedaria contaminada: las
@@ -284,9 +284,11 @@ print(f"Nombres de features ({len(feature_names)}): {feature_names}")
 # para medir que tan bien funciona esa eleccion. stratify=y mantiene la
 # misma proporcion de clase 0/1 en train y test que en el dataset completo
 # (importante porque el target esta desbalanceado, ~91% / 9%).
+# Particion 80/20, siguiendo el protocolo estandar para microdatos de
+# encuestas de salud (DHS) descrito en el marco teorico del proyecto.
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.30, random_state=2023, stratify=y
+    X, y, test_size=0.20, random_state=2023, stratify=y
 )
 
 print(f"\nTrain: {X_train.shape}")
@@ -387,6 +389,30 @@ resultados_boruta.insert(0, 'Posicion', range(1, len(resultados_boruta) + 1))
 resultados_boruta['Importancia_acumulada_pct'] = (
     resultados_boruta['Importancia'].cumsum() / resultados_boruta['Importancia'].sum() * 100
 ).round(1)
+
+# --- Z-Score de estabilidad (aproximacion al Z-Score de Boruta) ---
+# La implementacion original de Boruta (en R) calcula un Z-Score comparando
+# la importancia de cada variable real contra la mejor variable sombra en
+# cada iteracion. El paquete de Python (boruta_py) que se usa aqui NO
+# expone las importancias de las sombras (solo support_/ranking_/
+# importance_history_ de las variables reales), asi que no se puede
+# reproducir ese calculo exacto. Como aproximacion honesta y documentada,
+# se calcula un "Z-Score de estabilidad": que tan alta y consistente fue la
+# importancia de cada variable a lo largo de las iteraciones en las que
+# participo (media / desviacion estandar). Un valor alto indica que la
+# variable fue importante de forma sostenida, no por una fluctuacion
+# puntual de una sola iteracion.
+historial_importancia = boruta.importance_history_[1:]  # fila 0 = ceros (antes de iterar), se descarta
+z_scores_estabilidad = {}
+for i, feat in enumerate(feature_names):
+    valores = historial_importancia[:, i]
+    valores = valores[~np.isnan(valores)]  # NaN = la variable ya no participaba (Boruta decidio su destino antes)
+    if len(valores) > 1 and valores.std() > 0:
+        z_scores_estabilidad[feat] = valores.mean() / valores.std()
+    else:
+        z_scores_estabilidad[feat] = np.nan
+
+resultados_boruta['Z_Score_Estabilidad'] = resultados_boruta['Feature'].map(z_scores_estabilidad).round(2)
 
 print(f"\nResumen de Boruta:")
 print(f"   Total de features evaluadas: {len(feature_names)}")

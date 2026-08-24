@@ -106,15 +106,15 @@ print(f"\nColumnas categoricas ({len(categorical_features)}): {COLUMNAS_CATEGORI
 print(f"Columnas continuas/conteo ({len(columnas_continuas)}): {columnas_continuas}")
 
 # ==========================================
-# PASO 5: DIVIDIR EN TRAIN Y TEST (ANTES de balancear)
+# PASO 5: DIVIDIR EN TRAIN Y TEST (80/20, ANTES de balancear)
 # ==========================================
 # Mismos parametros que en boruta/boruta_seleccion_caracteristicas.py
-# (test_size=0.30, random_state=2023) para que el train/test sea
+# (test_size=0.20, random_state=2023) para que el train/test sea
 # consistente entre etapas del proyecto. stratify=y mantiene la proporcion
 # 91%/9% en ambos conjuntos.
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.30, random_state=2023, stratify=y
+    X, y, test_size=0.20, random_state=2023, stratify=y
 )
 
 print(f"\nTrain (antes de balancear): {X_train.shape}")

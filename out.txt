@@ -1,0 +1,42 @@
+max_col 23 max_row 46
+
+4 | Fase |  |  | 2026-07-07 00:00:00 -> 2026-07-30 00:00:00 | G= =F4-E4+1 H= =ROUND(G4/7,1) I= =IF(F4<TODAY(),"Completado",IF(E4<=TODAY(),"En progreso","Pendiente"))
+5 | Tarea | 1.1. Extracción de datos |  | None -> None | G= None H= None I= None
+6 | Subtarea | 1.1. Extracción de datos | 1.1.1. Descarga de la base de datos ENDES 2022-202 | 2026-07-07 00:00:00 -> 2026-07-08 00:00:00 | G= =F6-E6+1 H= =ROUND(G6/7,1) I= =IF(F6<TODAY(),"Completado",IF(E6<=TODAY(),"En progreso","Pendiente"))
+7 | Subtarea | 1.1. Extracción de datos | 1.1.2. Exploración inicial de la data | 2026-07-09 00:00:00 -> 2026-07-10 00:00:00 | G= =F7-E7+1 H= =ROUND(G7/7,1) I= =IF(F7<TODAY(),"Completado",IF(E7<=TODAY(),"En progreso","Pendiente"))
+8 | Tarea | 1.2. Depuración y filtrado |  | None -> None | G= None H= None I= None
+9 | Subtarea | 1.2. Depuración y filtrado | 1.2.1. Aplicación de criterios de inclusión y excl | 2026-07-11 00:00:00 -> 2026-07-15 00:00:00 | G= =F9-E9+1 H= =ROUND(G9/7,1) I= =IF(F9<TODAY(),"Completado",IF(E9<=TODAY(),"En progreso","Pendiente"))
+10 | Tarea | 1.3. Manejo de datos faltantes |  | None -> None | G= None H= None I= None
+11 | Subtarea | 1.3. Manejo de datos faltantes | 1.3.1. Identificación de valores atípicos y datos  | 2026-07-16 00:00:00 -> 2026-07-17 00:00:00 | G= =F11-E11+1 H= =ROUND(G11/7,1) I= =IF(F11<TODAY(),"Completado",IF(E11<=TODAY(),"En progreso","Pendiente"))
+12 | Subtarea | 1.3. Manejo de datos faltantes | 1.3.2. Tratamiento de datos inconsistentes | 2026-07-18 00:00:00 -> 2026-07-19 00:00:00 | G= =F12-E12+1 H= =ROUND(G12/7,1) I= =IF(F12<TODAY(),"Completado",IF(E12<=TODAY(),"En progreso","Pendiente"))
+13 | Tarea | 1.4. Selección de características |  | None -> None | G= None H= None I= None
+14 | Subtarea | 1.4. Selección de características | 1.4.1. Implementación del algoritmo Boruta | 2026-07-20 00:00:00 -> 2026-07-23 00:00:00 | G= =F14-E14+1 H= =ROUND(G14/7,1) I= =IF(F14<TODAY(),"Completado",IF(E14<=TODAY(),"En progreso","Pendiente"))
+15 | Subtarea | 1.4. Selección de características | 1.4.2. Identificación de variables con impacto rea | 2026-07-24 00:00:00 -> 2026-07-25 00:00:00 | G= =F15-E15+1 H= =ROUND(G15/7,1) I= =IF(F15<TODAY(),"Completado",IF(E15<=TODAY(),"En progreso","Pendiente"))
+16 | Tarea | 1.5. Balanceo de datos |  | None -> None | G= None H= None I= None
+17 | Subtarea | 1.5. Balanceo de datos | 1.5.1. Aplicación de SMOTE o Borderline-SMOTE | 2026-07-26 00:00:00 -> 2026-07-28 00:00:00 | G= =F17-E17+1 H= =ROUND(G17/7,1) I= =IF(F17<TODAY(),"Completado",IF(E17<=TODAY(),"En progreso","Pendiente"))
+18 | Subtarea | 1.5. Balanceo de datos | 1.5.2. Validación de la distribución balanceada | 2026-07-29 00:00:00 -> 2026-07-30 00:00:00 | G= =F18-E18+1 H= =ROUND(G18/7,1) I= =IF(F18<TODAY(),"Completado",IF(E18<=TODAY(),"En progreso","Pendiente"))
+19 | Fase |  |  | 2026-07-31 00:00:00 -> 2026-08-17 00:00:00 | G= =F19-E19+1 H= =ROUND(G19/7,1) I= =IF(F19<TODAY(),"Completado",IF(E19<=TODAY(),"En progreso","Pendiente"))
+20 | Tarea | 2.1. Entrenamiento de modelos tradicionales |  | None -> None | G= None H= None I= None
+21 | Subtarea | 2.1. Entrenamiento de modelos tradicionales | 2.1.1. Implementación de KNN | 2026-07-31 00:00:00 -> 2026-08-02 00:00:00 | G= =F21-E21+1 H= =ROUND(G21/7,1) I= =IF(F21<TODAY(),"Completado",IF(E21<=TODAY(),"En progreso","Pendiente"))
+22 | Subtarea | 2.1. Entrenamiento de modelos tradicionales | 2.1.2. Implementación de SVM | 2026-08-03 00:00:00 -> 2026-08-05 00:00:00 | G= =F22-E22+1 H= =ROUND(G22/7,1) I= =IF(F22<TODAY(),"Completado",IF(E22<=TODAY(),"En progreso","Pendiente"))
+23 | Tarea | 2.2. Entrenamiento de modelos de ensamblaje |  | None -> None | G= None H= None I= None
+24 | Subtarea | 2.2. Entrenamiento de modelos de ensamblaje | 2.2.1. Implementación de Random Forest | 2026-08-06 00:00:00 -> 2026-08-08 00:00:00 | G= =F24-E24+1 H= =ROUND(G24/7,1) I= =IF(F24<TODAY(),"Completado",IF(E24<=TODAY(),"En progreso","Pendiente"))
+25 | Subtarea | 2.2. Entrenamiento de modelos de ensamblaje | 2.2.2. Implementación de XGBoost | 2026-08-09 00:00:00 -> 2026-08-11 00:00:00 | G= =F25-E25+1 H= =ROUND(G25/7,1) I= =IF(F25<TODAY(),"Completado",IF(E25<=TODAY(),"En progreso","Pendiente"))
+26 | Subtarea | 2.2. Entrenamiento de modelos de ensamblaje | 2.2.3. Implementación de Gradient Boosting | 2026-08-12 00:00:00 -> 2026-08-14 00:00:00 | G= =F26-E26+1 H= =ROUND(G26/7,1) I= =IF(F26<TODAY(),"Completado",IF(E26<=TODAY(),"En progreso","Pendiente"))
+27 | Tarea | 2.3. Evaluación y comparación |  | None -> None | G= None H= None I= None
+28 | Subtarea | 2.3. Evaluación y comparación | 2.3.1. Cálculo de métricas (AUC, F1-Score, Sensibi | 2026-08-15 00:00:00 -> 2026-08-16 00:00:00 | G= =F28-E28+1 H= =ROUND(G28/7,1) I= =IF(F28<TODAY(),"Completado",IF(E28<=TODAY(),"En progreso","Pendiente"))
+29 | Subtarea | 2.3. Evaluación y comparación | 2.3.2. Matriz de confusión y análisis comparativo | 2026-08-17 00:00:00 -> 2026-08-17 00:00:00 | G= =F29-E29+1 H= =ROUND(G29/7,1) I= =IF(F29<TODAY(),"Completado",IF(E29<=TODAY(),"En progreso","Pendiente"))
+30 | Fase |  |  | 2026-08-18 00:00:00 -> 2026-08-23 00:00:00 | G= =F30-E30+1 H= =ROUND(G30/7,1) I= =IF(F30<TODAY(),"Completado",IF(E30<=TODAY(),"En progreso","Pendiente"))
+31 | Tarea | 3.1. Inteligencia Artificial Explicable |  | None -> None | G= None H= None I= None
+32 | Subtarea | 3.1. Inteligencia Artificial Explicable | 3.1.1. Implementación de SHAP | 2026-08-18 00:00:00 -> 2026-08-19 00:00:00 | G= =F32-E32+1 H= =ROUND(G32/7,1) I= =IF(F32<TODAY(),"Completado",IF(E32<=TODAY(),"En progreso","Pendiente"))
+33 | Subtarea | 3.1. Inteligencia Artificial Explicable | 3.1.2. Implementación de LIME | 2026-08-20 00:00:00 -> 2026-08-21 00:00:00 | G= =F33-E33+1 H= =ROUND(G33/7,1) I= =IF(F33<TODAY(),"Completado",IF(E33<=TODAY(),"En progreso","Pendiente"))
+34 | Tarea | 3.2. Análisis de resultados |  | None -> None | G= None H= None I= None
+35 | Subtarea | 3.2. Análisis de resultados | 3.2.1. Identificación de variables más influyentes | 2026-08-22 00:00:00 -> 2026-08-22 00:00:00 | G= =F35-E35+1 H= =ROUND(G35/7,1) I= =IF(F35<TODAY(),"Completado",IF(E35<=TODAY(),"En progreso","Pendiente"))
+36 | Subtarea | 3.2. Análisis de resultados | 3.2.2. Discusión de resultados | 2026-08-23 00:00:00 -> 2026-08-23 00:00:00 | G= =F36-E36+1 H= =ROUND(G36/7,1) I= =IF(F36<TODAY(),"Completado",IF(E36<=TODAY(),"En progreso","Pendiente"))
+37 | Fase |  |  | 2026-07-07 00:00:00 -> 2026-08-23 00:00:00 | G= =F37-E37+1 H= =ROUND(G37/7,1) I= =IF(F37<TODAY(),"Completado",IF(E37<=TODAY(),"En progreso","Pendiente"))
+38 | Tarea | 4.1. Redacción de metodología (paralelo a Fas |  | None -> None | G= None H= None I= None
+39 | Subtarea | 4.1. Redacción de metodología (paralelo a Fas | 4.1.1. Redacción de metodología (preparación de da | 2026-07-07 00:00:00 -> 2026-07-25 00:00:00 | G= =F39-E39+1 H= =ROUND(G39/7,1) I= =IF(F39<TODAY(),"Completado",IF(E39<=TODAY(),"En progreso","Pendiente"))
+40 | Tarea | 4.2. Redacción de resultados (paralelo a Fase |  | None -> None | G= None H= None I= None
+41 | Subtarea | 4.2. Redacción de resultados (paralelo a Fase | 4.2.1. Redacción de resultados | 2026-07-26 00:00:00 -> 2026-08-14 00:00:00 | G= =F41-E41+1 H= =ROUND(G41/7,1) I= =IF(F41<TODAY(),"Completado",IF(E41<=TODAY(),"En progreso","Pendiente"))
+42 | Tarea | 4.3. Redacción de discusión y conclusiones (p |  | None -> None | G= None H= None I= None
+43 | Subtarea | 4.3. Redacción de discusión y conclusiones (p | 4.3.1. Redacción de discusión y conclusiones preli | 2026-08-15 00:00:00 -> 2026-08-23 00:00:00 | G= =F43-E43+1 H= =ROUND(G43/7,1) I= =IF(F43<TODAY(),"Completado",IF(E43<=TODAY(),"En progreso","Pendiente"))

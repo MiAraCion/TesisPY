@@ -1,0 +1,61 @@
+﻿Caso,Metodo,Variable_condicion,Contribucion
+Alto riesgo (verdadero positivo),LIME,V025=1,0.22061947950372757
+Alto riesgo (verdadero positivo),LIME,V501=2,0.09940051577680702
+Alto riesgo (verdadero positivo),LIME,V201 <= 1.00,0.07775020558358106
+Alto riesgo (verdadero positivo),LIME,V222 <= 12.00,0.050338172761069354
+Alto riesgo (verdadero positivo),LIME,V106=3,0.038106771928234535
+Alto riesgo (verdadero positivo),LIME,24.80 < IMC <= 27.55,0.02534677056665427
+Alto riesgo (verdadero positivo),LIME,V190=5,0.01674913310478019
+Alto riesgo (verdadero positivo),LIME,M14 <= 7.00,0.0158915475535084
+Alto riesgo (verdadero positivo),LIME,V012 > 35.00,0.012718786004514971
+Alto riesgo (verdadero positivo),LIME,V040 <= 116.00,-0.0034201401710805645
+Bajo riesgo (verdadero negativo),LIME,V025=2,-0.21647041966919847
+Bajo riesgo (verdadero negativo),LIME,V106=1,-0.13002686161011615
+Bajo riesgo (verdadero negativo),LIME,V201 > 3.00,-0.12901007709558848
+Bajo riesgo (verdadero negativo),LIME,V501=2,0.09211768735259102
+Bajo riesgo (verdadero negativo),LIME,V222 > 40.00,-0.08160898661915333
+Bajo riesgo (verdadero negativo),LIME,IMC <= 24.80,-0.05081284821450728
+Bajo riesgo (verdadero negativo),LIME,V040 > 2561.75,-0.042885443451156344
+Bajo riesgo (verdadero negativo),LIME,7.00 < M14 <= 9.00,0.02307726081178973
+Bajo riesgo (verdadero negativo),LIME,V012 > 35.00,0.0069248085802755335
+Bajo riesgo (verdadero negativo),LIME,V190=1,-0.005764843504270731
+Caso limite (probabilidad ~0.5),LIME,V025=2,-0.21986287759224957
+Caso limite (probabilidad ~0.5),LIME,2.00 < V201 <= 3.00,-0.1013358783104505
+Caso limite (probabilidad ~0.5),LIME,V501=2,0.08691146508505523
+Caso limite (probabilidad ~0.5),LIME,12.00 < V222 <= 25.00,0.030967448478502184
+Caso limite (probabilidad ~0.5),LIME,407.00 < V040 <= 2561.75,0.021692900884037514
+Caso limite (probabilidad ~0.5),LIME,7.00 < M14 <= 9.00,0.018160342346875327
+Caso limite (probabilidad ~0.5),LIME,27.55 < IMC <= 30.63,0.015726781937947805
+Caso limite (probabilidad ~0.5),LIME,26.00 < V012 <= 30.00,0.015305810481471656
+Caso limite (probabilidad ~0.5),LIME,V106=2,0.011015666369338806
+Caso limite (probabilidad ~0.5),LIME,V190=1,-0.004720494711604986
+Alto riesgo (verdadero positivo),SHAP,V040,-0.001306667980732033
+Alto riesgo (verdadero positivo),SHAP,V222,0.03767958934382295
+Alto riesgo (verdadero positivo),SHAP,IMC,0.010741109091897821
+Alto riesgo (verdadero positivo),SHAP,V012,0.006281877108275121
+Alto riesgo (verdadero positivo),SHAP,V190,0.016580690621863785
+Alto riesgo (verdadero positivo),SHAP,M14,0.012953007271862549
+Alto riesgo (verdadero positivo),SHAP,V025,0.04892189579123375
+Alto riesgo (verdadero positivo),SHAP,V106,0.02117602470518075
+Alto riesgo (verdadero positivo),SHAP,V201,0.037742166976778124
+Alto riesgo (verdadero positivo),SHAP,V501,0.03013293607250524
+Bajo riesgo (verdadero negativo),SHAP,V040,-0.04997898632898882
+Bajo riesgo (verdadero negativo),SHAP,V222,-0.03454777092559534
+Bajo riesgo (verdadero negativo),SHAP,IMC,0.0031967664395124305
+Bajo riesgo (verdadero negativo),SHAP,V012,0.0074121159685894555
+Bajo riesgo (verdadero negativo),SHAP,V190,-0.023980364167968914
+Bajo riesgo (verdadero negativo),SHAP,M14,0.004639020428674626
+Bajo riesgo (verdadero negativo),SHAP,V025,-0.14067094460171614
+Bajo riesgo (verdadero negativo),SHAP,V106,-0.1324515708854235
+Bajo riesgo (verdadero negativo),SHAP,V201,-0.11625299237648602
+Bajo riesgo (verdadero negativo),SHAP,V501,0.013234624249236842
+Caso limite (probabilidad ~0.5),SHAP,V040,0.03175677314955287
+Caso limite (probabilidad ~0.5),SHAP,V222,0.04597287564078043
+Caso limite (probabilidad ~0.5),SHAP,IMC,0.015901450668437185
+Caso limite (probabilidad ~0.5),SHAP,V012,0.017101859668939783
+Caso limite (probabilidad ~0.5),SHAP,V190,-0.010888890599181468
+Caso limite (probabilidad ~0.5),SHAP,M14,0.011237432981033142
+Caso limite (probabilidad ~0.5),SHAP,V025,-0.11903088154336208
+Caso limite (probabilidad ~0.5),SHAP,V106,0.03282773766100265
+Caso limite (probabilidad ~0.5),SHAP,V201,-0.05543995223546157
+Caso limite (probabilidad ~0.5),SHAP,V501,0.030747139907189778
