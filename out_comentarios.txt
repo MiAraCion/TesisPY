@@ -1,0 +1,344 @@
+Total comentarios: 114
+
+--- Comentario ID 0 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:18:00Z ---
+Completar la caratula con los datos de la tesis.
+
+--- Comentario ID 1 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T20:38:00Z ---
+OK
+
+--- Comentario ID 2 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-11T22:09:00Z ---
+Se debe corregir el titulo del asesor y el mes del año.
+
+--- Comentario ID 3 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T01:28:00Z ---
+listo
+
+--- Comentario ID 6 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T23:12:00Z ---
+Siempre mantener actualizados los índices completos del documento
+
+--- Comentario ID 7 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T01:29:00Z ---
+ok
+
+--- Comentario ID 17 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:23:00Z ---
+Se debe colocar el color automático o negro del texto de la tesis para el contenido, luego de reemplazar la plantilla.
+
+--- Comentario ID 18 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T20:45:00Z ---
+OK
+
+--- Comentario ID 14 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T19:43:00Z ---
+Se debe completar esta sección revisar ejemplos de tesis compartidos.
+
+--- Comentario ID 15 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T01:27:00Z ---
+pendiente
+
+--- Comentario ID 16 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-18T22:27:00Z ---
+Pendiente.
+
+--- Comentario ID 25 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:08:00Z ---
+Se debe reemplazar expresiones como “interpretar clínicamente” dado que ENDES es una encuesta poblacional y el modelo no ha sido validado clínicamente. Es preferible “interpretación epidemiológica/predictiva” o “apoyo a la interpretación del riesgo”.
+
+--- Comentario ID 26 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T21:46:00Z ---
+ok listo
+
+--- Comentario ID 39 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:23:00Z ---
+Existe buena trazabilidad PE1→Boruta, PE2→SMOTE-NC, PE3→benchmark, PE4→SHAP global y PE5→XAI local. Sin embargo, PE2 habla de “reducción del sesgo de clase”; debe especificarse operacionalmente cómo se medirá ese sesgo, o limitarlo al impacto en Recall/F1/PR-AUC.
+
+--- Comentario ID 40 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T21:49:00Z ---
+propuesta colocada..
+
+--- Comentario ID 83 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:45:00Z ---
+Se debe listar en bullets o numeración.
+
+--- Comentario ID 84 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T21:47:00Z ---
+ok
+
+--- Comentario ID 85 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-13T20:18:00Z ---
+ok
+
+--- Comentario ID 110 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:47:00Z ---
+Se sugiere hacer doble check respecto a que cada hipótesis pueda comprobarse estadisticamente mediante las metricas propuetas en la matriz de consistencia y matriz de operacionalización. También debe existir una relación directa uno a uno con cada objetivo.
+
+--- Comentario ID 111 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T01:36:00Z ---
+falta la de directa uno a uno por objetivo
+
+--- Comentario ID 112 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:25:00Z ---
+Esto se corrigió o está pendiente?
+
+--- Comentario ID 113 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T21:50:00Z ---
+esta corregido
+
+--- Comentario ID 108 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T19:47:00Z ---
+Se debe corregir. Expresiones como “capacidad predictiva significativa” necesitan definir contra qué criterio se comprobará significancia. La Hipótesis especifica 5 es particularmente problemática porque anticipa que los hábitos tendrán mayor peso; SHAP/LIME deberían permitir descubrir qué variables predominan, no asumir previamente el resultado.
+
+--- Comentario ID 109 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T01:38:00Z ---
+corregido
+
+--- Comentario ID 120 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:25:00Z ---
+Se debe revisar cuándo usar el término significativo. “Capacidad de discriminación estadísticamente significativa” exige definir qué prueba estadística demostrará significancia, por ejemplo contraste AUROC > 0.5 con intervalo de confianza/bootstrap. Actualmente la metodología solo calcula métricas; eso no demuestra “significancia estadística”.
+
+--- Comentario ID 121 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-24T18:00:00Z ---
+aplicado
+
+--- Comentario ID 132 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:26:00Z ---
+Boruta identifica solo 4 variables confirmadas, pero posteriormente el desarrollo decide entrenar con las 10 de mayor importancia, incluyendo 6 que Boruta no confirmó. Esto rompe la trazabilidad HE1/OE1 → desarrollo. O se respeta la salida de Boruta, o debe formalizarse y justificar metodológicamente un criterio híbrido de selección, idealmente comparando “4 Boruta” vs. “Top-10”.
+
+--- Comentario ID 133 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-24T18:01:00Z ---
+ok
+
+--- Comentario ID 138 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:29:00Z ---
+El experimento RF sin/con SMOTE-NC demuestra aumento de Recall (0→0.482) y F1 (0→0.184), pero AUROC y PR-AUC disminuyen. Por tanto, el efecto es mixto. Además, HE2 generaliza el efecto del balanceo, pero el experimento mostrado usa únicamente Random Forest.
+
+--- Comentario ID 143 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:29:00Z ---
+Se afirma que ensambles superan “de manera estadísticamente significativa” a SVM/KNN. Las tablas actuales muestran diferencias pequeñas y no presentan prueba estadística ni IC. Con F1≈0.1935 para Gradient Boosting y 0.1932 para SVM no puede afirmarse significancia. Hay que realizar el contraste correspondiente o eliminar “estadísticamente significativa”.
+
+--- Comentario ID 148 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:33:00Z ---
+En H4 y H5 se aprecian más afirmaciones sobre lo que SHAP/LIME permiten hacer que hipótesis validables. revisar si son HE que valen la pena incluir.
+
+--- Comentario ID 149 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-24T21:46:00Z ---
+se colocaron opciones, pero puede no ser incluida más adelante.
+
+--- Comentario ID 160 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:49:00Z ---
+Se debe numerar o dividir en secciones indexables cada línea temática dentro del estado del arte.
+
+--- Comentario ID 161 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T21:52:00Z ---
+ok
+
+--- Comentario ID 162 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T19:48:00Z ---
+Se debe reforzar explícitamente al cierre la brecha de investigación: qué no han resuelto los trabajos existentes y qué aportará específicamente esta investigación con ENDES 2022–2025.
+
+--- Comentario ID 163 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T19:48:00Z ---
+Se debe evitar afirmaciones excesivas como “necesidad metodológica”, “máxima capacidad”, “abrumadora evidencia” o “puente definitivo”. Se sugiere utilizar lenguaje científico más neutral. También revisar la afirmación de que ML “supera ampliamente” a estrategias estadísticas tradicionales, pues depende del dataset, problema y diseño experimental.
+
+--- Comentario ID 164 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T02:48:00Z ---
+LISTO
+
+--- Comentario ID 166 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:34:00Z ---
+Para las secciones 2.1 a la 2.5: Se debe evitar convertir evidencia internacional en afirmaciones de utilidad clínica para Perú. Asimismo, “modelos de ensamble y KNN demuestran clara superioridad” es demasiado general. El propio resultado de la tesis muestra diferencias pequeñas y AUC moderado.
+
+--- Comentario ID 169 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:52:00Z ---
+Se debe corregir, la tabla 1 no se aprecia como tal. La tabla comparativa de antecedentes debe tener las columnas: Autor, Dataset, algoritmo, variables, métricas, limitaciones y el gap/brecha. Esto permite sintetizar la revisión y facilitar la identificación del vacío científico.
+
+--- Comentario ID 170 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T21:53:00Z ---
+incompleto, faltarían las variables, brecha, limitaciones
+
+--- Comentario ID 171 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-13T22:24:00Z ---
+Pendiente.
+
+--- Comentario ID 172 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-15T21:30:00Z ---
+listo
+
+--- Comentario ID 183 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T19:51:00Z ---
+Se debe  mejorar el estilo de redacción, debe ser más académico. E párrafo introductorio presenta redacción poco académica (“nos alarma”, “podemos entender”, “Data que podemos analizar”). Requiere revisión integral de estilo académico.
+
+--- Comentario ID 184 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-15T21:53:00Z ---
+listo
+
+--- Comentario ID 185 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T19:37:00Z ---
+Se debe corregir los problemas de numeración: después de 3.3.2 aparece 3.4.3, luego 3.4.4 y después nuevamente 3.4 XAI. Debe corregirse completamente la jerarquía.
+
+--- Comentario ID 186 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T22:51:00Z ---
+LISTO
+
+--- Comentario ID 188 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T22:54:00Z ---
+Se debe corregir la numeración y adecuar a las subsecciones sugeridas por la plantilla de tesis.
+
+--- Comentario ID 189 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:09:00Z ---
+Se sugiere revisar: se combinan aborto espontáneo (<22 semanas) y mortinato, mientras posteriormente el indicador de la matriz señala “gestación menor a 22 semanas, aborto espontáneo, mortinato”. Debe definirse inequívocamente cómo se construirá la variable binaria target usando variables reales de ENDES.
+
+--- Comentario ID 190 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-15T22:48:00Z ---
+add formula pendiente
+
+--- Comentario ID 191 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:18:00Z ---
+Existe una limitación metodológica que debe resolverse explícitamente: en 4.6 se reconoce que ENDES no permite distinguir con certeza una pérdida espontánea de una inducida, pero toda la tesis denomina al target “pérdida gestacional involuntaria”. No debería basarse en la suposición de que “la mayoría son involuntarias”. O encuentran evidencia/codificación ENDES que permita distinguirlas, o deben redefinir rigurosamente el desenlace y declarar la limitación.
+
+--- Comentario ID 193 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:21:00Z ---
+Se debe unificar el criterio temporal. En 3.1 se utiliza <22 semanas / menos de 6 meses, mientras 4.10.1 menciona primero “antes de 24 semanas, específicamente 22 semanas”. Eso es inconsistente. Debe existir una única regla computacional exacta y reproducible.
+
+--- Comentario ID 198 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:10:00Z ---
+Se debe revisar los factores contra las variables efectivamente disponibles y comparables en ENDES 2022–2025. No basta con que aparezcan en literatura; deben identificarse los campos/códigos ENDES concretos que alimentarán edad, riqueza, tabaco, alcohol, IMC, controles prenatales, paridad, etc.
+
+--- Comentario ID 199 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T03:02:00Z ---
+EN PROCESO
+
+--- Comentario ID 200 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:23:00Z ---
+Pendiente: debe demostrarse que la característica corresponde temporalmente al evento que se pretende predecir.
+
+--- Comentario ID 204 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:22:00Z ---
+El tamaño del texto de tablas debe ser 10.
+
+--- Comentario ID 205 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T23:08:00Z ---
+ok
+
+--- Comentario ID 207 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:26:00Z ---
+Se debe demostrar que M14, V222, anticonceptivos, IMC, tabaco, alcohol, diabetes, etc. representan información pertinente al momento o antes del evento gestacional target. Si se mezclan características actuales de la encuestada o de otro embarazo con una pérdida histórica, el modelo podría estar prediciendo el historial reportado y no un verdadero “riesgo futuro”. Esta trazabilidad temporal debe documentarse variable por variable.
+
+--- Comentario ID 216 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:13:00Z ---
+Se debe precisar que SMOTE se aplica exclusivamente al conjunto de entrenamiento, nunca antes de Train/Test Split, para evitar data leakage. 
+
+--- Comentario ID 217 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-16T16:40:00Z ---
+pendiente
+
+--- Comentario ID 218 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-17T01:27:00Z ---
+listo
+
+--- Comentario ID 219 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:30:00Z ---
+Hay una afirmación técnicamente problemática en 4.10.2: se indica que V501 solo se codifica One-Hot para KNN/SVM y que los árboles pueden utilizar su código original sin inconveniente. En árboles de scikit-learn/Gradient Boosting, una categoría nominal codificada 0,1,2... también será tratada mediante umbrales y puede introducir un orden artificial. V501 debería codificarse apropiadamente para todos los modelos o utilizar soporte categórico explícito.
+
+--- Comentario ID 221 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:15:00Z ---
+Se recomienda incorporar explícitamente matriz de confusión y, debido al posible fuerte desbalance, considerar también PR-AUC. Debe definirse previamente cuál será la métrica principal para elegir el modelo óptimo.
+
+--- Comentario ID 222 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-17T01:27:00Z ---
+FALTA
+
+--- Comentario ID 223 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-20T20:54:00Z ---
+listo
+
+--- Comentario ID 225 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:15:00Z ---
+Se debe diferenciar explícitamente explicabilidad global (p. ej., SHAP Summary Plot) de explicabilidad local (SHAP/LIME para casos individuales). Esto fortalecerá mucho el OE5.
+
+--- Comentario ID 226 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-17T01:29:00Z ---
+CONSTRUIR TABLA EN PROCESO
+
+--- Comentario ID 227 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-20T20:54:00Z ---
+listo
+
+--- Comentario ID 238 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-07-30T23:02:00Z ---
+Se debe completar las secciones faltantes usando lo planteado en el plan de tesis. Se debe detallar mucho más el pipeline completo de Machine Learning. 
+
+--- Comentario ID 239 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-02T23:51:00Z ---
+en progreso
+
+--- Comentario ID 240 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-13T22:24:00Z ---
+Pendiente.
+
+--- Comentario ID 241 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-20T20:56:00Z ---
+ok
+
+--- Comentario ID 248 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:16:00Z ---
+Revisa la expresión contribuye a la salud pública” , en todo caso debe plantearse como contribución potencial, dado que la investigación desarrolla/evalúa modelos y no implementa una intervención clínica.
+
+--- Comentario ID 249 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE | Fecha: 2026-08-20T17:45:00Z ---
+completo
+
+--- Comentario ID 256 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:17:00Z ---
+Se debe revisar la denominación “transversal”, porque se integrarán cuatro ediciones ENDES (2022–2025). Debe justificarse técnicamente si se trata de análisis transversal de bases acumuladas/pooling o si corresponde otra caracterización.
+
+--- Comentario ID 257 | Autor: ALUMNO - MICHAEL MOISES ARAGON ENCARNACI�N | Fecha: 2026-08-20T21:56:00Z ---
+Se modificó el párrafo. Se aclara que es transversal porque no se hace seguimiento a las mismas mujeres a través de los años, sino que se analizan distintos grupos de mujeres encuestadas en las ENDES de los años 2022–2025.
+
+--- Comentario ID 264 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:19:00Z ---
+Se sugiere reducir algo la explicación general y concentrarse más en cómo se operacionaliza el enfoque en esta investigación.
+
+--- Comentario ID 265 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-20T21:48:00Z ---
+listo
+
+--- Comentario ID 267 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:32:00Z ---
+Se recomienda revisar: Predictivo es adecuado. “Explicativo” puede confundirse con explicación causal. SHAP/LIME explican el comportamiento del modelo, no por qué ocurre causalmente la pérdida gestacional. Recomiendo denominarlo “predictivo con componente de explicabilidad del modelo”, no nivel explicativo causal.
+
+--- Comentario ID 274 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:32:00Z ---
+Se debe diferenciar la población objetivo de la población disponible en los microdatos ENDES. También debe aclararse qué significa exactamente “reportaron un embarazo durante el período de estudio”.
+
+--- Comentario ID 275 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-21T22:41:00Z ---
+corregido, los detalles irán en muestra, aqui es netamente poblacion de la ENDES al descargar la base de datos.
+
+--- Comentario ID 276 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:33:00Z ---
+Se sugiere diferenciar claramente población fuente, población elegible y muestra analítica.
+
+--- Comentario ID 285 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:33:00Z ---
+Se debe corregir. Requiere corrección metodológica. Se indica que “la muestra se seleccionó de forma aleatoria”, pero aparentemente se utilizarán los registros ENDES que cumplan los criterios de inclusión/exclusión. Si se utiliza todo el subconjunto elegible, no corresponde hablar de muestreo aleatorio. El 80/20 es una partición del dataset, no el procedimiento de selección de la muestra.
+
+--- Comentario ID 286 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:34:00Z ---
+Pendiente de corregir: Queda por completar “FLATA DATO%”. Además, el 80/20 es una partición estratificada del dataset, no un muestreo de la población.
+
+--- Comentario ID 287 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:35:00Z ---
+Luego de cruzar varios módulos y reducir 138,396 a 29,450 registros no debería asumirse automáticamente que la muestra resultante mantiene la misma representatividad nacional. Si se realizan inferencias poblacionales, deben considerar diseño complejo/pesos ENDES o, como mínimo, declarar esta limitación.
+
+--- Comentario ID 295 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:33:00Z ---
+Está vacío y debe desarrollarse. Es una sección esencial. Debe explicar obtención de microdatos ENDES, integración de años/módulos, filtrado, construcción del target, tratamiento de faltantes, codificación, normalización, Train/Test, Boruta, SMOTE, entrenamiento, validación cruzada, tuning, evaluación y XAI.
+
+--- Comentario ID 296 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T15:33:00Z ---
+listo
+
+--- Comentario ID 297 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:36:00Z ---
+Describe el flujo general, pero para un capítulo cerrado debería contener el procedimiento completo y ordenado: integración → target → split → imputación/encoding → Boruta → SMOTE-NC → CV → tuning → selección → test → XAI. Actualmente parte del detalle aparece disperso en 4.10.
+
+--- Comentario ID 302 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:34:00Z ---
+Se debe corregir: Python, Pandas, Scikit-learn o BorutaPy son herramientas de procesamiento, no instrumentos de investigación en el mismo sentido que la fuente/base de datos. Conviene separar instrumento/fuente de datos de herramientas de análisis.
+
+--- Comentario ID 303 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:37:00Z ---
+Se debe corregir: No está plenamente alineado con la matriz Excel. La matriz de operacionalización declara como instrumento una “Ficha de registro de resultados experimentales” y hace referencia a un “Anexo de Validación por Juicio de Expertos”; sin embargo, en la tesis no aparece esa ficha validada ni el anexo de juicio de expertos. Debe incorporarse o eliminarse esa afirmación de las matrices.
+
+--- Comentario ID 309 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-23T21:37:00Z ---
+Es una técnica/artefacto de evaluación, no necesariamente el “instrumento principal”. Conviene distinguir: fuente documental ENDES, ficha de registro experimental y métricas/técnicas de evaluación.
+
+--- Comentario ID 314 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:37:00Z ---
+Se debe corregir, el texto dice que existen 5 fases, mientras el desarrollo posterior incluye también XAI; recomiendo formalizar 6 fases.
+
+--- Comentario ID 315 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:38:00Z ---
+Respecto al diagrama: “Modelo híbrido” se define como stacking de RF+XGBoost+Gradient Boosting mientras “Modelo tradicional” agrupa SVM y KNN; metodológicamente sería más claro comparar modelos individuales vs. modelo ensemble/stacking, pues SVM/KNN no constituyen conjuntamente “un modelo tradicional”.
+
+--- Comentario ID 316 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-22T00:08:00Z ---
+en ensemble lo dejamos, y algoritmos independientes
+
+--- Comentario ID 324 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:38:00Z ---
+Se debe desarrollar a detalle: Esta sección debe convertirse en el núcleo técnico reproducible de la tesis, describiendo cómo se ejecutó cada fase, parámetros, variables, librerías, configuraciones, criterios y artefactos generados.
+
+--- Comentario ID 325 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-22T00:06:00Z ---
+listo, pasando info
+
+--- Comentario ID 362 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:39:00Z ---
+Pendiente. Los resultados deberían organizarse según los objetivos específicos: desempeño por grupos de variables, efecto Boruta/SMOTE, comparación de modelos, modelo óptimo y resultados XAI.
+
+--- Comentario ID 363 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T15:51:00Z ---
+en proceso
+
+--- Comentario ID 370 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:39:00Z ---
+Pendiente. Deberá contrastar los resultados obtenidos principalmente con los estudios revisados en el estado del arte, explicando coincidencias, diferencias y posibles causas.
+
+--- Comentario ID 377 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:39:00Z ---
+Pendiente. Deben responder directamente al objetivo general y a cada objetivo específico, sustentadas exclusivamente en los resultados obtenidos.
+
+--- Comentario ID 384 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-12T20:40:00Z ---
+Pendiente. Debe completarse conforme al formato institucional, declarando herramientas, actividades realizadas con ellas y grado de intervención humana.
+
+--- Comentario ID 385 | Autor: ALUMNO - KARLA JEMIMA JANGE ZARATE [2] | Fecha: 2026-08-23T15:51:00Z ---
+en proceso
+
+--- Comentario ID 504793894 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-25T22:26:32 ---
+Se debe alinear con la matriz de consistencia.
+
+--- Comentario ID 719826284 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-25T22:27:37 ---
+Se debe alinear con la matriz de consistencia.
+
+--- Comentario ID 1055323817 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-25T22:28:34 ---
+Se debe alinear con la matriz de consistencia.
+
+--- Comentario ID 1156519581 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:29:55 ---
+Pendiente. Mantener una terminología metodológica uniforme. Si se declara alcance “predictivo-comparativo”, evitar utilizar indistintamente nivel, alcance y diseño para referirse al mismo elemento.
+
+--- Comentario ID 297030591 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:30:17 ---
+Debe quedar claramente definida la población de estudio y, sobre todo, la unidad de análisis: mujer, embarazo, episodio gestacional o registro ENDES. No deben utilizarse estas unidades indistintamente.
+
+--- Comentario ID 844341425 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:31:11 ---
+Se debe verificar y consolidar el número definitivo de observaciones. La implementación reporta 31 288 registros de entrenamiento + 7 822 de prueba = 39 110 registros. Debe coincidir exactamente con metodología, tablas, figuras, matriz y anexos.
+
+--- Comentario ID 629489148 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:31:35 ---
+Pendiente.
+
+--- Comentario ID 60274711 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:33:36 ---
+Pendiente.
+
+--- Comentario ID 305965204 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-25T22:25:20 ---
+Se debe actualizar la matriz de consistencia y sincronizar con las secciones de Objetivos, Problema e Hipótesis.
+
+--- Comentario ID 1024236857 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-25T22:38:55 ---
+Se sugiere revisar las expresiones "apoyo a decisiones clínicas" y "política preventiva personalizada". Para ello se debería realizar una validación clínica externa, por lo tanto se debería hablar de interpretación del comportamiento del modelo y potencial investigación. No se debe hablar de uso clínico efectivo. 
+
+--- Comentario ID 774712293 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:35:35 ---
+La integración ENDES 2022–2025 está desarrollada, pero se debe garantizar reproducibilidad: identificar claramente módulos/archivos, variables utilizadas, criterios de integración y filtros aplicados.
+
+--- Comentario ID 1982053282 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:36:40 ---
+Existe una inconsistencia que debe eliminarse entre referencias a 19 y 20 variables candidatas/evaluadas. Debe existir un único número y este debe coincidir con matriz, metodología, tablas, figuras y código.
+
+--- Comentario ID 1405312080 | Autor: DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha: 2026-08-27T01:38:37 ---
+La comparación final debe mostrar consistentemente todas las métricas comprometidas en la matriz: AUROC, PR-AUC, Recall, Precision y F1. No debe quedar una selección del modelo sustentada solo en un subconjunto de ellas.
+

@@ -53,6 +53,7 @@ from xgboost import XGBClassifier
 from sklearn.metrics import (
     accuracy_score, balanced_accuracy_score, precision_score,
     recall_score, f1_score, roc_auc_score, confusion_matrix,
+    average_precision_score,
 )
 from imblearn.over_sampling import SMOTENC
 
@@ -168,6 +169,7 @@ for fold_idx, (train_idx, test_idx) in enumerate(skf.split(X, y), start=1):
             'F1_macro': f1_score(y_test_fold, pred, average='macro', zero_division=0),
             'F1_ponderado': f1_score(y_test_fold, pred, average='weighted', zero_division=0),
             'AUC_ROC': roc_auc_score(y_test_fold, proba),
+            'PR_AUC': average_precision_score(y_test_fold, proba),
         })
 
         cm = confusion_matrix(y_test_fold, pred, labels=[0, 1])
@@ -190,7 +192,7 @@ print(f"RESUMEN K-FOLD (media +/- desv. estandar de los {N_FOLDS} folds)")
 print("=" * 60)
 
 metricas_cols = ['Accuracy', 'Balanced_Accuracy', 'Precision_clase1', 'Recall_clase1',
-                  'F1_clase1', 'F1_macro', 'F1_ponderado', 'AUC_ROC']
+                  'F1_clase1', 'F1_macro', 'F1_ponderado', 'AUC_ROC', 'PR_AUC']
 
 resumen = df_folds.groupby('Modelo')[metricas_cols].agg(['mean', 'std'])
 resumen.columns = [f"{col}_{stat}" for col, stat in resumen.columns]

@@ -1,0 +1,50 @@
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+T1: BOOTSTRAP DEL AUROC (H0: AUROC=0.5 vs H1: AUROC>0.5)
+============================================================
+
+Test (sobre el que se hace el bootstrap): 7,822 filas (684 con perdida / 7,138 sin perdida)
+
+Ejecutando bootstrap (B=2000) para cada modelo...
+
+Random Forest
+   AUC-ROC puntual: 0.6499
+   IC 95% (bootstrap, B=2000): [0.6283, 0.6710]
+   H0 (AUROC=0.5) RECHAZADA al 95% de confianza (el limite inferior supera 0.5)
+
+Gradient Boosting
+   AUC-ROC puntual: 0.6540
+   IC 95% (bootstrap, B=2000): [0.6336, 0.6749]
+   H0 (AUROC=0.5) RECHAZADA al 95% de confianza (el limite inferior supera 0.5)
+
+XGBoost
+   AUC-ROC puntual: 0.6469
+   IC 95% (bootstrap, B=2000): [0.6252, 0.6686]
+   H0 (AUROC=0.5) RECHAZADA al 95% de confianza (el limite inferior supera 0.5)
+
+KNN
+   AUC-ROC puntual: 0.5883
+   IC 95% (bootstrap, B=2000): [0.5658, 0.6101]
+   H0 (AUROC=0.5) RECHAZADA al 95% de confianza (el limite inferior supera 0.5)
+
+SVM
+   AUC-ROC puntual: 0.6191
+   IC 95% (bootstrap, B=2000): [0.5979, 0.6408]
+   H0 (AUROC=0.5) RECHAZADA al 95% de confianza (el limite inferior supera 0.5)
+
+============================================================
+TABLA FINAL (AUROC + IC 95%, ordenada de mayor a menor)
+============================================================
+           Modelo  AUC_ROC  IC95_inferior  IC95_superior  Rechaza_H0_AUC=0.5
+Gradient Boosting 0.654017       0.633571       0.674901                True
+    Random Forest 0.649927       0.628307       0.670957                True
+          XGBoost 0.646852       0.625228       0.668612                True
+              SVM 0.619100       0.597857       0.640834                True
+              KNN 0.588329       0.565773       0.610085                True
+
+Tabla guardada en: C:\Users\Remoto\Desktop\TesisPY\Modelos\bootstrap_auroc.csv
+
+Hipotesis general: 5 de 5 modelos muestran una capacidad de discriminacion estadisticamente significativa (IC 95% del AUROC excluye 0.5).
+
+T1 (BOOTSTRAP AUROC) COMPLETADO
+============================================================

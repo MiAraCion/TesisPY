@@ -1,0 +1,48 @@
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+FASE 2 (C2): SMOTE-NC EN LOS 5 MODELOS (CON vs. SIN)
+============================================================
+
+Train (sin tocar): 31,288 filas | Test: 7,822 filas
+Train balanceado: 57,100 filas
+
+--- Random Forest ---
+   SIN SMOTE-NC -> Recall=0.0804 F1=0.1488 AUC=0.6765 PR-AUC=0.2431
+   CON SMOTE-NC -> Recall=0.7120 F1=0.2101 AUC=0.6567 PR-AUC=0.2332
+   Delta: Recall +0.6316 | F1 +0.0613 | AUC -0.0198 | PR-AUC -0.0098
+
+--- Gradient Boosting ---
+   SIN SMOTE-NC -> Recall=0.0804 F1=0.1488 AUC=0.6800 PR-AUC=0.2459
+   CON SMOTE-NC -> Recall=0.5965 F1=0.2181 AUC=0.6570 PR-AUC=0.2326
+   Delta: Recall +0.5161 | F1 +0.0692 | AUC -0.0230 | PR-AUC -0.0132
+
+--- XGBoost ---
+   SIN SMOTE-NC -> Recall=0.0804 F1=0.1488 AUC=0.6831 PR-AUC=0.2512
+   CON SMOTE-NC -> Recall=0.5336 F1=0.2125 AUC=0.6507 PR-AUC=0.2296
+   Delta: Recall +0.4532 | F1 +0.0637 | AUC -0.0324 | PR-AUC -0.0216
+
+--- KNN ---
+   SIN SMOTE-NC -> Recall=0.0132 F1=0.0259 AUC=0.5675 PR-AUC=0.1243
+   CON SMOTE-NC -> Recall=0.4649 F1=0.1922 AUC=0.6002 PR-AUC=0.1208
+   Delta: Recall +0.4518 | F1 +0.1663 | AUC +0.0327 | PR-AUC -0.0035
+
+--- SVM ---
+   SIN SMOTE-NC -> Recall=0.0000 F1=0.0000 AUC=0.5790 PR-AUC=0.1978
+   CON SMOTE-NC -> Recall=0.5789 F1=0.2115 AUC=0.6262 PR-AUC=0.1549
+   Delta: Recall +0.5789 | F1 +0.2115 | AUC +0.0472 | PR-AUC -0.0430
+
+Tabla guardada en: C:\Users\Remoto\Desktop\TesisPY\Validacion_SMOTE\comparacion_5_modelos.csv
+
+============================================================
+RESUMEN: ¿EL EFECTO MIXTO SE REPITE EN LOS 5 MODELOS?
+============================================================
+   Random Forest: SI (mismo patron que RF)
+   Gradient Boosting: SI (mismo patron que RF)
+   XGBoost: SI (mismo patron que RF)
+   KNN: NO exactamente igual
+   SVM: NO exactamente igual
+
+Grafico guardado en: C:\Users\Remoto\Desktop\TesisPY\Validacion_SMOTE\grafico_5_modelos_con_sin_smote.png
+
+C2 COMPLETADO
+============================================================

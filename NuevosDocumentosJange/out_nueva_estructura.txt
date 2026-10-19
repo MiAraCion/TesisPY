@@ -1,0 +1,60 @@
+total parrafos: 605
+total tablas: 19
+113 | 1. Introducción
+118 | 1.1. Definición del problema
+125 | 1.1.1 Problema General
+127 | 1.1.2 Problemas específicos
+134 | 1.2 Objetivos
+135 | 1.2.1 Objetivo general
+137 | 1.2.2 Objetivos específicos
+144 | 1.3 Hipótesis
+145 | 1.3.1 Hipótesis general
+147 | 1.3.2 Hipótesis específicas
+155 | 2. Estado del arte
+156 | 2.1 Determinantes sociodemográficos y de salud en la pérdida gestacional
+159 | 2.2 Selección de características y balanceo en grandes bases de datos epidemiológicas
+163 | 2.3 Evaluación y Comparación de Algoritmos de Maching Learning en Salud
+172 | 2.4 Modelos de Ensamble y técnicas avanzadas de clasificación
+175 | 2.5 Inteligencia Artificial Explicable (XAI) para la Interpretación Clínica
+179 | 3. Marco teórico
+182 | 3.1. Pérdida Gestacional
+183 | 3.1.1 Definición clínica de aborto espontáneo
+188 | 3.1.2 Impacto en la salud reproductiva
+191 | 3.2. Factores determinantes asociados
+192 | 3.2.1 Factores sociodemográficos
+204 | 3.2.2 Factores de salud y antecedentes reproductivos
+216 | 3.3 Machine Learning aplicado a la salud
+219 | 3.3.1 Fundamentos de aprendizaje supervisado y clasificación binaria
+225 | 3.3.2 Algoritmos tradicionales y de ensamble
+235 | 3.3.3 Preprocesamiento: Selección Boruta y Balanceo SMOTE-NC
+243 | 3.3.4 Métricas de evaluación del rendimiento
+251 | 3.3.5 Inteligencia Artificial Explicable (XAI)
+268 | 4. Metodología de la investigación
+269 | 4.1 Tipo de investigación
+272 | 4.2 Diseño metodológico
+281 | 4.3 Enfoque
+286 | 4.4 Nivel
+293 | 4.5 Población
+297 | 4.6 Muestra
+304 | 4.7 Métodos de recolección y análisis
+321 | 4.8 Instrumentos de investigación
+330 | 4.9 Metodología de desarrollo
+348 | 4.9.1. Fase 1: Adquisición y comprensión de los datos (ENDES 2022-2025)
+351 | 4.9.2. Fase 2: Preprocesamiento y depuración
+355 | 4.9.3. Fase 3: Selección de características y balanceo (Boruta y SMOTE-NC)
+360 | 4.9.4. Fase 4: Modelamiento predictivo y ajuste de hiperparámetros (5 algoritmos)
+368 | 4.9.5. Fase 5: Evaluación multivariada y explicabilidad (TreeSHAP y LIME)
+378 | 4.10 Desarrollo de la solución
+381 | 4.10.1. Adquisición y extracción del conjunto de datos:
+394 | 4.10.2. Limpieza y preprocesamiento de datos:
+410 | 4.10.3. Selección de características mediante Boruta:
+427 | 4.10.4. Tratamiento del desbalance de clases (SMOTE-NC):
+448 | 4.10.5. Entrenamiento y optimización de modelos de Machine Learning:
+469 | 4.10.6. Evaluación y selección del modelo óptimo:
+490 | 4.10.7. Implementación de Inteligencia Artificial Explicable (XAI):
+530 | 5. Resultados
+531 | 6. Discusión
+532 | 7. Conclusiones
+533 | 8. Declaración de uso de IA
+535 | 9. Bibliografía
+589 | 10. Anexos

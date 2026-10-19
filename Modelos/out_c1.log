@@ -1,0 +1,67 @@
+============================================================
+TESIS: PREDICCION DE PERDIDA GESTACIONAL
+C1: 4 VARIABLES BORUTA-CONFIRMADAS vs. TOP-10 HIBRIDO
+============================================================
+
+Dataset: 39,110 filas | Features usadas (solo las 4 confirmadas): ['V040', 'V222', 'IMC', 'V190']
+Train: 25,421 | Validacion: 5,867 | Test: 7,822
+Train balanceado: 46,392 filas
+
+============================================================
+BUSQUEDA DE HIPERPARAMETROS (evaluada en el set de VALIDACION)
+============================================================
+
+--- Random Forest ---
+   Mejores hiperparametros: {'n_estimators': 300, 'min_samples_leaf': 1, 'max_depth': 5} (F1 validacion: 0.2168)
+   TEST -> AUC=0.6360 F1=0.2088 Recall=0.5409 Precision=0.1294
+
+--- Gradient Boosting ---
+   Mejores hiperparametros: {'n_estimators': 100, 'max_depth': 2, 'learning_rate': 0.05} (F1 validacion: 0.2140)
+   TEST -> AUC=0.6362 F1=0.2109 Recall=0.4942 Precision=0.1341
+
+--- XGBoost ---
+   Mejores hiperparametros: {'n_estimators': 200, 'max_depth': 5, 'learning_rate': 0.03} (F1 validacion: 0.2106)
+   TEST -> AUC=0.6229 F1=0.1976 Recall=0.3830 Precision=0.1331
+
+--- KNN ---
+   Mejores hiperparametros: {'weights': 'uniform', 'n_neighbors': 15} (F1 validacion: 0.1887)
+   TEST -> AUC=0.5688 F1=0.1716 Recall=0.4006 Precision=0.1092
+
+--- SVM ---
+   Mejores hiperparametros: {'gamma': 'scale', 'C': 0.5} (F1 validacion: 0.2041)
+   TEST -> AUC=0.6103 F1=0.1968 Recall=0.6184 Precision=0.1170
+
+Tabla (solo 4 confirmadas) guardada en: C:\Users\Remoto\Desktop\TesisPY\Modelos\resultados_4confirmadas.csv
+
+============================================================
+COMPARACION: 4 CONFIRMADAS vs. TOP-10 HIBRIDO (mismo test, umbral optimo)
+============================================================
+
+Gradient Boosting
+   AUC:  4-confirmadas=0.6362  vs  Top-10=0.6540  (delta=-0.0178)
+   F1:   4-confirmadas=0.2109  vs  Top-10=0.2167  (delta=-0.0058)
+
+Random Forest
+   AUC:  4-confirmadas=0.6360  vs  Top-10=0.6499  (delta=-0.0139)
+   F1:   4-confirmadas=0.2088  vs  Top-10=0.2182  (delta=-0.0094)
+
+XGBoost
+   AUC:  4-confirmadas=0.6229  vs  Top-10=0.6469  (delta=-0.0239)
+   F1:   4-confirmadas=0.1976  vs  Top-10=0.2094  (delta=-0.0118)
+
+SVM
+   AUC:  4-confirmadas=0.6103  vs  Top-10=0.6191  (delta=-0.0088)
+   F1:   4-confirmadas=0.1968  vs  Top-10=0.2053  (delta=-0.0085)
+
+KNN
+   AUC:  4-confirmadas=0.5688  vs  Top-10=0.5883  (delta=-0.0196)
+   F1:   4-confirmadas=0.1716  vs  Top-10=0.1761  (delta=-0.0045)
+
+Tabla comparativa guardada en: C:\Users\Remoto\Desktop\TesisPY\Modelos\comparacion_4_vs_top10.csv
+
+HE1 ('el criterio hibrido de 10 variables mantiene capacidad predictiva igual o superior a las 4 confirmadas'):
+   5 de 5 modelos tienen MEJOR F1 con el Top-10 que con las 4 confirmadas
+   Veredicto: CONFIRMADA
+
+C1 COMPLETADO
+============================================================

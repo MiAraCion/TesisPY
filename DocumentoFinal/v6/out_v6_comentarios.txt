@@ -1,0 +1,69 @@
+Traceback (most recent call last):
+  File "<string>", line 69, in <module>
+  File "C:\Users\Remoto\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2248' in position 66: character maps to <undefined>
+Total comentarios: 27
+
+ID=26 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar la consistencia entre las hipótesis y los resultados obtenidos:HE1 debe sustentar equivalencia o ausencia de pérdida predictiva; HE2 utiliza “significativamente”, no es necesario.HE3 plantea superioridad entre familias. Cada hipótesis necesita un contraste compatible con esa afirmación. Un intervalo de AUROC por encima de 0.5 no demuestra ninguna de esas tres comparaciones. 
+  Ancla: Hipótesis especificas
+
+ID=46 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar y corregir: Se alternan definiciones de negativos como embarazos que continúan después de seis meses y nacimientos sin pérdida registrada. Incorporar una regla operacional única: condiciones de clase 1, clase 0 y exclusión, tratamiento de nulos y casos con diferentes antecedentes reproductivos. Revisar el diccionario: V201 se define como nacidos vivos, pero se asocia un filtro de al menos una gestación con un mínimo de un hijo. Una mujer puede tener antecedentes de gestación sin nacidos vivos. Precisar qué casos admite realmente la implementación. 
+  Ancla: Pérdida Gestacional
+
+ID=68 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar. Si bien es importante reconocer el desfase temporal, sin embargo, afirmar estabilidad del IMC, residencia, estado civil o diagnóstico no garantiza que representen el estado previo a la pérdida. Se debería como variables observadas en la entrevista, con sus límites temporales. 
+  Ancla: Correspondencia temporal de las variables predictoras
+
+ID=148 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere presentar un único esquema de entrenamiento, validación y prueba. Debe coincidir con las cantidades de las tablas, la validación cruzada y el bootstrap. 
+  Ancla: Método de recolección y análisis
+
+ID=179 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere documentar la unicidad de las llaves y el control de multiplicación de filas tras los joins. También precisar cómo se evita confundir identificadores entre años. Adjuntar conteos antes y después de cada integración. 
+  Ancla: Adquisición y comprensión de datos
+
+ID=187 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar y corregir: Se reconoce imputación sobre el conjunto consolidado antes de la partición y luego, sin embargo, se afirma que la partición antecedió a todo procesamiento. Se debe corregir la implementación y volver a ejecutar la evaluación con imputadores ajustados únicamente en entrenamiento. Una variación pequeña del IMC no demuestra ausencia de fuga. 
+  Ancla: Preprocesamiento y depuración
+
+ID=206 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se de revisar y si es necesario corregir:La Tabla 15 presenta, sin SMOTE:Precision = 1.0000.Recall = 0.0804.Accuracy = 0.9196.Con una prevalencia positiva cercana a 8.75%, una precisión de 1 implica ausencia de falsos positivos. Esos valores de precisión y sensibilidad conducirían a una exactitud aproximada de 0.9195, compatible por redondeo, pero la balanced accuracy sería aproximadamente 0.5402, como efectivamente se informa. Por tanto, esta fila es aritméticamente plausible; no debe cuestionarse solo porque la precisión sea 100%
+  Ancla: Tratamiento del desbalance de clases (SMOTE-NC)
+
+ID=222 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar y corregir: La columna de mejores hiperparámetros no contiene información recuperable en la tabla consultada: se debe verificar visualmente y completarla si corresponde. Documentar configuraciones, espacio de búsqueda, número de iteraciones y criterio de selección para los cinco modelos. 
+  Ancla: Modelamiento predictivo y ajuste de Hiperparámetros
+
+ID=229 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar y corregir: Es el principal bloqueo: las matrices y métricas deben identificar inequívocamente su conjunto de evaluación. Separar resultados de validación cruzada, validación para umbral y prueba independiente 
+  Ancla: Evaluación y Benchmark de modelos
+
+ID=248 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar y corregir: El texto dice que SHAP y LIME se aplicaron a Random Forest, pero el modelo seleccionado es Gradient Boosting. Verificar los artefactos utilizados. Si corresponden a RF, no basta cambiar el nombre: debe explicarse el modelo seleccionado o justificarse expresamente otra elección. 
+  Ancla: Interpretabilidad y Explicabilidad (XAI)
+
+ID=282 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se debe corregir:Diferencias pequeñas no prueban “equivalencia estadística”. La Tabla 20 incluso muestra descensos en varios modelos con Top-10. Presentar diferencias observadas y, si se mantiene una conclusión formal de equivalencia, definir margen y contraste correspondiente. 
+  Ancla: Selección de características mediante Boruta (O1)
+
+ID=288 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se debe corregir:Se afirma mejora en cinco algoritmos, pero la tabla presentada desarrolla RF. Añadir las comparaciones completas y distinguir efecto del sobremuestreo del efecto de cambiar el umbral. Corregir “SMOTE-MC”. 
+  Ancla: Impacto del balanceo de clases con SMOTE-MC sobre la sensibilidad y el sesgo algorítmico (OE2)
+
+ID=294 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se debe revisar y corregir: El bootstrap contra AUROC = 0.5 evalúa discriminación respecto al azar; no prueba superioridad entre algoritmos. Describir las diferencias como numéricas mientras no exista un contraste entre modelos. 
+  Ancla: Rendimiento predictivo comparativo entre algoritmos de ensamble y tradicionales (OE3)
+
+ID=300 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Se sugiere revisar las tablas 18 y 23: Identificar la procedencia de cada predicción de esta matriz. Si corresponde a predicciones fuera de muestra sobre toda la base, describir ese protocolo y corregir la afirmación de validación cruzada únicamente sobre entrenamiento. Si corresponde a prueba independiente, regenerar la matriz con los 7,822 registros reservados. Actualizar las métricas y conclusiones asociadas 
+  Ancla: Selección, optimización y análisis del modelo optimo (OE3)
+
+ID=301 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
+  Comentario: Corregir la procedencia de la matriz y reportar por separado el desempeño del conjunto independiente. Evitar concluir utilidad preventiva a partir de discriminación retrospectiva. 
+  Ancla: Selección, optimización y análisis del modelo optimo (OE3)
+
+ID=307 | Autor=DOCENTE - DAVID CARLOS VERA OLIVERA | Fecha=2026-10-17 | Resuelto=False
