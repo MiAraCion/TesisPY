@@ -1,0 +1,125 @@
+{
+  "features_originales": [
+    "V201",
+    "V222",
+    "V040",
+    "V012",
+    "IMC",
+    "V190",
+    "V025",
+    "V106",
+    "V501",
+    "QS206"
+  ],
+  "hiperparametros": {
+    "random_forest": {
+      "n_estimators": 300,
+      "min_samples_leaf": 1,
+      "max_depth": 5
+    },
+    "gradient_boosting": {
+      "n_estimators": 150,
+      "max_depth": 2,
+      "learning_rate": 0.05
+    },
+    "xgboost": {
+      "n_estimators": 300,
+      "max_depth": 3,
+      "learning_rate": 0.05
+    },
+    "knn": {
+      "weights": "uniform",
+      "n_neighbors": 11
+    },
+    "svm": {
+      "gamma": "auto",
+      "C": 1
+    }
+  },
+  "umbrales": {
+    "random_forest": 0.5012,
+    "gradient_boosting": 0.552,
+    "xgboost": 0.5097000002861023,
+    "knn": 0.6364,
+    "svm": 0.4128
+  },
+  "nombres": {
+    "random_forest": "Random Forest",
+    "gradient_boosting": "Gradient Boosting",
+    "xgboost": "XGBoost",
+    "knn": "KNN",
+    "svm": "SVM (aproximado, submuestra 8,000 filas)"
+  },
+  "resultados_verificacion": {
+    "random_forest": {
+      "nombre": "Random Forest",
+      "umbral": 0.5012,
+      "n_filas_entrenamiento": 57100,
+      "auc": 0.6498,
+      "f1": 0.2194,
+      "recall": 0.6038,
+      "precision": 0.134,
+      "tn": 4470,
+      "fp": 2668,
+      "fn": 271,
+      "tp": 413,
+      "nota": ""
+    },
+    "gradient_boosting": {
+      "nombre": "Gradient Boosting",
+      "umbral": 0.552,
+      "n_filas_entrenamiento": 57100,
+      "auc": 0.656,
+      "f1": 0.2209,
+      "recall": 0.4766,
+      "precision": 0.1438,
+      "tn": 5197,
+      "fp": 1941,
+      "fn": 358,
+      "tp": 326,
+      "nota": ""
+    },
+    "xgboost": {
+      "nombre": "XGBoost",
+      "umbral": 0.5097000002861023,
+      "n_filas_entrenamiento": 57100,
+      "auc": 0.6495,
+      "f1": 0.2108,
+      "recall": 0.5015,
+      "precision": 0.1335,
+      "tn": 4911,
+      "fp": 2227,
+      "fn": 341,
+      "tp": 343,
+      "nota": ""
+    },
+    "knn": {
+      "nombre": "KNN",
+      "umbral": 0.6364,
+      "n_filas_entrenamiento": 57100,
+      "auc": 0.6002,
+      "f1": 0.1818,
+      "recall": 0.2763,
+      "precision": 0.1355,
+      "tn": 5932,
+      "fp": 1206,
+      "fn": 495,
+      "tp": 189,
+      "nota": ""
+    },
+    "svm": {
+      "nombre": "SVM (aproximado, submuestra 8,000 filas)",
+      "umbral": 0.4128,
+      "n_filas_entrenamiento": 8000,
+      "auc": 0.6265,
+      "f1": 0.2081,
+      "recall": 0.6096,
+      "precision": 0.1255,
+      "tn": 4232,
+      "fp": 2906,
+      "fn": 267,
+      "tp": 417,
+      "nota": "APROXIMADO: entrenado sobre una submuestra de 8,000 filas (no las 57,100 completas) por costo computacional -- el SVM oficial de la tesis usa el set completo y tarda ~9h en entrenar. 5,215 vectores de soporte."
+    }
+  }
+}

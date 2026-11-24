@@ -235,69 +235,106 @@ df_modelo.loc[fuera_rango, 'IMC'] = np.nan
 print(f"IMC valido en: {df_modelo['IMC'].notna().sum():,} de {len(df_modelo):,} filas")
 
 # ==========================================
-# PASO 7: MANEJO DE VALORES NULOS
+# PASO 7: ELIMINAR FILAS SIN TARGET VALIDO
+# ==========================================
+# Las filas sin target no sirven ni para entrenar ni para validar. Se hace
+# antes de dividir train/test para que ninguno de los dos conjuntos quede
+# con filas invalidas.
+
+df_modelo = df_modelo.dropna(subset=['target']).copy()
+feature_names = df_modelo.drop('target', axis=1).columns.tolist()
+
+print(f"\nFilas con target valido: {len(df_modelo):,}")
+print(f"Nombres de features ({len(feature_names)}): {feature_names}")
+
+# ==========================================
+# PASO 8: DIVIDIR EN TRAIN Y TEST (80/20)
+# ==========================================
+# FIX (observacion del docente, revision de v7): la particion se mueve
+# ANTES de la imputacion de nulos. Antes, la mediana/moda se calculaba
+# sobre el dataset consolidado completo (train+test juntos) y recien
+# despues se dividia, lo cual es una fuga de datos leve: el valor de
+# relleno del train se habia visto influenciado por filas que en teoria
+# iban a ser "nunca vistas". El docente senalo correctamente que una
+# variacion pequena en el resultado final (ej. 0.0001 en el IMC) no prueba
+# que no haya fuga: la fuga es un problema del procedimiento, no del
+# tamano del efecto. Con este orden, Boruta y todo lo que sigue solo usa
+# estadisticos (mediana, moda) calculados con el 80% de entrenamiento.
+#
+# Boruta se ejecuta SOLO sobre el train set. Si se ejecutara sobre todo el
+# dataset, la validacion posterior (PASO 14) quedaria contaminada: las
+# variables se habrian elegido viendo los mismos datos que despues se usan
+# para medir que tan bien funciona esa eleccion. stratify mantiene la
+# misma proporcion de clase 0/1 en train y test que en el dataset completo
+# (importante porque el target esta desbalanceado, ~91% / 9%).
+# Particion 80/20, siguiendo el protocolo estandar para microdatos de
+# encuestas de salud (DHS) descrito en el marco teorico del proyecto.
+
+df_train, df_test = train_test_split(
+    df_modelo, test_size=0.20, random_state=2023, stratify=df_modelo['target']
+)
+df_train = df_train.copy()
+df_test = df_test.copy()
+
+print(f"\nTrain (80%): {df_train.shape}")
+print(f"Test (20%): {df_test.shape}")
+
+# ==========================================
+# PASO 9: MANEJO DE VALORES NULOS (ajustado SOLO con train)
 # ==========================================
 # Nota: parte de estos nulos son "no aplica" por patrones de salto del
 # cuestionario (ej. V222 queda vacio si la mujer no tiene un nacimiento
 # previo, QS205C queda vacio si no fuma diariamente). Para esta corrida se
 # imputan con mediana (numericas) o moda (categoricas) por simplicidad. Es
 # una limitacion documentada: no distingue "no aplica" de "no sabe".
+#
+# La mediana/moda de cada columna se calcula UNICAMENTE con df_train. Ese
+# mismo valor (ya fijo, no recalculado) se usa para rellenar los nulos de
+# df_test, igual que se haria con un StandardScaler o un OneHotEncoder:
+# se "ajusta" (fit) solo con entrenamiento y se "aplica" (transform) sobre
+# el resto, sin que el test influya en el valor de relleno.
 
 print("\n" + "-" * 60)
-print("MANEJO DE VALORES NULOS")
+print("MANEJO DE VALORES NULOS (ajustado solo con train)")
 print("-" * 60)
 
-for col in df_modelo.columns:
-    nulos = df_modelo[col].isna().sum()
-    if nulos > 0:
-        print(f"   {col}: {nulos:,} ({nulos / len(df_modelo) * 100:.1f}%)")
+for col in feature_names:
+    nulos_train = df_train[col].isna().sum()
+    if nulos_train > 0:
+        print(f"   {col}: {nulos_train:,} nulos en train ({nulos_train / len(df_train) * 100:.1f}%)")
 
-for col in df_modelo.columns:
-    if col == 'target':
-        continue
-    if df_modelo[col].dtype in ['int64', 'float64']:
-        df_modelo[col] = df_modelo[col].fillna(df_modelo[col].median())
+valores_imputacion = {}
+for col in feature_names:
+    if df_train[col].dtype in ['int64', 'float64']:
+        valor = df_train[col].median()
     else:
-        df_modelo[col] = df_modelo[col].fillna(df_modelo[col].mode()[0])
+        valor = df_train[col].mode()[0]
+    valores_imputacion[col] = valor
+    df_train[col] = df_train[col].fillna(valor)
+    df_test[col] = df_test[col].fillna(valor)
+    # df_modelo (orden original) tambien se actualiza con el MISMO valor de
+    # train, para que los datasets de salida del PASO 15 (que se construyen
+    # a partir de df_modelo, no de df_train/df_test) queden imputados sin
+    # nulos y en el orden original, reproducible por cualquier script
+    # posterior que vuelva a dividir 80/20 con random_state=2023.
+    df_modelo[col] = df_modelo[col].fillna(valor)
 
-# Las filas sin target no sirven ni para entrenar ni para validar
-df_modelo = df_modelo.dropna(subset=['target']).copy()
-
-print("\nValores nulos imputados")
-
-# ==========================================
-# PASO 8: SEPARAR X (FEATURES) E y (TARGET)
-# ==========================================
-
-X = df_modelo.drop('target', axis=1).values
-y = df_modelo['target'].values
-feature_names = df_modelo.drop('target', axis=1).columns.tolist()
-
-print(f"\nFeatures (X): {X.shape}")
-print(f"Target (y): {y.shape}")
-print(f"Nombres de features ({len(feature_names)}): {feature_names}")
+print("\nValores nulos imputados (mediana/moda ajustadas solo con el 80% de entrenamiento)")
 
 # ==========================================
-# PASO 9: DIVIDIR EN TRAIN Y TEST (80/20)
+# PASO 10: SEPARAR X (FEATURES) E y (TARGET)
 # ==========================================
-# Boruta se ejecuta SOLO sobre el train set. Si se ejecutara sobre todo el
-# dataset, la validacion posterior (PASO 12) quedaria contaminada: las
-# variables se habrian elegido viendo los mismos datos que despues se usan
-# para medir que tan bien funciona esa eleccion. stratify=y mantiene la
-# misma proporcion de clase 0/1 en train y test que en el dataset completo
-# (importante porque el target esta desbalanceado, ~91% / 9%).
-# Particion 80/20, siguiendo el protocolo estandar para microdatos de
-# encuestas de salud (DHS) descrito en el marco teorico del proyecto.
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.20, random_state=2023, stratify=y
-)
+X_train = df_train.drop('target', axis=1).values
+y_train = df_train['target'].values
+X_test = df_test.drop('target', axis=1).values
+y_test = df_test['target'].values
 
 print(f"\nTrain: {X_train.shape}")
 print(f"Test: {X_test.shape}")
 
 # ==========================================
-# PASO 10: BORUTA - SELECCION DE CARACTERISTICAS
+# PASO 11: BORUTA - SELECCION DE CARACTERISTICAS
 # ==========================================
 # Parametros clave y por que estan asi:
 #
@@ -348,7 +385,7 @@ print("\nEjecutando Boruta...")
 boruta.fit(X_train, y_train)
 
 # ==========================================
-# PASO 11: TABLA DE RESULTADOS (ordenada de mayor a menor puntaje)
+# PASO 12: TABLA DE RESULTADOS (ordenada de mayor a menor puntaje)
 # ==========================================
 # BorutaPy no expone un atributo feature_importances_ propio (solo
 # support_ y ranking_). Para obtener importancias interpretables y
@@ -425,7 +462,7 @@ print(f"\nTabla completa (de mayor a menor importancia):")
 print(resultados_boruta.to_string(index=False))
 
 # ==========================================
-# PASO 12: VISUALIZACION DE RESULTADOS
+# PASO 13: VISUALIZACION DE RESULTADOS
 # ==========================================
 
 plt.figure(figsize=(10, 8))
@@ -439,7 +476,7 @@ plt.savefig(BASE_DIR / "boruta" / "grafico_importancia.png", dpi=150)
 print(f"\nGrafico guardado en: {BASE_DIR / 'boruta' / 'grafico_importancia.png'}")
 
 # ==========================================
-# PASO 13: VALIDACION - CON TODAS LAS FEATURES VS. SOLO LAS CONFIRMADAS
+# PASO 14: VALIDACION - CON TODAS LAS FEATURES VS. SOLO LAS CONFIRMADAS
 # ==========================================
 # Con un target desbalanceado (~91/9), accuracy por si sola es enganosa: un
 # modelo que siempre prediga "0" ya obtiene ~91% de accuracy sin haber
@@ -475,7 +512,7 @@ pred_sel = rf_sel.predict(X_test_boruta)
 evaluar(f"Solo features confirmadas por Boruta ({selected.sum()})", y_test, pred_sel)
 
 # ==========================================
-# PASO 14: CREAR DATASETS DE SALIDA
+# PASO 15: CREAR DATASETS DE SALIDA
 # ==========================================
 # Se generan DOS datasets alternativos, porque Boruta suele ser muy
 # conservador (a veces confirma muy pocas variables) y no siempre conviene
@@ -509,7 +546,7 @@ for col in df_top_n.columns:
     print(f"   - {col}")
 
 # ==========================================
-# PASO 15: GUARDAR RESULTADOS
+# PASO 16: GUARDAR RESULTADOS
 # ==========================================
 
 try:
@@ -525,7 +562,7 @@ except Exception as e:
     print(f"No se pudo guardar el dataset top {TOP_N}: {e}")
 
 # ==========================================
-# PASO 16: RESUMEN FINAL
+# PASO 17: RESUMEN FINAL
 # ==========================================
 
 print("\n" + "=" * 60)

@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Demo en Vivo — Predicción</title>
+<meta name="description" content="Inferencia real, en el navegador, de los 5 modelos entrenados para predecir riesgo de pérdida gestacional." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f7; --surface:#ffffff; --surface-2:#eef0f3; --border:#dde1e6;
+  --text:#1a1d23; --text-dim:#5b6270; --accent:#3b5bdb; --accent-dim:#eef1fd;
+  --good:#1f9d55; --good-bg:#e7f7ed; --bad:#d64545; --bad-bg:#fdecec;
+  --warn:#c98a1f; --warn-bg:#fcf1de;
+  --mono: 'JetBrains Mono', monospace; --sans:'Inter',sans-serif; --head:'Space Grotesk',sans-serif;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13151a; --surface:#1b1e25; --surface-2:#20242c; --border:#2b2f3a;
+    --text:#e8eaed; --text-dim:#9aa1ad; --accent:#7691ff; --accent-dim:#1f2640;
+    --good:#4ad980; --good-bg:#15301f; --bad:#ff6b6b; --bad-bg:#3a1a1a;
+    --warn:#e8b355; --warn-bg:#3a2e14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13151a; --surface:#1b1e25; --surface-2:#20242c; --border:#2b2f3a;
+  --text:#e8eaed; --text-dim:#9aa1ad; --accent:#7691ff; --accent-dim:#1f2640;
+  --good:#4ad980; --good-bg:#15301f; --bad:#ff6b6b; --bad-bg:#3a1a1a;
+  --warn:#e8b355; --warn-bg:#3a2e14;
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+  padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block: 20px 40px;
+}
+.wrap{max-width:1180px; margin:0 auto;}
+h1{font-family:var(--head); font-size:1.5rem; margin:0 0 4px; text-wrap:balance;}
+.subtitle{color:var(--text-dim); font-size:0.9rem; margin:0 0 20px; max-width:680px;}
+.panel{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:16px;}
+.panel h2{font-family:var(--head); font-size:0.95rem; margin:0 0 12px; display:flex; align-items:center; gap:8px;}
+.badge{font-family:var(--mono); font-size:0.68rem; background:var(--accent-dim); color:var(--accent); padding:2px 8px; border-radius:20px; letter-spacing:0.02em;}
+.controls{display:flex; flex-wrap:wrap; gap:14px; align-items:end;}
+.field{display:flex; flex-direction:column; gap:6px; min-width:0;}
+.field label{font-size:0.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.04em;}
+select, input[type=file]{
+  font-family:var(--sans); font-size:0.85rem; padding:8px 10px; border-radius:8px;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text); min-width:180px;
+}
+button{
+  font-family:var(--sans); font-weight:600; font-size:0.85rem; padding:9px 18px; border-radius:8px;
+  border:1px solid var(--border); background:var(--surface-2); color:var(--text); cursor:pointer;
+  transition:transform 0.08s ease;
+}
+button:hover:not(:disabled){transform:translateY(-1px);}
+button:disabled{opacity:0.45; cursor:not-allowed;}
+button.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+button.danger{background:var(--bad-bg); border-color:var(--bad); color:var(--bad);}
+.status-line{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:0.78rem; color:var(--text-dim); margin-top:14px; flex-wrap:wrap;}
+.dot{width:8px; height:8px; border-radius:50%; background:var(--text-dim); display:inline-block;}
+.dot.live{background:var(--good); box-shadow:0 0 0 0 var(--good); animation:pulse 1.4s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,157,85,0.5);}70%{box-shadow:0 0 0 6px rgba(31,157,85,0);}100%{box-shadow:0 0 0 0 rgba(31,157,85,0);}}
+.stats-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:10px; margin-top:4px;}
+.stat{background:var(--surface-2); border-radius:10px; padding:10px 12px;}
+.stat .n{font-family:var(--mono); font-weight:600; font-size:1.25rem;}
+.stat .l{font-size:0.68rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.03em; margin-top:2px;}
+.stat.good .n{color:var(--good);} .stat.bad .n{color:var(--bad);}
+.table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:12px;}
+table{border-collapse:collapse; width:100%; font-size:0.78rem; min-width:1080px;}
+thead th{
+  background:var(--surface-2); text-align:left; padding:9px 10px; font-size:0.68rem; text-transform:uppercase;
+  letter-spacing:0.03em; color:var(--text-dim); border-bottom:1px solid var(--border); white-space:nowrap; position:sticky; top:0;
+}
+tbody td{padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; font-family:var(--mono); color:var(--text);}
+tbody tr.active{background:var(--accent-dim);}
+tbody tr.calc td.c-pred{color:var(--warn);}
+.pill{padding:2px 9px; border-radius:20px; font-size:0.72rem; font-weight:600; display:inline-block;}
+.pill.ok{background:var(--good-bg); color:var(--good);}
+.pill.fail{background:var(--bad-bg); color:var(--bad);}
+.pill.pend{background:var(--surface-2); color:var(--text-dim);}
+.pill.risk1{background:var(--bad-bg); color:var(--bad);}
+.pill.risk0{background:var(--good-bg); color:var(--good);}
+.pager{display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-size:0.78rem; color:var(--text-dim); gap:10px; flex-wrap:wrap;}
+.pager button{padding:5px 12px;}
+.empty-state{padding:50px 20px; text-align:center; color:var(--text-dim); font-size:0.9rem;}
+.empty-state b{color:var(--text);}
+footer{margin-top:18px; font-size:0.72rem; color:var(--text-dim); line-height:1.6;}
+code{font-family:var(--mono); background:var(--surface-2); padding:1px 5px; border-radius:4px; font-size:0.85em;}
+@media (max-width:640px){
+  select, input[type=file]{min-width:140px;}
+  table{min-width:900px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Demo en vivo del modelo predictivo</h1>
+  <p class="subtitle">Riesgo de pérdida gestacional — ENDES 2022-2025. Cada predicción se calcula <b>en tiempo real, dentro del navegador</b>, reproduciendo matemáticamente el modelo entrenado (árboles reales para Random Forest / Gradient Boosting / XGBoost; distancia real a 57,100 vecinos para KNN). El target real nunca se entrega al modelo: solo se usa después, para marcar si acertó.</p>
+
+  <div class="panel">
+    <h2>1. Cargar datos de prueba <span class="badge">20% — sin target expuesto al modelo</span></h2>
+    <div class="controls">
+      <div class="field">
+        <label for="csvFile">Archivo CSV (datos_prueba_20porciento.csv)</label>
+        <input type="file" id="csvFile" accept=".csv" />
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <span id="loadStatus" style="font-family:var(--mono); font-size:0.78rem; color:var(--text-dim);">Ningún archivo cargado</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>2. Elegir algoritmo y correr la demo</h2>
+    <div class="controls">
+      <div class="field">
+        <label for="modelSelect">Algoritmo</label>
+        <select id="modelSelect" disabled>
+          <option value="gradient_boosting">Gradient Boosting (óptimo)</option>
+          <option value="random_forest">Random Forest</option>
+          <option value="xgboost">XGBoost</option>
+          <option value="knn">KNN (k=11)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="speedSelect">Velocidad</label>
+        <select id="speedSelect">
+          <option value="1400">Lento</option>
+          <option value="700" selected>Normal</option>
+          <option value="250">Rápido</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button class="primary" id="btnRun" disabled>▶ Correr demo</button>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button id="btnPause" disabled>⏸ Pausar</button>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <button id="btnReset" disabled>↺ Reiniciar</button>
+      </div>
+    </div>
+    <div class="status-line">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">En espera de datos.</span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat"><div class="n" id="statProcesados">0</div><div class="l">Procesados</div></div>
+      <div class="stat good"><div class="n" id="statAciertos">0</div><div class="l">Aciertos</div></div>
+      <div class="stat bad"><div class="n" id="statFallos">0</div><div class="l">Fallos</div></div>
+      <div class="stat"><div class="n" id="statAccuracy">—</div><div class="l">Accuracy acumulado</div></div>
+      <div class="stat"><div class="n" id="statRecall">—</div><div class="l">Recall clase 1 acumulado</div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>3. Tabla de casos</h2>
+    <div id="tableArea">
+      <div class="empty-state">Carga el CSV de datos de prueba para ver los casos aquí.</div>
+    </div>
+  </div>
+
+  <footer>
+    Modelos reentrenados con los hiperparámetros reales documentados en <code>Modelos/resultados_modelos_optimizado.csv</code>, sobre <code>SMOTENC/train_balanceado.csv</code> (57,100 filas balanceadas). El umbral de decisión de cada modelo también es el real, optimizado por F1 en el conjunto de validación. La inferencia (recorrido de árboles reales, o distancia real a los vecinos de entrenamiento) ocurre completamente en este navegador — no hay predicciones precalculadas ni servidor.
+  </footer>
+</div>
+
+<script>
+// ======================================================================
+// Carga perezosa de los JSON de modelos (archivos publicados junto a la pagina)
+// ======================================================================
+const ARCHIVOS_MODELO = {
+  random_forest: 'modelo_random_forest.json',
+  gradient_boosting: 'modelo_gradient_boosting.json',
+  xgboost: 'modelo_xgboost.json',
+  knn: 'modelo_knn.json',
+};
+let metadatos = null;
+const modelosCache = {};
+
+async function cargarMetadatos(){
+  if(metadatos) return metadatos;
+  const r = await fetch('modelo_metadatos.json');
+  metadatos = await r.json();
+  return metadatos;
+}
+async function cargarModelo(clave){
+  if(modelosCache[clave]) return modelosCache[clave];
+  const r = await fetch(ARCHIVOS_MODELO[clave]);
+  const data = await r.json();
+  modelosCache[clave] = data;
+  return data;
+}
+
+// ======================================================================
+// Decodificacion de etiquetas legibles -> codigos numericos ENDES
+// ======================================================================
+const MAP_AREA = {'Urbano':1,'Rural':2};
+const MAP_EDUC = {'Sin educación':0,'Primaria':1,'Secundaria':2,'Superior':3};
+const MAP_RIQUEZA = {'Más pobre':1,'Pobre':2,'Medio':3,'Rico':4,'Más rico':5};
+const MAP_CIVIL = {'Nunca unida':0,'Casada':1,'Conviviente':2,'Viuda':3,'Divorciada':4,'Separada':5};
+const MAP_ALCOHOL = {'Sí':1,'No':2};
+
+function construirVectorFeatures(fila, featuresOH){
+  // Reconstruye, EN EL MISMO ORDEN que featuresOH, el vector de entrada del
+  // modelo -- el target NUNCA entra aqui.
+  const civilCod = MAP_CIVIL[fila.estado_civil];
+  const valores = {
+    V201: Number(fila.paridad),
+    V222: Number(fila.intervalo_intergenesico),
+    V040: Number(fila.altitud),
+    V012: Number(fila.edad),
+    IMC: Number(fila.imc),
+    V190: MAP_RIQUEZA[fila.riqueza],
+    V025: MAP_AREA[fila.area],
+    V106: MAP_EDUC[fila.nivel_educativo],
+    QS206: MAP_ALCOHOL[fila.alcohol],
+    V501_0: civilCod===0?1:0, V501_1: civilCod===1?1:0, V501_2: civilCod===2?1:0,
+    V501_3: civilCod===3?1:0, V501_4: civilCod===4?1:0, V501_5: civilCod===5?1:0,
+  };
+  return featuresOH.map(f=>valores[f]);
+}
+
+// ======================================================================
+// Motores de inferencia REALES (recorren los arboles / distancias reales)
+// ======================================================================
+function sigmoid(z){ return 1/(1+Math.exp(-z)); }
+
+function recorrerArbolPlano(nodos, x){
+  let idx = 0;
+  while(true){
+    const n = nodos[idx];
+    if(n.hoja) return n.valor;
+    idx = (x[n.feat] <= n.umbral) ? n.izq : n.der;
+  }
+}
+function recorrerArbolXgb(nodo, x){
+  if(nodo.hoja) return nodo.valor;
+  return (x[nodo.feat] < nodo.umbral) ? recorrerArbolXgb(nodo.izq, x) : recorrerArbolXgb(nodo.der, x);
+}
+
+function inferirRandomForest(modelo, x){
+  let sumaP1 = 0;
+  for(const arbol of modelo.arboles){
+    const valor = recorrerArbolPlano(arbol, x); // [count_clase0, count_clase1]
+    const total = valor[0] + valor[1];
+    sumaP1 += total > 0 ? (valor[1] / total) : 0;
+  }
+  return sumaP1 / modelo.arboles.length;
+}
+function inferirGradientBoosting(modelo, x){
+  let suma = 0;
+  for(const arbol of modelo.arboles){
+    suma += recorrerArbolPlano(arbol, x)[0];
+  }
+  const score = modelo.init_log_odds + modelo.learning_rate * suma;
+  return sigmoid(score);
+}
+function inferirXgboost(modelo, x){
+  let suma = modelo.base_log_odds;
+  for(const arbol of modelo.arboles){
+    suma += recorrerArbolXgb(arbol, x);
+  }
+  return sigmoid(suma);
+}
+function inferirKnn(modelo, x){
+  const xEsc = x.slice();
+  modelo.orden_features.forEach((nombre, i)=>{
+    if(modelo.columnas_escalar.includes(nombre)){
+      xEsc[i] = (x[i] - modelo.scaler_mean[nombre]) / modelo.scaler_scale[nombre];
+    }
+  });
+  const distancias = new Array(modelo.train_X.length);
+  for(let i=0;i<modelo.train_X.length;i++){
+    const fila = modelo.train_X[i];
+    let d = 0;
+    for(let j=0;j<fila.length;j++){ const diff = fila[j]-xEsc[j]; d += diff*diff; }
+    distancias[i] = d;
+  }
+  const indices = Array.from(distancias.keys());
+  indices.sort((a,b)=>distancias[a]-distancias[b]);
+  const k = modelo.n_neighbors;
+  let votos1 = 0;
+  for(let i=0;i<k;i++){ votos1 += modelo.train_y[indices[i]]; }
+  return votos1 / k;
+}
+
+async function predecir(claveModelo, fila){
+  const meta = await cargarMetadatos();
+  const modelo = await cargarModelo(claveModelo);
+  const x = construirVectorFeatures(fila, meta.features_onehot);
+  let proba;
+  if(claveModelo === 'random_forest') proba = inferirRandomForest(modelo, x);
+  else if(claveModelo === 'gradient_boosting') proba = inferirGradientBoosting(modelo, x);
+  else if(claveModelo === 'xgboost') proba = inferirXgboost(modelo, x);
+  else if(claveModelo === 'knn') proba = inferirKnn(modelo, x);
+  const prediccion = proba >= modelo.umbral ? 1 : 0;
+  return {proba, prediccion, umbral: modelo.umbral};
+}
+
+// ======================================================================
+// Parser de CSV simple (sin libreria -- columnas conocidas, sin comas internas)
+// ======================================================================
+function parsearCSV(texto){
+  const lineas = texto.replace(/\r/g,'').split('\n').filter(l=>l.length>0);
+  const encabezados = lineas[0].split(',').map(h=>h.trim());
+  const filas = [];
+  for(let i=1;i<lineas.length;i++){
+    const valores = lineas[i].split(',');
+    const obj = {};
+    encabezados.forEach((h,idx)=>{ obj[h] = valores[idx] !== undefined ? valores[idx].trim() : ''; });
+    filas.push(obj);
+  }
+  return filas;
+}
+
+// ======================================================================
+// Estado y render de la tabla
+// ======================================================================
+let datos = [];           // filas crudas del CSV cargado
+let resultados = [];       // {proba, prediccion, resultado} por fila, paralelo a datos
+let pagina = 0;
+const FILAS_POR_PAGINA = 40;
+let indiceActual = -1;
+let corriendo = false;
+let pausado = false;
+let temporizador = null;
+
+const $ = (id)=>document.getElementById(id);
+
+function etiquetaRiesgo(valor){
+  return valor===1 ? '<span class="pill risk1">Con pérdida</span>' : '<span class="pill risk0">Sin pérdida</span>';
+}
+
+function renderTabla(){
+  const area = $('tableArea');
+  if(datos.length === 0){
+    area.innerHTML = '<div class="empty-state">Carga el CSV de datos de prueba para ver los casos aquí.</div>';
+    return;
+  }
+  const inicio = pagina*FILAS_POR_PAGINA;
+  const fin = Math.min(inicio+FILAS_POR_PAGINA, datos.length);
+  let filasHtml = '';
+  for(let i=inicio;i<fin;i++){
+    const f = datos[i];
+    const r = resultados[i];
+    const activa = i===indiceActual;
+    let celdaPred = '<span class="pill pend">—</span>';
+    let celdaProba = '—';
+    let celdaResultado = '<span class="pill pend">pendiente</span>';
+    if(r && r.proba !== undefined){
+      celdaPred = etiquetaRiesgo(r.prediccion);
+      celdaProba = (r.proba*100).toFixed(1)+'%';
+      celdaResultado = r.acierto ? '<span class="pill ok">Acierto</span>' : '<span class="pill fail">No acierto</span>';
+    } else if(activa && corriendo){
+      celdaPred = '<span class="pill pend">calculando…</span>';
+    }
+    filasHtml += `<tr class="${activa?'active':''} ${activa&&corriendo?'calc':''}" id="fila-${i}">
+      <td>${f.caso}</td><td>${f.edad}</td><td>${f.area}</td><td>${f.nivel_educativo}</td>
+      <td>${f.riqueza}</td><td>${f.altitud}</td><td>${f.estado_civil}</td><td>${f.paridad}</td>
+      <td>${f.intervalo_intergenesico}</td><td>${f.alcohol}</td><td>${f.imc}</td>
+      <td>${etiquetaRiesgo(Number(f.target))}</td>
+      <td class="c-pred">${celdaPred}</td><td>${celdaProba}</td><td>${celdaResultado}</td>
+    </tr>`;
+  }
+  area.innerHTML = `
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Edad</th><th>Área</th><th>Nivel educ.</th><th>Riqueza</th><th>Altitud</th>
+        <th>Estado civil</th><th>Paridad</th><th>Interv. intergén.</th><th>Alcohol</th><th>IMC</th>
+        <th>Target real</th><th>Predicción</th><th>Prob.</th><th>Resultado</th>
+      </tr></thead>
+      <tbody>${filasHtml}</tbody>
+    </table></div>
+    <div class="pager">
+      <span>Mostrando ${inicio+1}–${fin} de ${datos.length.toLocaleString('es-PE')} casos</span>
+      <span>
+        <button id="pagPrev" ${pagina===0?'disabled':''}>← Anterior</button>
+        <button id="pagNext" ${fin>=datos.length?'disabled':''}>Siguiente →</button>
+      </span>
+    </div>`;
+  $('pagPrev')?.addEventListener('click', ()=>{ pagina--; renderTabla(); });
+  $('pagNext')?.addEventListener('click', ()=>{ pagina++; renderTabla(); });
+}
+
+function actualizarStats(){
+  const procesados = resultados.filter(r=>r && r.proba!==undefined).length;
+  const aciertos = resultados.filter(r=>r && r.acierto===true).length;
+  const fallos = procesados - aciertos;
+  $('statProcesados').textContent = procesados.toLocaleString('es-PE');
+  $('statAciertos').textContent = aciertos.toLocaleString('es-PE');
+  $('statFallos').textContent = fallos.toLocaleString('es-PE');
+  $('statAccuracy').textContent = procesados>0 ? ((aciertos/procesados)*100).toFixed(1)+'%' : '—';
+  const positivosReales = datos.slice(0,procesados).filter(f=>Number(f.target)===1).length;
+  let vp = 0;
+  for(let i=0;i<procesados;i++){
+    if(Number(datos[i].target)===1 && resultados[i].prediccion===1) vp++;
+  }
+  $('statRecall').textContent = positivosReales>0 ? ((vp/positivosReales)*100).toFixed(1)+'%' : '—';
+}
+
+async function procesarFila(i){
+  indiceActual = i;
+  pagina = Math.floor(i/FILAS_POR_PAGINA);
+  renderTabla();
+  const claveModelo = $('modelSelect').value;
+  const fila = datos[i];
+  const r = await predecir(claveModelo, fila);
+  const real = Number(fila.target);
+  resultados[i] = {proba:r.proba, prediccion:r.prediccion, acierto:(r.prediccion===real)};
+  renderTabla();
+  actualizarStats();
+  const elFila = document.getElementById('fila-'+i);
+  if(elFila) elFila.scrollIntoView({block:'nearest'});
+}
+
+async function bucleDemo(){
+  const total = datos.length;
+  let i = indiceActual+1 < 0 ? 0 : indiceActual+1;
+  if(resultados.every(r=>r && r.proba!==undefined)) i = 0; // reinicio si ya se completo todo
+  while(i < total && corriendo && !pausado){
+    await procesarFila(i);
+    i++;
+    await new Promise(res=>{ temporizador = setTimeout(res, Number($('speedSelect').value)); });
+  }
+  if(i>=total){
+    corriendo = false;
+    $('statusText').textContent = 'Demo completada: '+total.toLocaleString('es-PE')+' casos procesados.';
+    $('statusDot').classList.remove('live');
+    $('btnRun').disabled = false; $('btnPause').disabled = true;
+  }
+}
+
+// ======================================================================
+// Eventos de UI
+// ======================================================================
+$('csvFile').addEventListener('change', async (ev)=>{
+  const archivo = ev.target.files[0];
+  if(!archivo) return;
+  const texto = await archivo.text();
+  datos = parsearCSV(texto);
+  resultados = new Array(datos.length);
+  indiceActual = -1;
+  pagina = 0;
+  $('loadStatus').textContent = `${datos.length.toLocaleString('es-PE')} casos cargados ✓`;
+  $('modelSelect').disabled = false;
+  $('btnRun').disabled = false;
+  $('btnReset').disabled = false;
+  $('statusText').textContent = 'Datos listos. Elige un algoritmo y pulsa "Correr demo".';
+  await cargarMetadatos();
+  renderTabla();
+  actualizarStats();
+});
+
+$('btnRun').addEventListener('click', async ()=>{
+  corriendo = true; pausado = false;
+  $('btnRun').disabled = true; $('btnPause').disabled = false;
+  $('statusDot').classList.add('live');
+  $('statusText').textContent = `Calculando en vivo con ${$('modelSelect').selectedOptions[0].text}…`;
+  $('modelSelect').disabled = true;
+  bucleDemo();
+});
+$('btnPause').addEventListener('click', ()=>{
+  pausado = true; corriendo = false;
+  clearTimeout(temporizador);
+  $('btnRun').disabled = false; $('btnPause').disabled = true;
+  $('statusDot').classList.remove('live');
+  $('statusText').textContent = 'Pausado en el caso #'+(indiceActual+1)+'. Pulsa "Correr demo" para continuar.';
+});
+$('btnReset').addEventListener('click', ()=>{
+  corriendo = false; pausado = false;
+  clearTimeout(temporizador);
+  resultados = new Array(datos.length);
+  indiceActual = -1; pagina = 0;
+  $('modelSelect').disabled = false;
+  $('btnRun').disabled = false; $('btnPause').disabled = true;
+  $('statusDot').classList.remove('live');
+  $('statusText').textContent = 'Reiniciado. Elige un algoritmo y pulsa "Correr demo".';
+  renderTabla();
+  actualizarStats();
+});
+</script>
+</body>
+</html>
