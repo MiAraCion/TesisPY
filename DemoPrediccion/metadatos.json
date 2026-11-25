@@ -48,7 +48,7 @@
     "gradient_boosting": "Gradient Boosting",
     "xgboost": "XGBoost",
     "knn": "KNN",
-    "svm": "SVM (aproximado, submuestra 8,000 filas)"
+    "svm": "SVM"
   },
   "resultados_verificacion": {
     "random_forest": {
@@ -108,18 +108,18 @@
       "nota": ""
     },
     "svm": {
-      "nombre": "SVM (aproximado, submuestra 8,000 filas)",
+      "nombre": "SVM",
       "umbral": 0.4128,
-      "n_filas_entrenamiento": 8000,
-      "auc": 0.6265,
-      "f1": 0.2081,
-      "recall": 0.6096,
-      "precision": 0.1255,
-      "tn": 4232,
-      "fp": 2906,
-      "fn": 267,
-      "tp": 417,
-      "nota": "APROXIMADO: entrenado sobre una submuestra de 8,000 filas (no las 57,100 completas) por costo computacional -- el SVM oficial de la tesis usa el set completo y tarda ~9h en entrenar. 5,215 vectores de soporte."
+      "n_filas_entrenamiento": 57100,
+      "auc": 0.6262,
+      "f1": 0.2085,
+      "recall": 0.595,
+      "precision": 0.1264,
+      "tn": 4324,
+      "fp": 2814,
+      "fn": 277,
+      "tp": 407,
+      "nota": "Entrenado con el 80% completo de entrenamiento (57,100 filas), igual que el modelo oficial reportado en la tesis. 35,435 vectores de soporte. Tiempo de entrenamiento: 0.2 horas."
     }
   }
 }
